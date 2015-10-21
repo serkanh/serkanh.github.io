@@ -1,7 +1,7 @@
 ---
 layout: post
 title:  "Quickstart with Vault"
-date:   2014-04-06 15:40:56
+date:   2015-10-20 15:40:56
 categories: jekyll 
 ---
 Vault is a secure storage server that secures, stores, passwords, tokens, API keys etc. It is the from Hashicorp which had some great products such as Vault, Terraform and i think the most popular of all Vagrant.
