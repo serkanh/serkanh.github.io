@@ -31,7 +31,7 @@ disable_mlock = true
 VAULT_ADDR=http://127.0.0.1:8200 vault init 
 ```
 
-##### 3. Authenticate with master token. Please refer to our shared authentication application for token.
+##### 3. Authenticate with master token.
 ```
 VAULT_ADDR=http://127.0.0.1:8200 vault auth <root-token>
 ```
