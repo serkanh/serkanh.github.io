@@ -13,7 +13,7 @@ This is a basic summary of excellent tutorial from Digital Ocean on how to setup
 
 ##### 1. Create an fqdn 
 
-I am using AWS Route53 for this step so when you login create an A record(assuming you are pointing to an ip.) for your vpn. Assuming your domain name is mydomain.com, create something like vpn.yourdomain.com
+I am using AWS Route53 for this step so when you login create an A record(assuming you are pointing to an ip.) for your vpn. Assuming your domain name is yourdomain.com, create something like vpn.yourdomain.com
 
 
 ##### 2. Create a data container.
