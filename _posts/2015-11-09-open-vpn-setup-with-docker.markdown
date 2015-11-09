@@ -7,8 +7,8 @@ categories: vpn, docker
 
 This is a basic summary of excellent tutorial from Digital Ocean on how to setup OpenVpn with Docker. 
 
-https://github.com/kylemanna/docker-openvpn
-https://www.digitalocean.com/community/tutorials/how-to-run-openvpn-in-a-docker-container-on-ubuntu-14-04
+[https://github.com/kylemanna/docker-openvpn](https://github.com/kylemanna/docker-openvpn) <br />
+[https://www.digitalocean.com/community/tutorials/how-to-run-openvpn-in-a-docker-container-on-ubuntu-14-04](https://www.digitalocean.com/community/tutorials/how-to-run-openvpn-in-a-docker-container-on-ubuntu-14-04)
 
 
 ##### 1. Create an fqdn 
