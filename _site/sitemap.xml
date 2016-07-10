@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd" xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 <url>
+<loc>/osx,/screenshot/2016/07/10/save-screenshot-to-clipboard-on-osx.html</loc>
+<lastmod>2016-07-10T11:40:56-04:00</lastmod>
+</url>
+<url>
 <loc>/vpn,/docker/2015/11/09/open-vpn-setup-with-docker.html</loc>
 <lastmod>2015-11-09T10:40:56-05:00</lastmod>
 </url>
@@ -17,6 +21,10 @@
 </url>
 <url>
 <loc>/articles.html</loc>
-<lastmod>2016-04-28T10:44:36-04:00</lastmod>
+<lastmod>2016-06-15T11:41:51-04:00</lastmod>
+</url>
+<url>
+<loc>/tools.html</loc>
+<lastmod>2016-07-10T13:09:17-04:00</lastmod>
 </url>
 </urlset>
