@@ -20,7 +20,7 @@ my super secret information
 ssh-keygen
 ```
 
-##### 3. Convert your generated or existing public key to pem format. 
+##### 3. Export your generated or existing public key to pem format. 
 ```
 openssl rsa -in ~/.ssh/id_rsa -pubout > ~/id_rsa.pub.pem
 ```

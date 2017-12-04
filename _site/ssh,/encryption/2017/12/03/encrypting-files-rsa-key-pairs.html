@@ -43,7 +43,7 @@ my super secret information
 <h5>2. If you havent already create a rsa key pair. If you would like to use existing rsa key pair skip this step and continue to step 3.</h5>
 <div class="highlight"><pre><code class="language-" data-lang="">ssh-keygen
 </code></pre></div>
-<h5>3. Convert your generated or existing public key to pem format.</h5>
+<h5>3. Export your generated or existing public key to pem format.</h5>
 <div class="highlight"><pre><code class="language-" data-lang="">openssl rsa -in ~/.ssh/id_rsa -pubout &gt; ~/id_rsa.pub.pem
 </code></pre></div>
 <h5>4. Now you are ready encrypt the file you created earliear.</h5>
