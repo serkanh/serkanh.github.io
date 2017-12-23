@@ -12,14 +12,30 @@
     <!--[if lt IE 9]>
     <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
     <![endif]-->
-
+   
     <title> Quickstart with Vault </title>
+    <!-- Begin Jekyll SEO tag v2.4.0 -->
+<title>Quickstart with Vault | Serkan Haytac</title>
+<meta name="generator" content="Jekyll v3.6.2" />
+<meta property="og:title" content="Quickstart with Vault" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="Vault is a secure storage server that secures, stores, passwords, tokens, API keys etc. It is the from Hashicorp which had some great products such as Vault, Terraform and i think the most popular of all Vagrant. &quot;Vault handles leasing, key revocation, key rolling, and auditing. I want to give a simple to follow setup example for anyone to try out this awesome tool." />
+<meta property="og:description" content="Vault is a secure storage server that secures, stores, passwords, tokens, API keys etc. It is the from Hashicorp which had some great products such as Vault, Terraform and i think the most popular of all Vagrant. &quot;Vault handles leasing, key revocation, key rolling, and auditing. I want to give a simple to follow setup example for anyone to try out this awesome tool." />
+<link rel="canonical" href="http://localhost:4000/jekyll/2015/10/20/hashicorp-vault-setup.html" />
+<meta property="og:url" content="http://localhost:4000/jekyll/2015/10/20/hashicorp-vault-setup.html" />
+<meta property="og:site_name" content="Serkan Haytac" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2015-10-20T11:40:56-04:00" />
+<script type="application/ld+json">
+{"description":"Vault is a secure storage server that secures, stores, passwords, tokens, API keys etc. It is the from Hashicorp which had some great products such as Vault, Terraform and i think the most popular of all Vagrant. &quot;Vault handles leasing, key revocation, key rolling, and auditing. I want to give a simple to follow setup example for anyone to try out this awesome tool.","@type":"BlogPosting","url":"http://localhost:4000/jekyll/2015/10/20/hashicorp-vault-setup.html","headline":"Quickstart with Vault","dateModified":"2015-10-20T11:40:56-04:00","datePublished":"2015-10-20T11:40:56-04:00","mainEntityOfPage":{"@type":"WebPage","@id":"http://localhost:4000/jekyll/2015/10/20/hashicorp-vault-setup.html"},"@context":"http://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+
   </head>
 
   <body>
     <header>
       <div class="inner">
-        <h1> Serkan Haytac </h1>
+        <h1><a href="/"> Serkan Haytac </a></h1>
         <h2></h2>
         <a href="https://github.com/pietromenna/jekyll-architect-theme" class="button"><small>View project on</small> GitHub</a>
       </div>
@@ -38,7 +54,7 @@
 <h5>1. Start the server</h5>
 
 <figure class="highlight"><pre><code class="language-bash" data-lang="bash"> 
-vault server -config<span class="o">=</span>vault.hcl </code></pre></figure>
+vault server <span class="nt">-config</span><span class="o">=</span>vault.hcl </code></pre></figure>
  
 <div class="highlight"><pre><code class="language-" data-lang="">#vault.hcl
 backend "file" {

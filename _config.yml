@@ -1,6 +1,7 @@
 name: Serkan Haytac
 markdown: redcarpet
 baseurl: ''
-gems:
+plugins:
   - jekyll-sitemap
-
+  - jekyll-feed
+  - jekyll-seo-tag
