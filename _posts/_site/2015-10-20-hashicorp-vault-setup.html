@@ -1,12 +1,12 @@
 <p>Vault is a secure storage server that secures, stores, passwords, tokens, API keys etc. It is the from Hashicorp which had some great products such as Vault, Terraform and i think the most popular of all Vagrant.
 “Vault handles leasing, key revocation, key rolling, and auditing. I want to give a simple to follow setup example for anyone to try out this awesome tool.</p>
 
-<h5 id="start-the-server">1. Start the server</h5>
+<h5 id="1-start-the-server">1. Start the server</h5>
 
 <figure class="highlight"><pre><code class="language-bash" data-lang="bash"> 
-vault server -config<span class="o">=</span>vault.hcl </code></pre></figure>
+vault server <span class="nt">-config</span><span class="o">=</span>vault.hcl </code></pre></figure>
 
-<div class="highlighter-rouge"><pre class="highlight"><code>#vault.hcl
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>#vault.hcl
 backend "file" {
   path="vault"
 }
@@ -17,29 +17,24 @@ listener "tcp" {
 }
 
 disable_mlock = true
-</code></pre>
-</div>
-<p>##### 2. Initiate vault and copy/save root token and the keys. <em>*This is only done when initating a new server.</em>
-<code class="highlighter-rouge">
-VAULT_ADDR=http://127.0.0.1:8200 vault init 
-</code></p>
+</code></pre></div></div>
+<h5 id="2-initiate-vault-and-copysave-root-token-and-the-keys-this-is-only-done-when-initating-a-new-server">2. Initiate vault and copy/save root token and the keys. <em>*This is only done when initating a new server.</em></h5>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>VAULT_ADDR=http://127.0.0.1:8200 vault init 
+</code></pre></div></div>
 
-<h5 id="authenticate-with-master-token">3. Authenticate with master token.</h5>
-<div class="highlighter-rouge"><pre class="highlight"><code>VAULT_ADDR=http://127.0.0.1:8200 vault auth &lt;root-token&gt;
-</code></pre>
-</div>
+<h5 id="3-authenticate-with-master-token">3. Authenticate with master token.</h5>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>VAULT_ADDR=http://127.0.0.1:8200 vault auth &lt;root-token&gt;
+</code></pre></div></div>
 
-<h5 id="unseal-to-add-new-authentication-tokens-default-threshold-is-set-to-3-only-root-token-can-unseal-the-vault-vault-is-sealed-everytime-it-is-restarted-and-has-to-be-unsealed-for-services-to-acces">4. Unseal to add new authentication tokens. Default threshold is set to 3. Only root token can unseal the vault. Vault is sealed everytime it is restarted and has to be unsealed for services to acces</h5>
-<div class="highlighter-rouge"><pre class="highlight"><code>VAULT_ADDR=http://127.0.0.1:8200 vault unseal  
-</code></pre>
-</div>
+<h5 id="4-unseal-to-add-new-authentication-tokens-default-threshold-is-set-to-3-only-root-token-can-unseal-the-vault-vault-is-sealed-everytime-it-is-restarted-and-has-to-be-unsealed-for-services-to-acces">4. Unseal to add new authentication tokens. Default threshold is set to 3. Only root token can unseal the vault. Vault is sealed everytime it is restarted and has to be unsealed for services to acces</h5>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>VAULT_ADDR=http://127.0.0.1:8200 vault unseal  
+</code></pre></div></div>
 
-<h5 id="create-a-policy">5. Create a policy.</h5>
-<div class="highlighter-rouge"><pre class="highlight"><code>VAULT_ADDR=http://127.0.0.1:8200 vault policy-write secret acl.hcl
-</code></pre>
-</div>
+<h5 id="5-create-a-policy">5. Create a policy.</h5>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>VAULT_ADDR=http://127.0.0.1:8200 vault policy-write secret acl.hcl
+</code></pre></div></div>
 
-<div class="highlighter-rouge"><pre class="highlight"><code>#acl.hcl
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>#acl.hcl
 path "secret/*" {
   policy = "read"
 }
@@ -48,17 +43,14 @@ path "secret/*" {
 path "auth/token/lookup-self" {
   policy = "read"
 }
-</code></pre>
-</div>
-<p>##### 6. Create a token that services will be using with the previously created policy. Token generated will be used for services so make a copy of it. 
-<code class="highlighter-rouge">
-VAULT_ADDR=http://127.0.0.1:8200 vault token-create -policy="secret"   
-</code></p>
+</code></pre></div></div>
+<h5 id="6-create-a-token-that-services-will-be-using-with-the-previously-created-policy-token-generated-will-be-used-for-services-so-make-a-copy-of-it">6. Create a token that services will be using with the previously created policy. Token generated will be used for services so make a copy of it.</h5>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>VAULT_ADDR=http://127.0.0.1:8200 vault token-create -policy="secret"   
+</code></pre></div></div>
 
-<h5 id="while-still-in-root-and-add-new-keyvalues">7. While still in root and add new key/values</h5>
-<div class="highlighter-rouge"><pre class="highlight"><code>VAULT_ADDR=http://127.0.0.1:8200 vault write secret/AWS_SECRET_KEY value=&lt;key goes here&gt;
-</code></pre>
-</div>
+<h5 id="7-while-still-in-root-and-add-new-keyvalues">7. While still in root and add new key/values</h5>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>VAULT_ADDR=http://127.0.0.1:8200 vault write secret/AWS_SECRET_KEY value=&lt;key goes here&gt;
+</code></pre></div></div>
 
-<h5 id="authenticate-with-service-token-that-was-generated-on-step-6-and-read-the-key-entered">8. Authenticate with service token that was generated on step 6 and read the key entered.</h5>
+<h5 id="8-authenticate-with-service-token-that-was-generated-on-step-6-and-read-the-key-entered">8. Authenticate with service token that was generated on step 6 and read the key entered.</h5>
 
