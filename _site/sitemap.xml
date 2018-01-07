@@ -25,7 +25,13 @@
 <lastmod>2018-01-05T17:13:00-05:00</lastmod>
 </url>
 <url>
+<loc>http://localhost:4000/categories.html</loc>
+</url>
+<url>
 <loc>http://localhost:4000/</loc>
+</url>
+<url>
+<loc>http://localhost:4000/tags.html</loc>
 </url>
 <url>
 <loc>http://localhost:4000/articles.html</loc>

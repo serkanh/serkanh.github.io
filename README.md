@@ -1,40 +1,37 @@
-# Architect theme
+dbyll
+=====
 
-This is a [Jekyll][1] theme that is an adaptation of [@jasonlong][2]'s [Architect theme][4] on [GitHub Pages][3].
+Open source stylish, minimalistic theme for jekyll.  
+Demo: http://dbtek.github.io/dbyll/
 
-This is the raw HTML and styles that are used for the *Architect* theme on [GitHub Pages](http://pages.github.com/).
+## New
+- Dbyll for Ghost is now available. Get it [here](https://github.com/dbtek/dbyll-ghost) now.
+- :new: Check out [Paper](https://github.com/dbtek/paper), new Material Design Jekyll theme.
 
-![](http://cl.ly/image/1x0Q3213330G/content)
+### Features
+- Responsive layout.
+- Supports tags and categories.
+- Social profile and bio of author.
+- Bootstrap based.
+- Glyphicon and Font-Awesome Icons.
+- Pagination.
+- Syntax highlighting with pygments.
+- Disqus comments.
+- :new: Custom sidebar background image.
 
-# How to use it?
 
-Install Jekyll in your system
+### Download
+* [Download dbyll](https://github.com/dbtek/dbyll/archive/master.zip)
 
-```
-$ gem install jekyll # use sudo if your system requires it
-```
+### Install
+- You need to have [ruby](https://www.ruby-lang.org/en/documentation/installation/) installed in your system.
+- Install bundler which helps in specifying and installing dependencies of any Ruby project. ```gem install bundler```
+- Go to the root of the repo and run this - ```bundle install```
+- Then - ```bundle exec jekyll serve```
 
-Download the theme @ http://github.com/pietromenna/jekyll-architect-theme/archive/master.zip
+### Screenshots
+![dbyll-screenshot](assets/media/dbyll-ss.png)
 
-Unzip it and use it as a regular jekyll folder.
+### License
+- [MIT](http://opensource.org/licenses/MIT)
 
-```
-$ unzip master.zip
-```
-
-Use it!
-
-```
-$ jekyll serve
-```
-
-For more details read about [Jekyll][1] on its web page.
-
-# License
-
-This work is licensed under a [Creative Commons Attribution 4.0 International](http://creativecommons.org/licenses/by/4.0/).
-
-[1]: http://jekyllrb.com
-[2]: https://github.com/jasonlong
-[3]: http://pages.github.com/
-[4]: http://github.com/jasonlong/architect-theme

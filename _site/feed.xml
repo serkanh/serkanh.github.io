@@ -1,22 +1,35 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.6.2">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2018-01-05T23:25:40-05:00</updated><id>http://localhost:4000/</id><title type="html">Serkan Haytac</title><entry><title type="html">Server-Side Encryption with Customer-Provided Encryption Keys</title><link href="http://localhost:4000/s3,/encryption/2018/01/05/S3-server-side-encryption-with-customer-provided-enc-keys.html" rel="alternate" type="text/html" title="Server-Side Encryption with Customer-Provided Encryption Keys " /><published>2018-01-05T17:13:00-05:00</published><updated>2018-01-05T17:13:00-05:00</updated><id>http://localhost:4000/s3,/encryption/2018/01/05/S3-server-side-encryption-with-customer-provided-enc-keys</id><content type="html" xml:base="http://localhost:4000/s3,/encryption/2018/01/05/S3-server-side-encryption-with-customer-provided-enc-keys.html">&lt;p&gt;Per AWS docs requirements for encryptions are:
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+	<channel>
+		<title>serkan haytac</title>
+		<description>Stylish Jekyll Theme</description>
+		<link>/</link>
+		<atom:link href="/feed.xml" rel="self" type="application/rss+xml" />
+		
+			<item>
+				<title>Server-Side Encryption with Customer-Provided Encryption Keys </title>
+				<description>&lt;p&gt;Per AWS docs requirements for encryptions are:
 https://docs.aws.amazon.com/AmazonS3/latest/dev/ServerSideEncryptionCustomerKeys.html&lt;/p&gt;
 
-&lt;h5&gt;1. Generate your AES256 keys.&lt;/h5&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-&quot; data-lang=&quot;&quot;&gt;➜ cat testing
+&lt;h5 id=&quot;1-generate-your-aes256-keys&quot;&gt;1. Generate your AES256 keys.&lt;/h5&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;➜ cat testing
 this is a test
 ➜ echo -n your-super-secret-phrase-string | openssl dgst -sha256 -binary &amp;gt; aes256.key    
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;h5&gt;3. Encrypt and upload your file&lt;/h5&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-&quot; data-lang=&quot;&quot;&gt;➜ aws --profile=personal \
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h5 id=&quot;3-encrypt-and-upload-your-file&quot;&gt;3. Encrypt and upload your file&lt;/h5&gt;
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;➜ aws --profile=personal \
 s3api put-object \
 --bucket=shaytac-test \
 --key=test2 \
 --body=testing \
 --sse-customer-algorithm=AES256 \
 --sse-customer-key=fileb://aes256.key
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;h5&gt;4. Decrypt and download your file&lt;/h5&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-&quot; data-lang=&quot;&quot;&gt;➜ aws --profile=personal \
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h5 id=&quot;4-decrypt-and-download-your-file&quot;&gt;4. Decrypt and download your file&lt;/h5&gt;
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;➜ aws --profile=personal \
 s3api get-object \
 --bucket=shaytac-test \
 --key=test2  \
@@ -24,68 +37,112 @@ s3api get-object \
 --sse-customer-key=fileb://aes256.key testing-downloaded
 ➜ cat testing-downloaded
 this is a test
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</content><author><name></name></author><summary type="html">Per AWS docs requirements for encryptions are: https://docs.aws.amazon.com/AmazonS3/latest/dev/ServerSideEncryptionCustomerKeys.html</summary></entry><entry><title type="html">Encrypting files with rsa key pairs.</title><link href="http://localhost:4000/ssh,/encryption/2017/12/03/encrypting-files-rsa-key-pairs.html" rel="alternate" type="text/html" title="Encrypting files with rsa key pairs." /><published>2017-12-03T17:13:00-05:00</published><updated>2017-12-03T17:13:00-05:00</updated><id>http://localhost:4000/ssh,/encryption/2017/12/03/encrypting-files-rsa-key-pairs</id><content type="html" xml:base="http://localhost:4000/ssh,/encryption/2017/12/03/encrypting-files-rsa-key-pairs.html">&lt;p&gt;My day job i use ssh... alot. When you manage hundreds of servers with mission critical infastructure running on passswordless login with ssh keys can be huge time saver. I also take security pretty seriously when it comes to store sensitive information and always looking to find better ways to store sensitive information securely and also in  a convenient way for it to be not cumbersome. 
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+</description>
+				<pubDate>Fri, 05 Jan 2018 22:13:00 +0000</pubDate>
+				<link>/s3,/encryption/2018/01/05/S3-server-side-encryption-with-customer-provided-enc-keys.html</link>
+				<guid isPermaLink="true">/s3,/encryption/2018/01/05/S3-server-side-encryption-with-customer-provided-enc-keys.html</guid>
+			</item>
+		
+			<item>
+				<title>Encrypting files with rsa key pairs.</title>
+				<description>&lt;p&gt;My day job i use ssh… alot. When you manage hundreds of servers with mission critical infastructure running on passswordless login with ssh keys can be huge time saver. I also take security pretty seriously when it comes to store sensitive information and always looking to find better ways to store sensitive information securely and also in  a convenient way for it to be not cumbersome. 
 With that thought combining ssh keys to encrypt/decrypt files made quite sense so here is a quick write up to do it for anyone else that are interested in it.&lt;/p&gt;
 
-&lt;h5&gt;1. Create or open a file that you would like to encrypt.&lt;/h5&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-&quot; data-lang=&quot;&quot;&gt;➜  ~ echo &quot;my super secret information&quot; &amp;gt; secret.txt
+&lt;h5 id=&quot;1-create-or-open-a-file-that-you-would-like-to-encrypt&quot;&gt;1. Create or open a file that you would like to encrypt.&lt;/h5&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;➜  ~ echo &quot;my super secret information&quot; &amp;gt; secret.txt
 ➜  ~ cat secret.txt 
 my super secret information
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;h5&gt;2. If you havent already create a rsa key pair. If you would like to use existing rsa key pair skip this step and continue to step 3.&lt;/h5&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-&quot; data-lang=&quot;&quot;&gt;ssh-keygen
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;h5&gt;3. Export your generated or existing public key to pem format.&lt;/h5&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-&quot; data-lang=&quot;&quot;&gt;openssl rsa -in ~/.ssh/id_rsa -pubout &amp;gt; ~/id_rsa.pub.pem
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;h5&gt;4. Now you are ready encrypt the file you created earliear.&lt;/h5&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-&quot; data-lang=&quot;&quot;&gt;cat secret.txt  | openssl rsautl -encrypt -pubin -inkey ~/id_rsa.pub.pem &amp;gt; encrypted-secret.txt
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;h5 id=&quot;2-if-you-havent-already-create-a-rsa-key-pair-if-you-would-like-to-use-existing-rsa-key-pair-skip-this-step-and-continue-to-step-3&quot;&gt;2. If you havent already create a rsa key pair. If you would like to use existing rsa key pair skip this step and continue to step 3.&lt;/h5&gt;
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;ssh-keygen
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h5 id=&quot;3-export-your-generated-or-existing-public-key-to-pem-format&quot;&gt;3. Export your generated or existing public key to pem format.&lt;/h5&gt;
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;openssl rsa -in ~/.ssh/id_rsa -pubout &amp;gt; ~/id_rsa.pub.pem
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h5 id=&quot;4-now-you-are-ready-encrypt-the-file-you-created-earliear&quot;&gt;4. Now you are ready encrypt the file you created earliear.&lt;/h5&gt;
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;cat secret.txt  | openssl rsautl -encrypt -pubin -inkey ~/id_rsa.pub.pem &amp;gt; encrypted-secret.txt
 cat encrypted-secret.txt 
 ????uG?????$?&amp;amp;?????VN?'?(????,þQaE咫:?i??t?(?jr.g?#?ջO???=*?e??&amp;lt;&quot;?y'% 
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;h5&gt;5. To decypt the secret&lt;/h5&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-&quot; data-lang=&quot;&quot;&gt;➜  ~ cat encrypted-secret.txt  | openssl rsautl -decrypt -inkey ~/.ssh/id_rsa
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h5 id=&quot;5-to-decypt-the-secret&quot;&gt;5. To decypt the secret&lt;/h5&gt;
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;➜  ~ cat encrypted-secret.txt  | openssl rsautl -decrypt -inkey ~/.ssh/id_rsa
 my super secret information
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</content><author><name></name></author><summary type="html">My day job i use ssh... alot. When you manage hundreds of servers with mission critical infastructure running on passswordless login with ssh keys can be huge time saver. I also take security pretty seriously when it comes to store sensitive information and always looking to find better ways to store sensitive information securely and also in a convenient way for it to be not cumbersome. With that thought combining ssh keys to encrypt/decrypt files made quite sense so here is a quick write up to do it for anyone else that are interested in it.</summary></entry><entry><title type="html">Save screenshot to clipboard on OSX</title><link href="http://localhost:4000/osx,/screenshot/2016/07/10/save-screenshot-to-clipboard-on-osx.html" rel="alternate" type="text/html" title="Save screenshot to clipboard on OSX" /><published>2016-07-10T11:40:56-04:00</published><updated>2016-07-10T11:40:56-04:00</updated><id>http://localhost:4000/osx,/screenshot/2016/07/10/save-screenshot-to-clipboard-on-osx</id><content type="html" xml:base="http://localhost:4000/osx,/screenshot/2016/07/10/save-screenshot-to-clipboard-on-osx.html">&lt;p&gt;Screenshots are saved as .png files on the desktop in Mac OS X v10.6 and later. They&amp;#39;re automatically named &amp;quot;Screen Shot date at time .png.&amp;quot; To save your screenshot to the Clipboard instead of a file on your desktop, use 
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+</description>
+				<pubDate>Sun, 03 Dec 2017 22:13:00 +0000</pubDate>
+				<link>/ssh,/encryption/2017/12/03/encrypting-files-rsa-key-pairs.html</link>
+				<guid isPermaLink="true">/ssh,/encryption/2017/12/03/encrypting-files-rsa-key-pairs.html</guid>
+			</item>
+		
+			<item>
+				<title>Save screenshot to clipboard on OSX</title>
+				<description>&lt;p&gt;Screenshots are saved as .png files on the desktop in Mac OS X v10.6 and later. They’re automatically named “Screen Shot date at time .png.” To save your screenshot to the Clipboard instead of a file on your desktop, use&lt;/p&gt;
 &lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;Command-Shift-Control-4&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
-. &lt;/p&gt;</content><author><name></name></author><summary type="html">Screenshots are saved as .png files on the desktop in Mac OS X v10.6 and later. They&amp;#39;re automatically named &amp;quot;Screen Shot date at time .png.&amp;quot; To save your screenshot to the Clipboard instead of a file on your desktop, use Command-Shift-Control-4 .</summary></entry><entry><title type="html">OpenVpn Setup with Docker</title><link href="http://localhost:4000/vpn,/docker/2015/11/09/open-vpn-setup-with-docker.html" rel="alternate" type="text/html" title="OpenVpn Setup with Docker" /><published>2015-11-09T10:40:56-05:00</published><updated>2015-11-09T10:40:56-05:00</updated><id>http://localhost:4000/vpn,/docker/2015/11/09/open-vpn-setup-with-docker</id><content type="html" xml:base="http://localhost:4000/vpn,/docker/2015/11/09/open-vpn-setup-with-docker.html">&lt;p&gt;This is a basic summary of excellent tutorial from Digital Ocean on how to setup OpenVpn with Docker. &lt;/p&gt;
+&lt;p&gt;.&lt;/p&gt;
+
+</description>
+				<pubDate>Sun, 10 Jul 2016 15:40:56 +0000</pubDate>
+				<link>/osx,/screenshot/2016/07/10/save-screenshot-to-clipboard-on-osx.html</link>
+				<guid isPermaLink="true">/osx,/screenshot/2016/07/10/save-screenshot-to-clipboard-on-osx.html</guid>
+			</item>
+		
+			<item>
+				<title>OpenVpn Setup with Docker</title>
+				<description>&lt;p&gt;This is a basic summary of excellent tutorial from Digital Ocean on how to setup OpenVpn with Docker.&lt;/p&gt;
 
 &lt;p&gt;&lt;a href=&quot;https://github.com/kylemanna/docker-openvpn&quot;&gt;https://github.com/kylemanna/docker-openvpn&lt;/a&gt; &lt;br /&gt;
 &lt;a href=&quot;https://www.digitalocean.com/community/tutorials/how-to-run-openvpn-in-a-docker-container-on-ubuntu-14-04&quot;&gt;https://www.digitalocean.com/community/tutorials/how-to-run-openvpn-in-a-docker-container-on-ubuntu-14-04&lt;/a&gt;&lt;/p&gt;
 
-&lt;h5&gt;1. Create an fqdn&lt;/h5&gt;
+&lt;h5 id=&quot;1-create-an-fqdn&quot;&gt;1. Create an fqdn&lt;/h5&gt;
 
 &lt;p&gt;I am using AWS Route53 for this step so when you login create an A record(assuming you are pointing to an ip.) for your vpn. Assuming your domain name is yourdomain.com, create something like vpn.yourdomain.com&lt;/p&gt;
 
-&lt;h5&gt;2. Create a data container.&lt;/h5&gt;
+&lt;h5 id=&quot;2-create-a-data-container&quot;&gt;2. Create a data container.&lt;/h5&gt;
 
-&lt;p&gt;&lt;code&gt;export OVPN_DATA=&amp;quot;ovpn-data&amp;quot;&lt;/code&gt; &lt;br /&gt;&lt;br /&gt;
-&lt;code&gt;docker run -name $OVPN_DATA -v /etc/openvpn busybox&lt;/code&gt; &lt;/p&gt;
+&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;export OVPN_DATA=&quot;ovpn-data&quot;&lt;/code&gt; &lt;br /&gt;&lt;br /&gt;
+&lt;code class=&quot;highlighter-rouge&quot;&gt;docker run -name $OVPN_DATA -v /etc/openvpn busybox&lt;/code&gt;&lt;/p&gt;
 
-&lt;h5&gt;3. Generate vpn config file based on fqdn.&lt;/h5&gt;
+&lt;h5 id=&quot;3-generate-vpn-config-file-based-on-fqdn&quot;&gt;3. Generate vpn config file based on fqdn.&lt;/h5&gt;
 
-&lt;p&gt;&lt;code&gt;docker run --volumes-from $OVPN_DATA --rm kylemanna/openvpn ovpn_genconfig -u udp://vpn.yourdomain.com:1194&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;docker run --volumes-from $OVPN_DATA --rm kylemanna/openvpn ovpn_genconfig -u udp://vpn.yourdomain.com:1194&lt;/code&gt;&lt;/p&gt;
 
-&lt;h4&gt;4. Generate ovpn_initpki&lt;/h4&gt;
+&lt;h4 id=&quot;4-generate-ovpn_initpki&quot;&gt;4. Generate ovpn_initpki&lt;/h4&gt;
 
-&lt;p&gt;&lt;code&gt;docker run --volumes-from $OVPN_DATA --rm -it kylemanna/openvpn ovpn_initpki&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;docker run --volumes-from $OVPN_DATA --rm -it kylemanna/openvpn ovpn_initpki&lt;/code&gt;&lt;/p&gt;
 
-&lt;h4&gt;5. Run the server&lt;/h4&gt;
+&lt;h4 id=&quot;5-run-the-server&quot;&gt;5. Run the server&lt;/h4&gt;
+&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;docker run --volumes-from $OVPN_DATA --rm -p 1194:1194/udp --cap-add=NET_ADMIN kylemanna/openvpn&lt;/code&gt;&lt;/p&gt;
 
-&lt;p&gt;&lt;code&gt;docker run --volumes-from $OVPN_DATA --rm -p 1194:1194/udp --cap-add=NET_ADMIN kylemanna/openvpn&lt;/code&gt;&lt;/p&gt;
+&lt;h4 id=&quot;6-generate-client-keys&quot;&gt;6. Generate client keys&lt;/h4&gt;
+&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;docker run --volumes-from $OVPN_DATA rm -it  kylemanna/openvpn easyrsa build-client-full serkan nopass&lt;/code&gt; &lt;br /&gt;&lt;br /&gt;
+&lt;code class=&quot;highlighter-rouge&quot;&gt;docker run --volumes-from $OVPN_DATA -rm kylemanna/openvpn ovpn_getclient serkan &amp;gt; serkan.ovpn&lt;/code&gt;&lt;/p&gt;
 
-&lt;h4&gt;6. Generate client keys&lt;/h4&gt;
+&lt;h4 id=&quot;7-run-the-server&quot;&gt;7. Run the server&lt;/h4&gt;
 
-&lt;p&gt;&lt;code&gt;docker run --volumes-from $OVPN_DATA rm -it  kylemanna/openvpn easyrsa build-client-full serkan nopass&lt;/code&gt; &lt;br /&gt;&lt;br /&gt;
-&lt;code&gt;docker run --volumes-from $OVPN_DATA -rm kylemanna/openvpn ovpn_getclient serkan &amp;gt; serkan.ovpn&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;docker run -d --volumes-from $OVPN_DATA -p 0.0.0.0:1194:1193/udp --cap-add=NET_ADMIN kylemanna/openvpn&lt;/code&gt;&lt;/p&gt;
+</description>
+				<pubDate>Mon, 09 Nov 2015 15:40:56 +0000</pubDate>
+				<link>/vpn,/docker/2015/11/09/open-vpn-setup-with-docker.html</link>
+				<guid isPermaLink="true">/vpn,/docker/2015/11/09/open-vpn-setup-with-docker.html</guid>
+			</item>
+		
+			<item>
+				<title>Bastion Host Setup for CoreOS</title>
+				<description>&lt;p&gt;A common server access pattern is to prevent any connection to your production servers from outside of their private subnet, and use a bastion host to access the private subnet. This pattern is very
+useful when you want to limit; for example ssh access, from only within the network.&lt;/p&gt;
 
-&lt;h4&gt;7. Run the server&lt;/h4&gt;
+&lt;p&gt;Typically you set up a bastion host, and execute a nc command to the destination host located within the private network.&lt;/p&gt;
 
-&lt;p&gt;&lt;code&gt;docker run -d --volumes-from $OVPN_DATA -p 0.0.0.0:1194:1193/udp --cap-add=NET_ADMIN kylemanna/openvpn&lt;/code&gt;&lt;/p&gt;</content><author><name></name></author><summary type="html">This is a basic summary of excellent tutorial from Digital Ocean on how to setup OpenVpn with Docker.</summary></entry><entry><title type="html">Bastion Host Setup for CoreOS</title><link href="http://localhost:4000/coreos,ssh/2015/11/07/coreos-bastion-host-setup.html" rel="alternate" type="text/html" title="Bastion Host Setup for CoreOS" /><published>2015-11-07T09:14:56-05:00</published><updated>2015-11-07T09:14:56-05:00</updated><id>http://localhost:4000/coreos,ssh/2015/11/07/coreos-bastion-host-setup</id><content type="html" xml:base="http://localhost:4000/coreos,ssh/2015/11/07/coreos-bastion-host-setup.html">&lt;p&gt;A common server access pattern is to prevent any connection to your production servers from outside of their private subnet, and use a bastion host to access the private subnet. This pattern is very
-useful when you want to limit; for example ssh access, from only within the network. &lt;/p&gt;
+&lt;h4&gt;#&lt;/h4&gt;
 
-&lt;p&gt;Typically you set up a bastion host, and execute a nc command to the destination host located within the private network. &lt;/p&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-&quot; data-lang=&quot;&quot;&gt;#~/.ssh/config
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;#~/.ssh/config
 Host bastion-host
         Hostname 54.54.54.54
         User ec2-user
@@ -100,14 +157,16 @@ Host destination-host
         ProxyCommand ssh -A bastion-host nc %h %p
 
 
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
 &lt;p&gt;This works on most systems where netcat installed on both destination and bastion host.
 Recently i have been working on a project to deploy a Mesosphere cluster with Cloudformation.
 All the instances in the cluster were Coreos based so as usual i set up my config file with the bastion 
 host pattern like above which suprisingly did not work. Turns out Coreos uses a newer implementation
 of netcat which is called ncat. By modifying ProxyCommand lin on ~/.ssh/config file and change &lt;strong&gt;nc&lt;/strong&gt; to &lt;strong&gt;ncat&lt;/strong&gt;, i was able to 
 ssh into hosts within private instances with ease.&lt;/p&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-&quot; data-lang=&quot;&quot;&gt;#~/.ssh/config
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;#~/.ssh/config
 Host bastion-host
         Hostname 54.54.54.54
         User ec2-user
@@ -122,15 +181,25 @@ Host destination-host
         ProxyCommand ssh -A bastion-host ncat %h %p
 
 
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</content><author><name></name></author><summary type="html">A common server access pattern is to prevent any connection to your production servers from outside of their private subnet, and use a bastion host to access the private subnet. This pattern is very useful when you want to limit; for example ssh access, from only within the network.</summary></entry><entry><title type="html">Quickstart with Vault</title><link href="http://localhost:4000/jekyll/2015/10/20/hashicorp-vault-setup.html" rel="alternate" type="text/html" title="Quickstart with Vault" /><published>2015-10-20T11:40:56-04:00</published><updated>2015-10-20T11:40:56-04:00</updated><id>http://localhost:4000/jekyll/2015/10/20/hashicorp-vault-setup</id><content type="html" xml:base="http://localhost:4000/jekyll/2015/10/20/hashicorp-vault-setup.html">&lt;p&gt;Vault is a secure storage server that secures, stores, passwords, tokens, API keys etc. It is the from Hashicorp which had some great products such as Vault, Terraform and i think the most popular of all Vagrant.
-&amp;quot;Vault handles leasing, key revocation, key rolling, and auditing. I want to give a simple to follow setup example for anyone to try out this awesome tool. &lt;/p&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
-&lt;h5&gt;1. Start the server&lt;/h5&gt;
+</description>
+				<pubDate>Sat, 07 Nov 2015 14:14:56 +0000</pubDate>
+				<link>/coreos,ssh/2015/11/07/coreos-bastion-host-setup.html</link>
+				<guid isPermaLink="true">/coreos,ssh/2015/11/07/coreos-bastion-host-setup.html</guid>
+			</item>
+		
+			<item>
+				<title>Quickstart with Vault</title>
+				<description>&lt;p&gt;Vault is a secure storage server that secures, stores, passwords, tokens, API keys etc. It is the from Hashicorp which had some great products such as Vault, Terraform and i think the most popular of all Vagrant.
+“Vault handles leasing, key revocation, key rolling, and auditing. I want to give a simple to follow setup example for anyone to try out this awesome tool.&lt;/p&gt;
+
+&lt;h5 id=&quot;1-start-the-server&quot;&gt;1. Start the server&lt;/h5&gt;
 
 &lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt; 
 vault server &lt;span class=&quot;nt&quot;&gt;-config&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;vault.hcl &lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
- 
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-&quot; data-lang=&quot;&quot;&gt;#vault.hcl
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;#vault.hcl
 backend &quot;file&quot; {
   path=&quot;vault&quot;
 }
@@ -141,19 +210,24 @@ listener &quot;tcp&quot; {
 }
 
 disable_mlock = true
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;h5&gt;2. Initiate vault and copy/save root token and the keys. *&lt;em&gt;This is only done when initating a new server.&lt;/em&gt;&lt;/h5&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-&quot; data-lang=&quot;&quot;&gt;VAULT_ADDR=http://127.0.0.1:8200 vault init 
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;h5&gt;3. Authenticate with master token.&lt;/h5&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-&quot; data-lang=&quot;&quot;&gt;VAULT_ADDR=http://127.0.0.1:8200 vault auth &amp;lt;root-token&amp;gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;h5&gt;4. Unseal to add new authentication tokens. Default threshold is set to 3. Only root token can unseal the vault. Vault is sealed everytime it is restarted and has to be unsealed for services to acces&lt;/h5&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-&quot; data-lang=&quot;&quot;&gt;VAULT_ADDR=http://127.0.0.1:8200 vault unseal  
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;h5&gt;5. Create a policy.&lt;/h5&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-&quot; data-lang=&quot;&quot;&gt;VAULT_ADDR=http://127.0.0.1:8200 vault policy-write secret acl.hcl
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-&quot; data-lang=&quot;&quot;&gt;#acl.hcl
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;h5 id=&quot;2-initiate-vault-and-copysave-root-token-and-the-keys-this-is-only-done-when-initating-a-new-server&quot;&gt;2. Initiate vault and copy/save root token and the keys. &lt;em&gt;*This is only done when initating a new server.&lt;/em&gt;&lt;/h5&gt;
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;VAULT_ADDR=http://127.0.0.1:8200 vault init 
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h5 id=&quot;3-authenticate-with-master-token&quot;&gt;3. Authenticate with master token.&lt;/h5&gt;
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;VAULT_ADDR=http://127.0.0.1:8200 vault auth &amp;lt;root-token&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h5 id=&quot;4-unseal-to-add-new-authentication-tokens-default-threshold-is-set-to-3-only-root-token-can-unseal-the-vault-vault-is-sealed-everytime-it-is-restarted-and-has-to-be-unsealed-for-services-to-acces&quot;&gt;4. Unseal to add new authentication tokens. Default threshold is set to 3. Only root token can unseal the vault. Vault is sealed everytime it is restarted and has to be unsealed for services to acces&lt;/h5&gt;
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;VAULT_ADDR=http://127.0.0.1:8200 vault unseal  
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h5 id=&quot;5-create-a-policy&quot;&gt;5. Create a policy.&lt;/h5&gt;
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;VAULT_ADDR=http://127.0.0.1:8200 vault policy-write secret acl.hcl
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;#acl.hcl
 path &quot;secret/*&quot; {
   policy = &quot;read&quot;
 }
@@ -162,11 +236,22 @@ path &quot;secret/*&quot; {
 path &quot;auth/token/lookup-self&quot; {
   policy = &quot;read&quot;
 }
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;h5&gt;6. Create a token that services will be using with the previously created policy. Token generated will be used for services so make a copy of it.&lt;/h5&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-&quot; data-lang=&quot;&quot;&gt;VAULT_ADDR=http://127.0.0.1:8200 vault token-create -policy=&quot;secret&quot;   
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;h5&gt;7. While still in root and add new key/values&lt;/h5&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-&quot; data-lang=&quot;&quot;&gt;VAULT_ADDR=http://127.0.0.1:8200 vault write secret/AWS_SECRET_KEY value=&amp;lt;key goes here&amp;gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;h5&gt;8. Authenticate with service token that was generated on step 6 and read the key entered.&lt;/h5&gt;</content><author><name></name></author><summary type="html">Vault is a secure storage server that secures, stores, passwords, tokens, API keys etc. It is the from Hashicorp which had some great products such as Vault, Terraform and i think the most popular of all Vagrant. &amp;quot;Vault handles leasing, key revocation, key rolling, and auditing. I want to give a simple to follow setup example for anyone to try out this awesome tool.</summary></entry></feed>
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;h5 id=&quot;6-create-a-token-that-services-will-be-using-with-the-previously-created-policy-token-generated-will-be-used-for-services-so-make-a-copy-of-it&quot;&gt;6. Create a token that services will be using with the previously created policy. Token generated will be used for services so make a copy of it.&lt;/h5&gt;
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;VAULT_ADDR=http://127.0.0.1:8200 vault token-create -policy=&quot;secret&quot;   
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h5 id=&quot;7-while-still-in-root-and-add-new-keyvalues&quot;&gt;7. While still in root and add new key/values&lt;/h5&gt;
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;VAULT_ADDR=http://127.0.0.1:8200 vault write secret/AWS_SECRET_KEY value=&amp;lt;key goes here&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h5 id=&quot;8-authenticate-with-service-token-that-was-generated-on-step-6-and-read-the-key-entered&quot;&gt;8. Authenticate with service token that was generated on step 6 and read the key entered.&lt;/h5&gt;
+
+</description>
+				<pubDate>Tue, 20 Oct 2015 15:40:56 +0000</pubDate>
+				<link>/jekyll/2015/10/20/hashicorp-vault-setup.html</link>
+				<guid isPermaLink="true">/jekyll/2015/10/20/hashicorp-vault-setup.html</guid>
+			</item>
+		
+	</channel>
+</rss>

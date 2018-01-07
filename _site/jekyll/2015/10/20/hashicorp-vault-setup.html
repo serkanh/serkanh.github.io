@@ -1,62 +1,177 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta charset='utf-8'>
-    <meta http-equiv="X-UA-Compatible" content="chrome=1">
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-    <link href='https://fonts.googleapis.com/css?family=Architects+Daughter' rel='stylesheet' type='text/css'>
-    <link rel="stylesheet" type="text/css" href="/stylesheets/stylesheet.css" media="screen" />
-    <link rel="stylesheet" type="text/css" href="/stylesheets/pygment_trac.css" media="screen" />
-    <link rel="stylesheet" type="text/css" href="/stylesheets/print.css" media="print" />
+<head>
+	<meta charset="utf-8">
+	<title>Quickstart with Vault</title>
+	
+	<meta name="author" content="serkan haytac">
+    
+	<!-- Enable responsive viewport -->
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <!--[if lt IE 9]>
-    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
-    <![endif]-->
-   
-    <title> Quickstart with Vault </title>
-    <!-- Begin Jekyll SEO tag v2.4.0 -->
-<title>Quickstart with Vault | Serkan Haytac</title>
-<meta name="generator" content="Jekyll v3.6.2" />
-<meta property="og:title" content="Quickstart with Vault" />
-<meta property="og:locale" content="en_US" />
-<meta name="description" content="Vault is a secure storage server that secures, stores, passwords, tokens, API keys etc. It is the from Hashicorp which had some great products such as Vault, Terraform and i think the most popular of all Vagrant. &quot;Vault handles leasing, key revocation, key rolling, and auditing. I want to give a simple to follow setup example for anyone to try out this awesome tool." />
-<meta property="og:description" content="Vault is a secure storage server that secures, stores, passwords, tokens, API keys etc. It is the from Hashicorp which had some great products such as Vault, Terraform and i think the most popular of all Vagrant. &quot;Vault handles leasing, key revocation, key rolling, and auditing. I want to give a simple to follow setup example for anyone to try out this awesome tool." />
-<link rel="canonical" href="http://localhost:4000/jekyll/2015/10/20/hashicorp-vault-setup.html" />
-<meta property="og:url" content="http://localhost:4000/jekyll/2015/10/20/hashicorp-vault-setup.html" />
-<meta property="og:site_name" content="Serkan Haytac" />
-<meta property="og:type" content="article" />
-<meta property="article:published_time" content="2015-10-20T11:40:56-04:00" />
-<script type="application/ld+json">
-{"description":"Vault is a secure storage server that secures, stores, passwords, tokens, API keys etc. It is the from Hashicorp which had some great products such as Vault, Terraform and i think the most popular of all Vagrant. &quot;Vault handles leasing, key revocation, key rolling, and auditing. I want to give a simple to follow setup example for anyone to try out this awesome tool.","@type":"BlogPosting","url":"http://localhost:4000/jekyll/2015/10/20/hashicorp-vault-setup.html","headline":"Quickstart with Vault","dateModified":"2015-10-20T11:40:56-04:00","datePublished":"2015-10-20T11:40:56-04:00","mainEntityOfPage":{"@type":"WebPage","@id":"http://localhost:4000/jekyll/2015/10/20/hashicorp-vault-setup.html"},"@context":"http://schema.org"}</script>
-<!-- End Jekyll SEO tag -->
+	<!-- Le HTML5 shim, for IE6-8 support of HTML elements -->
+	<!--[if lt IE 9]>
+	<script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+	<![endif]-->
 
-  </head>
+	<!-- Le styles -->
+	<link href="/assets/resources/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+	<link href="/assets/resources/font-awesome/css/font-awesome.min.css" rel="stylesheet">
+	<link href="/assets/resources/syntax/syntax.css" rel="stylesheet">
+	<link href="/assets/css/style.css" rel="stylesheet">
 
-  <body>
-    <header>
-      <div class="inner">
-        <h1><a href="/"> Serkan Haytac </a></h1>
-        <h2></h2>
-        <a href="https://github.com/pietromenna/jekyll-architect-theme" class="button"><small>View project on</small> GitHub</a>
-      </div>
-    </header>
+	<!-- Le fav and touch icons -->
+	<!-- Update these with your own images
+	<link rel="shortcut icon" href="images/favicon.ico">
+	<link rel="apple-touch-icon" href="images/apple-touch-icon.png">
+	<link rel="apple-touch-icon" sizes="72x72" href="images/apple-touch-icon-72x72.png">
+	<link rel="apple-touch-icon" sizes="114x114" href="images/apple-touch-icon-114x114.png">
+	-->
 
-    <div id="content-wrapper">
-      <div class="inner clearfix">
-        <section id="main-content">
-          
-          <h2>Quickstart with Vault</h2>
-<p class="meta">20 Oct 2015</p>
+	<link rel="alternate" type="application/rss+xml" title="" href="/feed.xml">
+</head>
 
-<p>Vault is a secure storage server that secures, stores, passwords, tokens, API keys etc. It is the from Hashicorp which had some great products such as Vault, Terraform and i think the most popular of all Vagrant.
-&quot;Vault handles leasing, key revocation, key rolling, and auditing. I want to give a simple to follow setup example for anyone to try out this awesome tool. </p>
+<body>
+	<nav class="navbar navbar-default visible-xs" role="navigation">
+		<!-- Brand and toggle get grouped for better mobile display -->
+		<div class="navbar-header">
+			<button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+				<span class="sr-only">Toggle navigation</span>
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+			</button>
+			
+			<a type="button" class="navbar-toggle nav-link" href="http://github.com/serkanh">
+				<i class="fa fa-github"></i>
+			</a>
+			
+			
+			<a type="button" class="navbar-toggle nav-link" href="http://twitter.com/shaytac">
+				<i class="fa fa-twitter"></i>
+			</a>
+			
+			
+			<a type="button" class="navbar-toggle nav-link" href="mailto:shaytac at gmail.com">
+				<i class="fa fa-envelope"></i>
+			</a>
+			
+			<a class="navbar-brand" href="/">
+				<img src="/assets/imgs/profileimg.jpg" class="img-circle" />
+				serkan haytac
+			</a>
+		</div>
 
-<h5>1. Start the server</h5>
+		<!-- Collect the nav links, forms, and other content for toggling -->
+		<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+			<ul class="nav navbar-nav">
+				<li class="active"><a href="/">Home</a></li>
+				<li><a href="/categories.html">Categories</a></li>
+				<li><a href="/tags.html">Tags</a></li>
+			</ul>
+		</div><!-- /.navbar-collapse -->
+	</nav>
+
+	<!-- nav-menu-dropdown -->
+	<div class="btn-group hidden-xs" id="nav-menu">
+		<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+			<i class="fa fa-bars"></i>
+		</button>
+		<ul class="dropdown-menu" role="menu">
+			<li><a href="/"><i class="fa fa-home"></i>Home</a></li>
+			<li><a href="/categories.html"><i class="fa fa-folder"></i>Categories</a></li>
+			<li><a href="/tags.html"><i class="fa fa-tags"></i>Tags</a></li>
+			<li class="divider"></li>
+			<li><a href="#"><i class="fa fa-arrow-up"></i>Top of Page</a></li>
+		</ul>
+	</div>
+
+	<div class="col-sm-3 sidebar hidden-xs" style="">
+		<!-- sidebar.html -->
+<header class="sidebar-header" role="banner">
+	<a href="/">
+		<img src="/assets/imgs/profileimg.jpg" class="img-circle" />
+	</a>
+	<h3 class="title">
+        <a href="/">serkan haytac</a>
+    </h3>
+</header>
+
+
+<div id="bio" class="text-center">
+	<a href="https://www.certmetrics.com/amazon/public/badge.aspx?i=1&t=c&d=2016-07-01&ci=AWS00186868">AWS Certified Solutions Architect</a><br /><a href="https://www.certmetrics.com/amazon/public/badge.aspx?i=2&t=c&d=2016-07-23&ci=AWS00186868">AWS Certified Developer</a>
+</div>
+
+
+<div id="contact-list" class="text-center">
+	<ul class="list-unstyled list-inline">
+		
+		<li>
+			<a class="btn btn-default btn-sm" href="https://github.com/serkanh">
+				<i class="fa fa-github-alt fa-lg"></i>
+			</a>
+		</li>
+		
+		
+		<li>
+			<a class="btn btn-default btn-sm" href="https://twitter.com/shaytac">
+				<i class="fa fa-twitter fa-lg"></i>
+			</a>
+		</li>
+		
+		
+		<li>
+			<a class="btn btn-default btn-sm" href="mailto:shaytac at gmail.com">
+				<i class="fa fa-envelope fa-lg"></i>
+			</a>
+		</li>
+		
+	</ul>
+	<ul id="contact-list-secondary" class="list-unstyled list-inline">
+		
+		
+		<li>
+			<a class="btn btn-default btn-sm" href="https://linkedin.com/in/serkanhaytac">
+				<i class="fa fa-linkedin fa-lg"></i>
+			</a>
+		</li>
+		
+		<li>
+			<a class="btn btn-default btn-sm" href="/feed.xml">
+				<i class="fa fa-rss fa-lg"></i>
+			</a>
+		</li>
+	</ul>
+</div>
+<!-- sidebar.html end -->
+
+	</div>
+
+	<div class="col-sm-9 col-sm-offset-3">
+		<div class="page-header">
+  <h1>Quickstart with Vault </h1>
+</div>
+	
+<article>
+
+	<div class="col-sm-10">
+	 <span class="post-date">
+	   
+	   October 
+	   20th,
+	   
+	   2015
+	 </span>
+	  <div class="article_body">
+	  <p>Vault is a secure storage server that secures, stores, passwords, tokens, API keys etc. It is the from Hashicorp which had some great products such as Vault, Terraform and i think the most popular of all Vagrant.
+“Vault handles leasing, key revocation, key rolling, and auditing. I want to give a simple to follow setup example for anyone to try out this awesome tool.</p>
+
+<h5 id="1-start-the-server">1. Start the server</h5>
 
 <figure class="highlight"><pre><code class="language-bash" data-lang="bash"> 
 vault server <span class="nt">-config</span><span class="o">=</span>vault.hcl </code></pre></figure>
- 
-<div class="highlight"><pre><code class="language-" data-lang="">#vault.hcl
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>#vault.hcl
 backend "file" {
   path="vault"
 }
@@ -67,19 +182,24 @@ listener "tcp" {
 }
 
 disable_mlock = true
-</code></pre></div>
-<h5>2. Initiate vault and copy/save root token and the keys. *<em>This is only done when initating a new server.</em></h5>
-<div class="highlight"><pre><code class="language-" data-lang="">VAULT_ADDR=http://127.0.0.1:8200 vault init 
-</code></pre></div>
-<h5>3. Authenticate with master token.</h5>
-<div class="highlight"><pre><code class="language-" data-lang="">VAULT_ADDR=http://127.0.0.1:8200 vault auth &lt;root-token&gt;
-</code></pre></div>
-<h5>4. Unseal to add new authentication tokens. Default threshold is set to 3. Only root token can unseal the vault. Vault is sealed everytime it is restarted and has to be unsealed for services to acces</h5>
-<div class="highlight"><pre><code class="language-" data-lang="">VAULT_ADDR=http://127.0.0.1:8200 vault unseal  
-</code></pre></div>
-<h5>5. Create a policy.</h5>
-<div class="highlight"><pre><code class="language-" data-lang="">VAULT_ADDR=http://127.0.0.1:8200 vault policy-write secret acl.hcl
-</code></pre></div><div class="highlight"><pre><code class="language-" data-lang="">#acl.hcl
+</code></pre></div></div>
+<h5 id="2-initiate-vault-and-copysave-root-token-and-the-keys-this-is-only-done-when-initating-a-new-server">2. Initiate vault and copy/save root token and the keys. <em>*This is only done when initating a new server.</em></h5>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>VAULT_ADDR=http://127.0.0.1:8200 vault init 
+</code></pre></div></div>
+
+<h5 id="3-authenticate-with-master-token">3. Authenticate with master token.</h5>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>VAULT_ADDR=http://127.0.0.1:8200 vault auth &lt;root-token&gt;
+</code></pre></div></div>
+
+<h5 id="4-unseal-to-add-new-authentication-tokens-default-threshold-is-set-to-3-only-root-token-can-unseal-the-vault-vault-is-sealed-everytime-it-is-restarted-and-has-to-be-unsealed-for-services-to-acces">4. Unseal to add new authentication tokens. Default threshold is set to 3. Only root token can unseal the vault. Vault is sealed everytime it is restarted and has to be unsealed for services to acces</h5>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>VAULT_ADDR=http://127.0.0.1:8200 vault unseal  
+</code></pre></div></div>
+
+<h5 id="5-create-a-policy">5. Create a policy.</h5>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>VAULT_ADDR=http://127.0.0.1:8200 vault policy-write secret acl.hcl
+</code></pre></div></div>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>#acl.hcl
 path "secret/*" {
   policy = "read"
 }
@@ -88,31 +208,107 @@ path "secret/*" {
 path "auth/token/lookup-self" {
   policy = "read"
 }
-</code></pre></div>
-<h5>6. Create a token that services will be using with the previously created policy. Token generated will be used for services so make a copy of it.</h5>
-<div class="highlight"><pre><code class="language-" data-lang="">VAULT_ADDR=http://127.0.0.1:8200 vault token-create -policy="secret"   
-</code></pre></div>
-<h5>7. While still in root and add new key/values</h5>
-<div class="highlight"><pre><code class="language-" data-lang="">VAULT_ADDR=http://127.0.0.1:8200 vault write secret/AWS_SECRET_KEY value=&lt;key goes here&gt;
-</code></pre></div>
-<h5>8. Authenticate with service token that was generated on step 6 and read the key entered.</h5>
+</code></pre></div></div>
+<h5 id="6-create-a-token-that-services-will-be-using-with-the-previously-created-policy-token-generated-will-be-used-for-services-so-make-a-copy-of-it">6. Create a token that services will be using with the previously created policy. Token generated will be used for services so make a copy of it.</h5>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>VAULT_ADDR=http://127.0.0.1:8200 vault token-create -policy="secret"   
+</code></pre></div></div>
+
+<h5 id="7-while-still-in-root-and-add-new-keyvalues">7. While still in root and add new key/values</h5>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>VAULT_ADDR=http://127.0.0.1:8200 vault write secret/AWS_SECRET_KEY value=&lt;key goes here&gt;
+</code></pre></div></div>
+
+<h5 id="8-authenticate-with-service-token-that-was-generated-on-step-6-and-read-the-key-entered">8. Authenticate with service token that was generated on step 6 and read the key entered.</h5>
 
 
+	  </div>
 
-        </section>
+		
+		<ul class="tag_box list-unstyled list-inline">
+		  <li><i class="fa fa-folder-open"></i></li>
+		  
+		  
+			 
+				<li><a href="/categories.html#jekyll-ref">
+					jekyll <span>(1)</span>
+					
+				</a></li>
+			
+		  
+		</ul>
+		  
 
-        <aside id="sidebar">
-	<p class="side-pages"><a href="/tools.html"><h3 align="center">Useful tools</h3></></p>
-	<p class="side-pages"><a href="/articles.html"><h3 align="center">Useful articles</h3></></p>
-          <p class="repo-owner"><a href="https://github.com/jasonlong/architect-theme">architect-theme</a> is maintained by <a href="https://github.com/jasonlong">jasonlong</a>.</p>
+		  
 
-          <p class="repo-owner"><a href="https://github.com/pietromenna/jekyll-architect-theme">jekyll-architect-theme</a> is maintained by <a href="https://github.com/pietromenna">pietromenna</a>.</p>
+		<hr>
 
-          <p>This page was generated by <a href="https://pages.github.com">GitHub Pages</a> using the Architect theme by <a href="https://twitter.com/jasonlong">Jason Long</a>.</p>
-        </aside>
-      </div>
+		<div>
+      <section class="share col-sm-6">
+        <h4 class="section-title">Share Post</h4>
+        <a class="btn btn-default btn-sm twitter" href="http://twitter.com/share?text=Quickstart with Vault&via=shaytac"
+           onclick="window.open(this.href, 'twitter-share', 'width=550,height=235');return false;">
+          <i class="fa fa-twitter fa-lg"></i>
+          Twitter
+        </a>
+        <a class="btn btn-default btn-sm facebook" href="https://www.facebook.com/sharer/sharer.php"
+           onclick="window.open(this.href, 'facebook-share','width=580,height=296');return false;">
+          <i class="fa fa-facebook fa-lg"></i>
+          Facebook
+        </a>
+        <a class="btn btn-default btn-sm gplus"
+           onclick="window.open('https://plus.google.com/share?url='+window.location.href, 'google-plus-share', 'width=490,height=530');return false;">
+          <i class="fa fa-google-plus fa-lg"></i>
+          Google+
+        </a>
+      </section>
+
+      <section class="col-sm-6 author">
+        <img src="/assets/imgs/profileimg.jpg" class="img-rounded author-image" />
+        <h4 class="section-title author-name">serkan haytac</h4>
+        <p class="author-bio"><a href="https://www.certmetrics.com/amazon/public/badge.aspx?i=1&t=c&d=2016-07-01&ci=AWS00186868">AWS Certified Solutions Architect</a><br /><a href="https://www.certmetrics.com/amazon/public/badge.aspx?i=2&t=c&d=2016-07-23&ci=AWS00186868">AWS Certified Developer</a></p>
+      </section>
     </div>
-		<!-- Global site tag (gtag.js) - Google Analytics -->
+
+    <div class="clearfix"></div>
+
+		<ul class="pager">
+		  
+		  <li class="previous disabled"><a>&larr; Previous</a></li>
+		  
+		  
+		  <li class="next"><a href="/coreos,ssh/2015/11/07/coreos-bastion-host-setup.html" title="Bastion Host Setup for CoreOS">Next &rarr;</a></li>
+		  
+		</ul>
+
+		<hr>
+	</div>
+	
+	<div class="col-sm-2 sidebar-2">
+	
+	</div>
+</article>
+<div class="clearfix"></div>
+
+
+
+
+
+		<footer>
+			<hr/>
+			<p>
+				&copy; 2018 serkan haytac with <a href="http://jekyllrb.com/">Jekyll</a>. Theme: <a href="https://github.com/dbtek/dbyll">dbyll</a> by dbtek.
+			</p>
+		</footer>
+	</div>
+
+	<script type="text/javascript" src="/assets/resources/jquery/jquery.min.js"></script>
+	<script type="text/javascript" src="/assets/resources/bootstrap/js/bootstrap.min.js"></script>
+	<script type="text/javascript" src="/assets/js/app.js"></script>
+</body>
+</html>
+
+
+
+<!-- Global site tag (gtag.js) - Google Analytics -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=UA-900551-54"></script>
 <script>
   window.dataLayer = window.dataLayer || [];
@@ -122,5 +318,4 @@ path "auth/token/lookup-self" {
   gtag('config', 'UA-900551-54');
 </script>
 
-  </body>
-</html>
+

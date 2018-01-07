@@ -1,80 +1,368 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta charset='utf-8'>
-    <meta http-equiv="X-UA-Compatible" content="chrome=1">
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-    <link href='https://fonts.googleapis.com/css?family=Architects+Daughter' rel='stylesheet' type='text/css'>
-    <link rel="stylesheet" type="text/css" href="/stylesheets/stylesheet.css" media="screen" />
-    <link rel="stylesheet" type="text/css" href="/stylesheets/pygment_trac.css" media="screen" />
-    <link rel="stylesheet" type="text/css" href="/stylesheets/print.css" media="print" />
+<head>
+	<meta charset="utf-8">
+	<title>Serkan Haytac</title>
+	
+	<meta name="author" content="serkan haytac">
+    
+	<!-- Enable responsive viewport -->
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <!--[if lt IE 9]>
-    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
-    <![endif]-->
-   
-    <title>  </title>
-    <!-- Begin Jekyll SEO tag v2.4.0 -->
-<title>Serkan Haytac</title>
-<meta name="generator" content="Jekyll v3.6.2" />
-<meta property="og:title" content="Serkan Haytac" />
-<meta property="og:locale" content="en_US" />
-<link rel="canonical" href="http://localhost:4000/" />
-<meta property="og:url" content="http://localhost:4000/" />
-<meta property="og:site_name" content="Serkan Haytac" />
-<script type="application/ld+json">
-{"name":"Serkan Haytac","@type":"WebSite","url":"http://localhost:4000/","headline":"Serkan Haytac","@context":"http://schema.org"}</script>
-<!-- End Jekyll SEO tag -->
+	<!-- Le HTML5 shim, for IE6-8 support of HTML elements -->
+	<!--[if lt IE 9]>
+	<script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+	<![endif]-->
 
-  </head>
+	<!-- Le styles -->
+	<link href="/assets/resources/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+	<link href="/assets/resources/font-awesome/css/font-awesome.min.css" rel="stylesheet">
+	<link href="/assets/resources/syntax/syntax.css" rel="stylesheet">
+	<link href="/assets/css/style.css" rel="stylesheet">
 
-  <body>
-    <header>
-      <div class="inner">
-        <h1><a href="/"> Serkan Haytac </a></h1>
-        <h2></h2>
-        <a href="https://github.com/pietromenna/jekyll-architect-theme" class="button"><small>View project on</small> GitHub</a>
-      </div>
-    </header>
+	<!-- Le fav and touch icons -->
+	<!-- Update these with your own images
+	<link rel="shortcut icon" href="images/favicon.ico">
+	<link rel="apple-touch-icon" href="images/apple-touch-icon.png">
+	<link rel="apple-touch-icon" sizes="72x72" href="images/apple-touch-icon-72x72.png">
+	<link rel="apple-touch-icon" sizes="114x114" href="images/apple-touch-icon-114x114.png">
+	-->
 
-    <div id="content-wrapper">
-      <div class="inner clearfix">
-        <section id="main-content">
-          
-          <div id="home">
-  <h1>Blog Posts</h1>
-  <ul class="posts">
-    
-      <li><span>05 Jan 2018</span> &raquo; <a href="/s3,/encryption/2018/01/05/S3-server-side-encryption-with-customer-provided-enc-keys.html">Server-Side Encryption with Customer-Provided Encryption Keys </a></li>
-    
-      <li><span>03 Dec 2017</span> &raquo; <a href="/ssh,/encryption/2017/12/03/encrypting-files-rsa-key-pairs.html">Encrypting files with rsa key pairs.</a></li>
-    
-      <li><span>10 Jul 2016</span> &raquo; <a href="/osx,/screenshot/2016/07/10/save-screenshot-to-clipboard-on-osx.html">Save screenshot to clipboard on OSX</a></li>
-    
-      <li><span>09 Nov 2015</span> &raquo; <a href="/vpn,/docker/2015/11/09/open-vpn-setup-with-docker.html">OpenVpn Setup with Docker</a></li>
-    
-      <li><span>07 Nov 2015</span> &raquo; <a href="/coreos,ssh/2015/11/07/coreos-bastion-host-setup.html">Bastion Host Setup for CoreOS</a></li>
-    
-      <li><span>20 Oct 2015</span> &raquo; <a href="/jekyll/2015/10/20/hashicorp-vault-setup.html">Quickstart with Vault</a></li>
-    
-  </ul>
+	<link rel="alternate" type="application/rss+xml" title="" href="/feed.xml">
+</head>
+
+<body>
+	<nav class="navbar navbar-default visible-xs" role="navigation">
+		<!-- Brand and toggle get grouped for better mobile display -->
+		<div class="navbar-header">
+			<button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+				<span class="sr-only">Toggle navigation</span>
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+			</button>
+			
+			<a type="button" class="navbar-toggle nav-link" href="http://github.com/serkanh">
+				<i class="fa fa-github"></i>
+			</a>
+			
+			
+			<a type="button" class="navbar-toggle nav-link" href="http://twitter.com/shaytac">
+				<i class="fa fa-twitter"></i>
+			</a>
+			
+			
+			<a type="button" class="navbar-toggle nav-link" href="mailto:shaytac at gmail.com">
+				<i class="fa fa-envelope"></i>
+			</a>
+			
+			<a class="navbar-brand" href="/">
+				<img src="/assets/imgs/profileimg.jpg" class="img-circle" />
+				serkan haytac
+			</a>
+		</div>
+
+		<!-- Collect the nav links, forms, and other content for toggling -->
+		<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+			<ul class="nav navbar-nav">
+				<li class="active"><a href="/">Home</a></li>
+				<li><a href="/categories.html">Categories</a></li>
+				<li><a href="/tags.html">Tags</a></li>
+			</ul>
+		</div><!-- /.navbar-collapse -->
+	</nav>
+
+	<!-- nav-menu-dropdown -->
+	<div class="btn-group hidden-xs" id="nav-menu">
+		<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+			<i class="fa fa-bars"></i>
+		</button>
+		<ul class="dropdown-menu" role="menu">
+			<li><a href="/"><i class="fa fa-home"></i>Home</a></li>
+			<li><a href="/categories.html"><i class="fa fa-folder"></i>Categories</a></li>
+			<li><a href="/tags.html"><i class="fa fa-tags"></i>Tags</a></li>
+			<li class="divider"></li>
+			<li><a href="#"><i class="fa fa-arrow-up"></i>Top of Page</a></li>
+		</ul>
+	</div>
+
+	<div class="col-sm-3 sidebar hidden-xs" style="">
+		<!-- sidebar.html -->
+<header class="sidebar-header" role="banner">
+	<a href="/">
+		<img src="/assets/imgs/profileimg.jpg" class="img-circle" />
+	</a>
+	<h3 class="title">
+        <a href="/">serkan haytac</a>
+    </h3>
+</header>
+
+
+<div id="bio" class="text-center">
+	<a href="https://www.certmetrics.com/amazon/public/badge.aspx?i=1&t=c&d=2016-07-01&ci=AWS00186868">AWS Certified Solutions Architect</a><br /><a href="https://www.certmetrics.com/amazon/public/badge.aspx?i=2&t=c&d=2016-07-23&ci=AWS00186868">AWS Certified Developer</a>
 </div>
 
 
-        </section>
+<div id="contact-list" class="text-center">
+	<ul class="list-unstyled list-inline">
+		
+		<li>
+			<a class="btn btn-default btn-sm" href="https://github.com/serkanh">
+				<i class="fa fa-github-alt fa-lg"></i>
+			</a>
+		</li>
+		
+		
+		<li>
+			<a class="btn btn-default btn-sm" href="https://twitter.com/shaytac">
+				<i class="fa fa-twitter fa-lg"></i>
+			</a>
+		</li>
+		
+		
+		<li>
+			<a class="btn btn-default btn-sm" href="mailto:shaytac at gmail.com">
+				<i class="fa fa-envelope fa-lg"></i>
+			</a>
+		</li>
+		
+	</ul>
+	<ul id="contact-list-secondary" class="list-unstyled list-inline">
+		
+		
+		<li>
+			<a class="btn btn-default btn-sm" href="https://linkedin.com/in/serkanhaytac">
+				<i class="fa fa-linkedin fa-lg"></i>
+			</a>
+		</li>
+		
+		<li>
+			<a class="btn btn-default btn-sm" href="/feed.xml">
+				<i class="fa fa-rss fa-lg"></i>
+			</a>
+		</li>
+	</ul>
+</div>
+<!-- sidebar.html end -->
 
-        <aside id="sidebar">
-	<p class="side-pages"><a href="/tools.html"><h3 align="center">Useful tools</h3></></p>
-	<p class="side-pages"><a href="/articles.html"><h3 align="center">Useful articles</h3></></p>
-          <p class="repo-owner"><a href="https://github.com/jasonlong/architect-theme">architect-theme</a> is maintained by <a href="https://github.com/jasonlong">jasonlong</a>.</p>
+	</div>
 
-          <p class="repo-owner"><a href="https://github.com/pietromenna/jekyll-architect-theme">jekyll-architect-theme</a> is maintained by <a href="https://github.com/pietromenna">pietromenna</a>.</p>
+	<div class="col-sm-9 col-sm-offset-3">
+		<div class="page-header">
+  <h1>Serkan Haytac </h1>
+</div>
 
-          <p>This page was generated by <a href="https://pages.github.com">GitHub Pages</a> using the Architect theme by <a href="https://twitter.com/jasonlong">Jason Long</a>.</p>
-        </aside>
-      </div>
-    </div>
-		<!-- Global site tag (gtag.js) - Google Analytics -->
+
+
+<article class="home">
+
+  <span class="post-date">
+    
+    January
+    5th,
+    
+    2018
+  </span>
+
+  <h2>
+    <a href="/s3,/encryption/2018/01/05/S3-server-side-encryption-with-customer-provided-enc-keys.html">Server-Side Encryption with Customer-Provided Encryption Keys </a>
+  </h2>
+
+  <div>
+    
+    
+    <p>Per AWS docs requirements for encryptions are:
+https://docs.aws.amazon.com/AmazonS3/latest/dev/ServerSideEncryptionCustomerKeys.html</p>
+
+
+    
+    
+  </div>
+
+</article>
+
+
+<article class="home">
+
+  <span class="post-date">
+    
+    December
+    3rd,
+    
+    2017
+  </span>
+
+  <h2>
+    <a href="/ssh,/encryption/2017/12/03/encrypting-files-rsa-key-pairs.html">Encrypting files with rsa key pairs.</a>
+  </h2>
+
+  <div>
+    
+    
+    <p>My day job i use ssh… alot. When you manage hundreds of servers with mission critical infastructure running on passswordless login with ssh keys can be huge time saver. I also take security pretty seriously when it comes to store sensitive information and always looking to find better ways to store sensitive information securely and also in  a convenient way for it to be not cumbersome. 
+With that thought combining ssh keys to encrypt/decrypt files made quite sense so here is a quick write up to do it for anyone else that are interested in it.</p>
+
+
+    
+    
+  </div>
+
+</article>
+
+
+<article class="home">
+
+  <span class="post-date">
+    
+    July
+    10th,
+    
+    2016
+  </span>
+
+  <h2>
+    <a href="/osx,/screenshot/2016/07/10/save-screenshot-to-clipboard-on-osx.html">Save screenshot to clipboard on OSX</a>
+  </h2>
+
+  <div>
+    
+    
+    <p>Screenshots are saved as .png files on the desktop in Mac OS X v10.6 and later. They’re automatically named “Screen Shot date at time .png.” To save your screenshot to the Clipboard instead of a file on your desktop, use</p>
+<figure class="highlight"><pre><code class="language-bash" data-lang="bash">Command-Shift-Control-4</code></pre></figure>
+<p>.</p>
+
+
+    
+    
+  </div>
+
+</article>
+
+
+<article class="home">
+
+  <span class="post-date">
+    
+    November
+    9th,
+    
+    2015
+  </span>
+
+  <h2>
+    <a href="/vpn,/docker/2015/11/09/open-vpn-setup-with-docker.html">OpenVpn Setup with Docker</a>
+  </h2>
+
+  <div>
+    
+    
+    <p>This is a basic summary of excellent tutorial from Digital Ocean on how to setup OpenVpn with Docker.</p>
+
+
+    
+    
+  </div>
+
+</article>
+
+
+<article class="home">
+
+  <span class="post-date">
+    
+    November
+    7th,
+    
+    2015
+  </span>
+
+  <h2>
+    <a href="/coreos,ssh/2015/11/07/coreos-bastion-host-setup.html">Bastion Host Setup for CoreOS</a>
+  </h2>
+
+  <div>
+    
+    
+    <p>A common server access pattern is to prevent any connection to your production servers from outside of their private subnet, and use a bastion host to access the private subnet. This pattern is very
+useful when you want to limit; for example ssh access, from only within the network.</p>
+
+
+    
+    
+  </div>
+
+</article>
+
+
+<article class="home">
+
+  <span class="post-date">
+    
+    October
+    20th,
+    
+    2015
+  </span>
+
+  <h2>
+    <a href="/jekyll/2015/10/20/hashicorp-vault-setup.html">Quickstart with Vault</a>
+  </h2>
+
+  <div>
+    
+    
+    <p>Vault is a secure storage server that secures, stores, passwords, tokens, API keys etc. It is the from Hashicorp which had some great products such as Vault, Terraform and i think the most popular of all Vagrant.
+“Vault handles leasing, key revocation, key rolling, and auditing. I want to give a simple to follow setup example for anyone to try out this awesome tool.</p>
+
+
+    
+    
+  </div>
+
+</article>
+
+<hr/>
+
+<ul class="pager"> 
+
+  
+  <li class="previous disabled">
+    <a>&larr; Newer</a>
+  </li>
+  
+  
+  <li>
+    <span class="page_number">Page: 1 of 1</span>
+  </li>
+
+  
+  <li class="next disabled">
+    <a>Older &rarr;</a>        
+  </li>
+  
+
+</ul>
+
+
+
+
+		<footer>
+			<hr/>
+			<p>
+				&copy; 2018 serkan haytac with <a href="http://jekyllrb.com/">Jekyll</a>. Theme: <a href="https://github.com/dbtek/dbyll">dbyll</a> by dbtek.
+			</p>
+		</footer>
+	</div>
+
+	<script type="text/javascript" src="/assets/resources/jquery/jquery.min.js"></script>
+	<script type="text/javascript" src="/assets/resources/bootstrap/js/bootstrap.min.js"></script>
+	<script type="text/javascript" src="/assets/js/app.js"></script>
+</body>
+</html>
+
+
+
+<!-- Global site tag (gtag.js) - Google Analytics -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=UA-900551-54"></script>
 <script>
   window.dataLayer = window.dataLayer || [];
@@ -84,5 +372,4 @@
   gtag('config', 'UA-900551-54');
 </script>
 
-  </body>
-</html>
+
