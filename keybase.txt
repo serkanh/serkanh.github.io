@@ -1,0 +1,55 @@
+==================================================================
+https://keybase.io/serkanh
+--------------------------------------------------------------------
+
+I hereby claim:
+
+  * I am an admin of https://serkanh.github.io
+  * I am serkanh (https://keybase.io/serkanh) on keybase.
+  * I have a public key ASAIwecfEWmLLDRHiY2-QGaYrh8uIBtshTZX513kmasnaQo
+
+To do so, I am signing this object:
+
+{
+  "body": {
+    "key": {
+      "eldest_kid": "012029ec3c2367c2069ed5952698f9f401d2f2adc5d16f7567db7bc7fffae474a8730a",
+      "host": "keybase.io",
+      "kid": "012008c1e71f11698b2c3447898dbe406698ae1f2e201b6c853657e75de499ab27690a",
+      "uid": "4b543c6b539e408bdf5e14ec3b331719",
+      "username": "serkanh"
+    },
+    "merkle_root": {
+      "ctime": 1516502080,
+      "hash": "0622defb6f4ca9b0bab04cbf41db299bd47a7897e0c350580bd8ab24a55290a88a92f339b3b6ea0f9bd5af8b1594ff114f0fe88989d85d35720e1235fa01f387",
+      "hash_meta": "5715000e5f7298a9b27e87a100369bbd4896262688afe9d7f1f6b9154ff5d0a7",
+      "seqno": 1951455
+    },
+    "service": {
+      "hostname": "serkanh.github.io",
+      "protocol": "https:"
+    },
+    "type": "web_service_binding",
+    "version": 1
+  },
+  "client": {
+    "name": "keybase.io go client",
+    "version": "1.0.38"
+  },
+  "ctime": 1516502133,
+  "expire_in": 504576000,
+  "prev": "42a361b69850db6b5fd18840b82f36d38e79e585975cbd8f97fba35eac646e9b",
+  "seqno": 16,
+  "tag": "signature"
+}
+
+which yields the signature:
+
+hKRib2R5hqhkZXRhY2hlZMOpaGFzaF90eXBlCqNrZXnEIwEgCMHnHxFpiyw0R4mNvkBmmK4fLiAbbIU2V+dd5JmrJ2kKp3BheWxvYWTFA0l7ImJvZHkiOnsia2V5Ijp7ImVsZGVzdF9raWQiOiIwMTIwMjllYzNjMjM2N2MyMDY5ZWQ1OTUyNjk4ZjlmNDAxZDJmMmFkYzVkMTZmNzU2N2RiN2JjN2ZmZmFlNDc0YTg3MzBhIiwiaG9zdCI6ImtleWJhc2UuaW8iLCJraWQiOiIwMTIwMDhjMWU3MWYxMTY5OGIyYzM0NDc4OThkYmU0MDY2OThhZTFmMmUyMDFiNmM4NTM2NTdlNzVkZTQ5OWFiMjc2OTBhIiwidWlkIjoiNGI1NDNjNmI1MzllNDA4YmRmNWUxNGVjM2IzMzE3MTkiLCJ1c2VybmFtZSI6InNlcmthbmgifSwibWVya2xlX3Jvb3QiOnsiY3RpbWUiOjE1MTY1MDIwODAsImhhc2giOiIwNjIyZGVmYjZmNGNhOWIwYmFiMDRjYmY0MWRiMjk5YmQ0N2E3ODk3ZTBjMzUwNTgwYmQ4YWIyNGE1NTI5MGE4OGE5MmYzMzliM2I2ZWEwZjliZDVhZjhiMTU5NGZmMTE0ZjBmZTg4OTg5ZDg1ZDM1NzIwZTEyMzVmYTAxZjM4NyIsImhhc2hfbWV0YSI6IjU3MTUwMDBlNWY3Mjk4YTliMjdlODdhMTAwMzY5YmJkNDg5NjI2MjY4OGFmZTlkN2YxZjZiOTE1NGZmNWQwYTciLCJzZXFubyI6MTk1MTQ1NX0sInNlcnZpY2UiOnsiaG9zdG5hbWUiOiJzZXJrYW5oLmdpdGh1Yi5pbyIsInByb3RvY29sIjoiaHR0cHM6In0sInR5cGUiOiJ3ZWJfc2VydmljZV9iaW5kaW5nIiwidmVyc2lvbiI6MX0sImNsaWVudCI6eyJuYW1lIjoia2V5YmFzZS5pbyBnbyBjbGllbnQiLCJ2ZXJzaW9uIjoiMS4wLjM4In0sImN0aW1lIjoxNTE2NTAyMTMzLCJleHBpcmVfaW4iOjUwNDU3NjAwMCwicHJldiI6IjQyYTM2MWI2OTg1MGRiNmI1ZmQxODg0MGI4MmYzNmQzOGU3OWU1ODU5NzVjYmQ4Zjk3ZmJhMzVlYWM2NDZlOWIiLCJzZXFubyI6MTYsInRhZyI6InNpZ25hdHVyZSJ9o3NpZ8RAd9Vy0nRU8McTg6ORzx9Eq547qINKWQx6PJmXEvSTQDwwyiX2tPz89aLjztJWQA2j5S1rR1Ate3YZWfLyl2fnAahzaWdfdHlwZSCkaGFzaIKkdHlwZQildmFsdWXEIFHC4OFGMjKbF0qrzbN3J2nKiRzAnXug8DOIssJyz1Ndo3RhZ80CAqd2ZXJzaW9uAQ==
+
+And finally, I am proving ownership of this host by posting or
+appending to this document.
+
+View my publicly-auditable identity here: https://keybase.io/serkanh
+
+==================================================================
