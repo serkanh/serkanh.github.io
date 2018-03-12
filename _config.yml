@@ -41,3 +41,6 @@ plugins:
   - jekyll-sitemap
   - jekyll-feed
   - jekyll-seo-tag
+
+# Gems
+gems: [jekyll-paginate]

@@ -168,31 +168,31 @@
 <p><a href="https://github.com/kylemanna/docker-openvpn">https://github.com/kylemanna/docker-openvpn</a> <br />
 <a href="https://www.digitalocean.com/community/tutorials/how-to-run-openvpn-in-a-docker-container-on-ubuntu-14-04">https://www.digitalocean.com/community/tutorials/how-to-run-openvpn-in-a-docker-container-on-ubuntu-14-04</a></p>
 
-<h5 id="1-create-an-fqdn">1. Create an fqdn</h5>
+<h5 id="create-an-fqdn">1. Create an fqdn</h5>
 
 <p>I am using AWS Route53 for this step so when you login create an A record(assuming you are pointing to an ip.) for your vpn. Assuming your domain name is yourdomain.com, create something like vpn.yourdomain.com</p>
 
-<h5 id="2-create-a-data-container">2. Create a data container.</h5>
+<h5 id="create-a-data-container">2. Create a data container.</h5>
 
 <p><code class="highlighter-rouge">export OVPN_DATA="ovpn-data"</code> <br /><br />
 <code class="highlighter-rouge">docker run -name $OVPN_DATA -v /etc/openvpn busybox</code></p>
 
-<h5 id="3-generate-vpn-config-file-based-on-fqdn">3. Generate vpn config file based on fqdn.</h5>
+<h5 id="generate-vpn-config-file-based-on-fqdn">3. Generate vpn config file based on fqdn.</h5>
 
 <p><code class="highlighter-rouge">docker run --volumes-from $OVPN_DATA --rm kylemanna/openvpn ovpn_genconfig -u udp://vpn.yourdomain.com:1194</code></p>
 
-<h4 id="4-generate-ovpn_initpki">4. Generate ovpn_initpki</h4>
+<h4 id="generate-ovpninitpki">4. Generate ovpn_initpki</h4>
 
 <p><code class="highlighter-rouge">docker run --volumes-from $OVPN_DATA --rm -it kylemanna/openvpn ovpn_initpki</code></p>
 
-<h4 id="5-run-the-server">5. Run the server</h4>
+<h4 id="run-the-server">5. Run the server</h4>
 <p><code class="highlighter-rouge">docker run --volumes-from $OVPN_DATA --rm -p 1194:1194/udp --cap-add=NET_ADMIN kylemanna/openvpn</code></p>
 
-<h4 id="6-generate-client-keys">6. Generate client keys</h4>
+<h4 id="generate-client-keys">6. Generate client keys</h4>
 <p><code class="highlighter-rouge">docker run --volumes-from $OVPN_DATA rm -it  kylemanna/openvpn easyrsa build-client-full serkan nopass</code> <br /><br />
 <code class="highlighter-rouge">docker run --volumes-from $OVPN_DATA -rm kylemanna/openvpn ovpn_getclient serkan &gt; serkan.ovpn</code></p>
 
-<h4 id="7-run-the-server">7. Run the server</h4>
+<h4 id="run-the-server-1">7. Run the server</h4>
 
 <p><code class="highlighter-rouge">docker run -d --volumes-from $OVPN_DATA -p 0.0.0.0:1194:1193/udp --cap-add=NET_ADMIN kylemanna/openvpn</code></p>
 

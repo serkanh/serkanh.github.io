@@ -168,9 +168,9 @@ useful when you want to limit; for example ssh access, from only within the netw
 
 <p>Typically you set up a bastion host, and execute a nc command to the destination host located within the private network.</p>
 
-<h4>#</h4>
+<h4 id="section">#</h4>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>#~/.ssh/config
+<div class="highlighter-rouge"><pre class="highlight"><code>#~/.ssh/config
 Host bastion-host
         Hostname 54.54.54.54
         User ec2-user
@@ -185,7 +185,8 @@ Host destination-host
         ProxyCommand ssh -A bastion-host nc %h %p
 
 
-</code></pre></div></div>
+</code></pre>
+</div>
 
 <p>This works on most systems where netcat installed on both destination and bastion host.
 Recently i have been working on a project to deploy a Mesosphere cluster with Cloudformation.
@@ -194,7 +195,7 @@ host pattern like above which suprisingly did not work. Turns out Coreos uses a 
 of netcat which is called ncat. By modifying ProxyCommand lin on ~/.ssh/config file and change <strong>nc</strong> to <strong>ncat</strong>, i was able to 
 ssh into hosts within private instances with ease.</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>#~/.ssh/config
+<div class="highlighter-rouge"><pre class="highlight"><code>#~/.ssh/config
 Host bastion-host
         Hostname 54.54.54.54
         User ec2-user
@@ -209,7 +210,8 @@ Host destination-host
         ProxyCommand ssh -A bastion-host ncat %h %p
 
 
-</code></pre></div></div>
+</code></pre>
+</div>
 
 
 	  </div>
