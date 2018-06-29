@@ -6,7 +6,7 @@ categories: git, github
 ---
 
 
-####$ Search a npm package that is used in a project. This is useful to get ideas of how package is setup and used. [github](https://github.com/search?utf8=%E2%9C%93&q=rbac+filename%3Apackage.json&ref=simplesearch)
+##### Search a npm package that is used in a project. This is useful to get ideas of how package is setup and used. [github](https://github.com/search?utf8=%E2%9C%93&q=rbac+filename%3Apackage.json&ref=simplesearch)
 ```
 rbac filename:package.json
 ```
@@ -16,7 +16,7 @@ rbac filename:package.json
  rbac filename:package.json stars:>100
 ```
 
-##### Search repos with more than 100 stars and a javasscript repo.[github](https://github.com/search?q=rbac+filename%3Apackage.json+stars%3A%3E100+language%3Ajavascript&type=Repositories)
+##### Search repos with more than 100 stars and a javascript repo.[github](https://github.com/search?q=rbac+filename%3Apackage.json+stars%3A%3E100+language%3Ajavascript&type=Repositories)
 ```
 rbac filename:package.json stars:>100 language:javascript 
 ```
@@ -27,7 +27,7 @@ rbac filename:package.json stars:>100 language:javascript
 ecs extension:tf
 ```
 
-##### Another practical example is to search for content that are usually in a certain path. Forexample circleci 2.0 files are are stored in `<repo-root>/.circleci/config.yml`. Say you want to find an example of psql usage in circleci manifest file: [github](https://github.com/search?q=psql+filename%3Aconfig.yml+path%3A.circleci&type=Repositories)
+##### Another practical example is to search for content that are usually in a certain path. For example circleci 2.0 files are are stored in `<repo-root>/.circleci/config.yml`. Say you want to find an example of psql usage in circleci manifest file: [github](https://github.com/search?q=psql+filename%3Aconfig.yml+path%3A.circleci&type=Repositories)
 ```
  psql filename:config.yml path:.circleci
  ````
