@@ -1,7 +1,7 @@
 ---
 layout: post
 title:  "Setting up SQS as event source with serverless and cloudformation. "
-date:   2018-04-01 22:13:00
+date:   2018-06-30 22:33:00
 categories: aws, lambda, serverless
 ---
 
