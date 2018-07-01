@@ -8,7 +8,7 @@ categories: aws, lambda, serverless
 
 ##### AWS recently announced SQS as an event source for lambda functions. This is now GA and looks like there is already a [pr](https://github.com/serverless/serverless/pull/5074) for it to to be soon implemened in [serverless framework](https://serverless.com/) as well. 
 
-##### As soon as it was announced we had a use case for this implementation in a project that we built with serverless framework. So instead of waiting pr to be merged  i decided to impletemented via cloudformation. 
+##### As soon as it was announced we had a use case for this implementation in a project that we built with serverless . So instead of waiting pr to be merged  i decided to impletemented via cloudformation. 
 
 ##### Below is the `serverless.yml` file with its entirety. Cloudformation creates a sqs and and EventSourceMapping for the function `supervisor`. 
 ````
