@@ -16,3 +16,5 @@ Some useful resources i keep forgeting about.
 [Datascience with commandline](https://www.datascienceatthecommandline.com/chapter-2-getting-started.html)
 
 [SCIP in Python](https://wizardforcel.gitbooks.io/sicp-in-python/content/)
+
+[React from Zero](https://github.com/kay-is/react-from-zero/blob/master/02-jsx.html)
