@@ -13,7 +13,7 @@ Some useful resources i keep forgeting about.
 
 [A wiki of Devops Tools, Tutorials and Scripts](https://github.com/Leo-G/DevopsWiki)
 
-[Datascience with commandline](https://www.datascienceatthecommandline.com/chapter-2-getting-started.html)
+[Data science with commandline](https://www.datascienceatthecommandline.com/chapter-2-getting-started.html)
 
 [SCIP in Python](https://wizardforcel.gitbooks.io/sicp-in-python/content/)
 
