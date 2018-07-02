@@ -2,7 +2,7 @@
 <html>
 <head>
 	<meta charset="utf-8">
-	<title>Useful github search queries </title>
+	<title>Setting up SQS as event source with serverless and cloudformation. </title>
 	
 	<meta name="author" content="serkan haytac">
     
@@ -149,7 +149,7 @@
 
 	<div class="col-sm-9 col-sm-offset-3">
 		<div class="page-header">
-  <h1>Useful github search queries  </h1>
+  <h1>Setting up SQS as event source with serverless and cloudformation.  </h1>
 </div>
 	
 <article>
@@ -157,38 +157,70 @@
 	<div class="col-sm-10">
 	 <span class="post-date">
 	   
-	   April 
-	   1st,
-	     
+	   June 
+	   30th,
+	   
 	   2018
 	 </span>
 	  <div class="article_body">
-	  <h5 id="search-a-npm-package-that-is-used-in-a-project-this-is-useful-to-get-ideas-of-how-package-is-setup-and-used-githubhttpsgithubcomsearchutf8e29c93qrbacfilename3apackagejsonrefsimplesearch">Search a npm package that is used in a project. This is useful to get ideas of how package is setup and used. <a href="https://github.com/search?utf8=%E2%9C%93&amp;q=rbac+filename%3Apackage.json&amp;ref=simplesearch">github</a></h5>
-<div class="highlighter-rouge"><pre class="highlight"><code>rbac filename:package.json
+	  <h5 id="aws-recently-announced-sqs-as-an-event-source-for-lambda-functions-this-is-now-ga-and-looks-like-there-is-already-a-prhttpsgithubcomserverlessserverlesspull5074-for-it-to-to-be-soon-implemened-in-serverless-frameworkhttpsserverlesscom-as-well">AWS recently announced SQS as an event source for lambda functions. This is now GA and looks like there is already a <a href="https://github.com/serverless/serverless/pull/5074">pr</a> for it to to be soon implemened in <a href="https://serverless.com/">serverless framework</a> as well.</h5>
+
+<h5 id="as-soon-as-it-was-announced-we-had-a-use-case-for-this-implementation-in-a-project-that-we-built-with-serverless--so-instead-of-waiting-pr-to-be-merged--i-decided-to-impletemented-via-cloudformation">As soon as it was announced we had a use case for this implementation in a project that we built with serverless . So instead of waiting pr to be merged  i decided to impletemented via cloudformation.</h5>
+
+<h5 id="below-is-the-serverlessyml-file-with-its-entirety-cloudformation-creates-a-sqs-and-and-eventsourcemapping-for-the-function-supervisor">Below is the <code class="highlighter-rouge">serverless.yml</code> file with its entirety. Cloudformation creates a sqs and and EventSourceMapping for the function <code class="highlighter-rouge">supervisor</code>.</h5>
+<div class="highlighter-rouge"><pre class="highlight"><code>
+
+service: cd-evox
+
+provider:
+  name: aws
+  runtime:  nodejs8.10
+  iamRoleStatements:
+    - Effect: 'Allow'
+      Action:
+        - "lambda:InvokeFunction"
+        - "lambda:InvokeAsync"
+        - "sqs:ReceiveMessage"
+        - "sqs:DeleteMessage"
+        - "sqs:GetQueueAttributes"
+      Resource: "*"
+
+
+
+
+functions:
+  supervisor:
+    handler: lambdas.supervisor
+
+
+# Create Sqs Queue
+resources:
+  Resources:
+    mapping:
+      Type: AWS::Lambda::EventSourceMapping
+      Properties:
+        EventSourceArn:
+          Fn::GetAtt:
+            - CdEvoxQueue
+            - Arn
+        FunctionName:
+          Fn::GetAtt:
+            - SupervisorLambdaFunction
+            - Arn
+    CdEvoxQueue:
+      Type: AWS::SQS::Queue
+      Properties:
+        QueueName: cd_evox_${opt:stage}
+        MessageRetentionPeriod: '1209600'
+        VisibilityTimeout: '60'
+
 </code></pre>
 </div>
-<p>##### Search repos with more than 100 stars. <a href="https://github.com/search?q=rbac+filename%3Apackage.json+stars%3A%3E100&amp;type=Repositories">github</a></p>
 
-<div class="highlighter-rouge"><pre class="highlight"><code> rbac filename:package.json stars:&gt;100
-</code></pre>
-</div>
+<p><img src="/images/sqs-as-eventsource.png" alt="Screenshot" /></p>
 
-<h5 id="search-repos-with-more-than-100-stars-and-a-javascript-repogithubhttpsgithubcomsearchqrbacfilename3apackagejsonstars3a3e100language3ajavascripttyperepositories">Search repos with more than 100 stars and a javascript repo.<a href="https://github.com/search?q=rbac+filename%3Apackage.json+stars%3A%3E100+language%3Ajavascript&amp;type=Repositories">github</a></h5>
-<div class="highlighter-rouge"><pre class="highlight"><code>rbac filename:package.json stars:&gt;100 language:javascript 
-</code></pre>
-</div>
-
-<h5 id="search-string-ecs-in-a-file-with-tf-extension-githubhttpsgithubcomsearchutf8e29c93qecsextension3atftyperepositoriesrefadvsearchll">Search string <code class="highlighter-rouge">ecs</code> in a file with .tf extension. <a href="https://github.com/search?utf8=%E2%9C%93&amp;q=ecs+extension%3Atf&amp;type=Repositories&amp;ref=advsearch&amp;l=&amp;l=">github</a></h5>
-
-<div class="highlighter-rouge"><pre class="highlight"><code>ecs extension:tf
-</code></pre>
-</div>
-
-<h5 id="another-practical-example-is-to-search-for-content-that-are-usually-in-a-certain-path-for-example-circleci-20-files-are-are-stored-in-repo-rootcircleciconfigyml-say-you-want-to-find-an-example-of-psql-usage-in-circleci-manifest-file-githubhttpsgithubcomsearchqpsqlfilename3aconfigymlpath3acirclecityperepositories">Another practical example is to search for content that are usually in a certain path. For example circleci 2.0 files are are stored in <code class="highlighter-rouge">&lt;repo-root&gt;/.circleci/config.yml</code>. Say you want to find an example of psql usage in circleci manifest file: <a href="https://github.com/search?q=psql+filename%3Aconfig.yml+path%3A.circleci&amp;type=Repositories">github</a></h5>
-<p><code class="highlighter-rouge">
- psql filename:config.yml path:.circleci
-</code>`</p>
-
+<p>Maximum batch size currently supported is between 1-10 so if you define a  batch size higher than 10 you will receive the error message:
+<code class="highlighter-rouge">An error occurred: mapping - Maximum batch size must be between 1 and 10 inclusive (Service: AWSLambda; Status Code: 400; Error Code: InvalidParameterValueException; Request ID: a03c1359-7cd5-11e8-8e95-8fcb11ee2f63).</code></p>
 
 	  </div>
 
@@ -198,13 +230,18 @@
 		  
 		  
 			 
-				<li><a href="/categories.html#git,-ref">
-					git, <span>(1)</span>
+				<li><a href="/categories.html#aws,-ref">
+					aws, <span>(1)</span>
 					,
 				</a></li>
 			 
-				<li><a href="/categories.html#github-ref">
-					github <span>(1)</span>
+				<li><a href="/categories.html#lambda,-ref">
+					lambda, <span>(1)</span>
+					,
+				</a></li>
+			 
+				<li><a href="/categories.html#serverless-ref">
+					serverless <span>(1)</span>
 					
 				</a></li>
 			
@@ -219,7 +256,7 @@
 		<div>
       <section class="share col-sm-6">
         <h4 class="section-title">Share Post</h4>
-        <a class="btn btn-default btn-sm twitter" href="http://twitter.com/share?text=Useful github search queries &via=shaytac"
+        <a class="btn btn-default btn-sm twitter" href="http://twitter.com/share?text=Setting up SQS as event source with serverless and cloudformation. &via=shaytac"
            onclick="window.open(this.href, 'twitter-share', 'width=550,height=235');return false;">
           <i class="fa fa-twitter fa-lg"></i>
           Twitter
@@ -247,10 +284,10 @@
 
 		<ul class="pager">
 		  
-		  <li class="previous"><a href="/s3,/encryption/2018/01/05/S3-server-side-encryption-with-customer-provided-enc-keys.html" title="Server-Side Encryption with Customer-Provided Encryption Keys ">&larr; Previous</a></li>
+		  <li class="previous"><a href="/git,/github/2018/04/01/useful-github-search-queries.html" title="Useful github search queries ">&larr; Previous</a></li>
 		  
 		  
-		  <li class="next"><a href="/aws,/lambda,/serverless/2018/06/30/setting-up-sqs-as-event-source-with-serverless-and-cloudformation..html" title="Setting up SQS as event source with serverless and cloudformation. ">Next &rarr;</a></li>
+			<li class="next disabled"><a>Next &rarr;</a>
 		  
 		</ul>
 
