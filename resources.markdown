@@ -7,6 +7,8 @@ permalink: /resources/
 
 Some useful resources i keep forgeting about. 
 
+[List of linux commands.](http://www.pixelbeat.org/cmdline.html)
+
 [Comprehensize list of github commands.](https://github.com/git-tips/tips)
 
 [A web app to organize github stars.](https://astralapp.com/)

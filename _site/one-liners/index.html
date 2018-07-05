@@ -2,7 +2,7 @@
 <html>
 <head>
 	<meta charset="utf-8">
-	<title>Serkan Haytac</title>
+	<title>One liners</title>
 	
 	<meta name="author" content="serkan haytac">
     
@@ -149,257 +149,20 @@
 
 	<div class="col-sm-9 col-sm-offset-3">
 		<div class="page-header">
-  <h1>Serkan Haytac </h1>
+  <h1>One liners </h1>
 </div>
 
+<p>To get the <a href="https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/USER_PIT.html">LatestRestorableTime</a>  on a given RDS instances.</p>
 
-
-<article class="home">
-
-  <span class="post-date">
-    
-    June
-    30th,
-    
-    2018
-  </span>
-
-  <h2>
-    <a href="/aws,/lambda,/serverless/2018/06/30/setting-up-sqs-as-event-source-with-serverless-and-cloudformation..html">Setting up SQS as event source with serverless and cloudformation. </a>
-  </h2>
-
-  <div>
-    
-    
-    <h5 id="aws-recently-announced-sqs-as-an-event-source-for-lambda-functions-this-is-now-ga-and-looks-like-there-is-already-a-prhttpsgithubcomserverlessserverlesspull5074-for-it-to-to-be-soon-implemened-in-serverless-frameworkhttpsserverlesscom-as-well">AWS recently announced SQS as an event source for lambda functions. This is now GA and looks like there is already a <a href="https://github.com/serverless/serverless/pull/5074">pr</a> for it to to be soon implemened in <a href="https://serverless.com/">serverless framework</a> as well.</h5>
-
-
-    
-    
-  </div>
-
-</article>
-
-
-<article class="home">
-
-  <span class="post-date">
-    
-    April
-    1st,
-    
-    2018
-  </span>
-
-  <h2>
-    <a href="/git,/github/2018/04/01/useful-github-search-queries.html">Useful github search queries </a>
-  </h2>
-
-  <div>
-    
-    
-    <h5 id="search-a-npm-package-that-is-used-in-a-project-this-is-useful-to-get-ideas-of-how-package-is-setup-and-used-githubhttpsgithubcomsearchutf8e29c93qrbacfilename3apackagejsonrefsimplesearch">Search a npm package that is used in a project. This is useful to get ideas of how package is setup and used. <a href="https://github.com/search?utf8=%E2%9C%93&amp;q=rbac+filename%3Apackage.json&amp;ref=simplesearch">github</a></h5>
-<div class="highlighter-rouge"><pre class="highlight"><code>rbac filename:package.json
+<div class="highlighter-rouge"><pre class="highlight"><code>➜  ~ aws rds describe-db-instances \
+				 --db-instance-identifier="evox-dev" \
+				 --query "DBInstances[*].[DBInstanceIdentifier,LatestRestorableTime]" --output text \
+				| awk '{print $2}' | TZ='America/New_York' date
+Thu Jul  5 10:51:02 EDT 2018
+➜  ~ 
 </code></pre>
 </div>
-<p>##### Search repos with more than 100 stars. <a href="https://github.com/search?q=rbac+filename%3Apackage.json+stars%3A%3E100&amp;type=Repositories">github</a></p>
 
-
-    
-    
-  </div>
-
-</article>
-
-
-<article class="home">
-
-  <span class="post-date">
-    
-    January
-    5th,
-    
-    2018
-  </span>
-
-  <h2>
-    <a href="/s3,/encryption/2018/01/05/S3-server-side-encryption-with-customer-provided-enc-keys.html">Server-Side Encryption with Customer-Provided Encryption Keys </a>
-  </h2>
-
-  <div>
-    
-    
-    <p>Per AWS docs requirements for encryptions are:
-https://docs.aws.amazon.com/AmazonS3/latest/dev/ServerSideEncryptionCustomerKeys.html</p>
-
-
-    
-    
-  </div>
-
-</article>
-
-
-<article class="home">
-
-  <span class="post-date">
-    
-    December
-    3rd,
-    
-    2017
-  </span>
-
-  <h2>
-    <a href="/ssh,/encryption/2017/12/03/encrypting-files-rsa-key-pairs.html">Encrypting files with rsa key pairs.</a>
-  </h2>
-
-  <div>
-    
-    
-    <p>My day job i use ssh… alot. When you manage hundreds of servers with mission critical infastructure running on passswordless login with ssh keys can be huge time saver. I also take security pretty seriously when it comes to store sensitive information and always looking to find better ways to store sensitive information securely and also in  a convenient way for it to be not cumbersome. 
-With that thought combining ssh keys to encrypt/decrypt files made quite sense so here is a quick write up to do it for anyone else that are interested in it.</p>
-
-
-    
-    
-  </div>
-
-</article>
-
-
-<article class="home">
-
-  <span class="post-date">
-    
-    July
-    10th,
-    
-    2016
-  </span>
-
-  <h2>
-    <a href="/osx,/screenshot/2016/07/10/save-screenshot-to-clipboard-on-osx.html">Save screenshot to clipboard on OSX</a>
-  </h2>
-
-  <div>
-    
-    
-    <p>Screenshots are saved as .png files on the desktop in Mac OS X v10.6 and later. They’re automatically named “Screen Shot date at time .png.” To save your screenshot to the Clipboard instead of a file on your desktop, use</p>
-<figure class="highlight"><pre><code class="language-bash" data-lang="bash">Command-Shift-Control-4</code></pre></figure>
-<p>.</p>
-
-
-    
-    
-  </div>
-
-</article>
-
-
-<article class="home">
-
-  <span class="post-date">
-    
-    November
-    9th,
-    
-    2015
-  </span>
-
-  <h2>
-    <a href="/vpn,/docker/2015/11/09/open-vpn-setup-with-docker.html">OpenVpn Setup with Docker</a>
-  </h2>
-
-  <div>
-    
-    
-    <p>This is a basic summary of excellent tutorial from Digital Ocean on how to setup OpenVpn with Docker.</p>
-
-
-    
-    
-  </div>
-
-</article>
-
-
-<article class="home">
-
-  <span class="post-date">
-    
-    November
-    7th,
-    
-    2015
-  </span>
-
-  <h2>
-    <a href="/coreos,ssh/2015/11/07/coreos-bastion-host-setup.html">Bastion Host Setup for CoreOS</a>
-  </h2>
-
-  <div>
-    
-    
-    <p>A common server access pattern is to prevent any connection to your production servers from outside of their private subnet, and use a bastion host to access the private subnet. This pattern is very
-useful when you want to limit; for example ssh access, from only within the network.</p>
-
-
-    
-    
-  </div>
-
-</article>
-
-
-<article class="home">
-
-  <span class="post-date">
-    
-    October
-    20th,
-    
-    2015
-  </span>
-
-  <h2>
-    <a href="/jekyll/2015/10/20/hashicorp-vault-setup.html">Quickstart with Vault</a>
-  </h2>
-
-  <div>
-    
-    
-    <p>Vault is a secure storage server that secures, stores, passwords, tokens, API keys etc. It is the from Hashicorp which had some great products such as Vault, Terraform and i think the most popular of all Vagrant.
-“Vault handles leasing, key revocation, key rolling, and auditing. I want to give a simple to follow setup example for anyone to try out this awesome tool.</p>
-
-
-    
-    
-  </div>
-
-</article>
-
-<hr/>
-
-<ul class="pager"> 
-
-  
-  <li class="previous disabled">
-    <a>&larr; Newer</a>
-  </li>
-  
-  
-  <li>
-    <span class="page_number">Page: 1 of 1</span>
-  </li>
-
-  
-  <li class="next disabled">
-    <a>Older &rarr;</a>        
-  </li>
-  
-
-</ul>
 
 
 
