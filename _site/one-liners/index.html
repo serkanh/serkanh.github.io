@@ -99,7 +99,7 @@
 
 
 <div id="bio" class="text-center">
-	<a href="https://www.certmetrics.com/amazon/public/badge.aspx?i=1&t=c&d=2016-07-01&ci=AWS00186868">AWS Certified Solutions Architect - Associate</a><br /><a href="https://www.certmetrics.com/amazon/public/badge.aspx?i=2&t=c&d=2016-07-23&ci=AWS00186868">AWS Certified Developer - Associate</a><br /><a href="https://www.certmetrics.com/amazon/public/badge.aspx?i=3&t=c&d=2018-01-12&ci=AWS00186868">AWS Certified SysOps Administrator - Associate</a><br /> <a href="https://gist.github.com/serkanh">Gists</><br /><a href="/resources">Resources</a>
+	<a href="https://www.certmetrics.com/amazon/public/badge.aspx?i=1&t=c&d=2016-07-01&ci=AWS00186868">AWS Certified Solutions Architect - Associate</a><br /><a href="https://www.certmetrics.com/amazon/public/badge.aspx?i=2&t=c&d=2016-07-23&ci=AWS00186868">AWS Certified Developer - Associate</a><br /><a href="https://www.certmetrics.com/amazon/public/badge.aspx?i=3&t=c&d=2018-01-12&ci=AWS00186868">AWS Certified SysOps Administrator - Associate</a><br /> <a href="https://gist.github.com/serkanh">Gists</><br /><a href="/resources">Resources</a><br /><a href="/one-liners">One liners</a>
 </div>
 
 
@@ -154,15 +154,21 @@
 
 <p>To get the <a href="https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/USER_PIT.html">LatestRestorableTime</a>  on a given RDS instances.</p>
 
-<div class="highlighter-rouge"><pre class="highlight"><code>➜  ~ aws rds describe-db-instances \
-				 --db-instance-identifier="evox-dev" \
-				 --query "DBInstances[*].[DBInstanceIdentifier,LatestRestorableTime]" --output text \
-				| awk '{print $2}' | TZ='America/New_York' date
-Thu Jul  5 10:51:02 EDT 2018
-➜  ~ 
+<div class="highlighter-rouge"><pre class="highlight"><code><span class="err">➜</span>  <span class="o">~</span> <span class="n">aws</span> <span class="n">rds</span> <span class="n">describe</span><span class="o">-</span><span class="n">db</span><span class="o">-</span><span class="n">instances</span> \
+				 <span class="o">--</span><span class="n">db</span><span class="o">-</span><span class="n">instance</span><span class="o">-</span><span class="n">identifier</span><span class="o">=</span><span class="s">"evox-dev"</span> \
+				 <span class="o">--</span><span class="n">query</span> <span class="s">"DBInstances[*].[DBInstanceIdentifier,LatestRestorableTime]"</span> <span class="o">--</span><span class="n">output</span> <span class="n">text</span> \
+				<span class="o">|</span> <span class="n">awk</span> <span class="s">'{print $2}'</span> <span class="o">|</span> <span class="n">TZ</span><span class="o">=</span><span class="s">'America/New_York'</span> <span class="n">date</span>
+<span class="n">Thu</span> <span class="n">Jul</span>  <span class="mi">5</span> <span class="mi">10</span><span class="p">:</span><span class="mi">51</span><span class="p">:</span><span class="mo">02</span> <span class="n">EDT</span> <span class="mi">2018</span>
+<span class="err">➜</span>  <span class="o">~</span> 
 </code></pre>
 </div>
+<hr />
 
+<p>To fetch the <code class="highlighter-rouge">PR #100</code> and create a local branch named <code class="highlighter-rouge">TICKET100</code> on local env.</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code><span class="n">git</span> <span class="n">fetch</span> <span class="n">upstream</span> <span class="n">pull</span><span class="o">/</span><span class="mi">100</span><span class="o">/</span><span class="n">head</span><span class="p">:</span><span class="n">TICKET100</span>
+</code></pre>
+</div>
 
 
 
