@@ -22,3 +22,10 @@ aws --profile=HA rds describe-db-snapshots --db-instance-identifier evox-dev
 ````
 aws --profile=HA rds describe-db-snapshots --db-instance-identifier evox-dev | jq '[.DBSnapshots[] | {Snapshot_Identifier:.DBSnapshotIdentifier,Creationtime:.SnapshotCreateTime}]'
 ````
+
+
+#### Get the LatestRestorableTime that is typically within the range of 5 min of current time. 
+
+```
+aws --profile=HA rds  describe-db-instances --query 'DBInstances[?DBInstanceIdentifier==`evox-dev`].LatestRestorableTime'  --output text
+```
