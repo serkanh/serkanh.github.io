@@ -29,3 +29,8 @@ aws --profile=HA rds describe-db-snapshots --db-instance-identifier evox-dev | j
 ```
 aws --profile=HA rds  describe-db-instances --query 'DBInstances[?DBInstanceIdentifier==`evox-dev`].LatestRestorableTime'  --output text
 ```
+
+```
+➜  serkanh.github.io git:(master) aws --profile=HA rds  describe-db-instances --query 'DBInstances[?DBInstanceIdentifier==`evox-dev`].LatestRestorableTime'  --output text | TZ='America/New_York' date
+Mon Jul 23 13:01:59 EDT 2018
+```
