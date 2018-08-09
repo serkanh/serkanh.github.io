@@ -11,11 +11,7 @@ We will build a serverless application with api gateway and deploy it to multipl
 
 First we start by setting up multiple stages for our lambda functions. To keep it simple we will simply set different environment variables per lambda function stage. Function basically will read from the env var and return its value as a string. We will deploy to different stages with serverless' `--stage` flag. 
 
-You can follow this steps by cloning  serverless-api-gateway-multi-stage-demo repo and checkout corresponding steps.
-
-
-## Step1
-If you cloned the repo checkout `step1` and issue `sls` commands as directed below in the specified order.
+Repo url: https://github.com/serkanh/serverless-api-gateway-multi-stage-demo
 
 ````
 
