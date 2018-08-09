@@ -7,6 +7,269 @@
 		<atom:link href="/feed.xml" rel="self" type="application/rss+xml" />
 		
 			<item>
+				<title>Multi stage api gateway deployment with serverless framework.</title>
+				<description>&lt;p&gt;Both serverless framework and api gateway has the concept of stages.&lt;/p&gt;
+
+&lt;p&gt;We will build a serverless application with api gateway and deploy it to multiple stages. What this means is that &lt;code class=&quot;highlighter-rouge&quot;&gt;dev&lt;/code&gt; lambda functions will be associated with the api gateways &lt;code class=&quot;highlighter-rouge&quot;&gt;/dev/&lt;/code&gt; stage and prod with &lt;code class=&quot;highlighter-rouge&quot;&gt;prod&lt;/code&gt; stage.&lt;/p&gt;
+
+&lt;p&gt;First we start by setting up multiple stages for our lambda functions. To keep it simple we will simply set different environment variables per lambda function stage. Function basically will read from the env var and return its value as a string. We will deploy to different stages with serverless’ &lt;code class=&quot;highlighter-rouge&quot;&gt;--stage&lt;/code&gt; flag.&lt;/p&gt;
+
+&lt;p&gt;You can follow this steps by cloning  serverless-api-gateway-multi-stage-demo repo and checkout corresponding steps.&lt;/p&gt;
+
+&lt;h2 id=&quot;step1&quot;&gt;Step1&lt;/h2&gt;
+&lt;p&gt;If you cloned the repo checkout &lt;code class=&quot;highlighter-rouge&quot;&gt;step1&lt;/code&gt; and issue &lt;code class=&quot;highlighter-rouge&quot;&gt;sls&lt;/code&gt; commands as directed below in the specified order.&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;
+service: serverless-api-gateway-multi-stage-demo
+
+## This is where we setup env variables that will be set for different stages of lambda functions.
+custom:
+  dev_APP_STAGE: &#39;DEV STAGE&#39;
+  prod_APP_STAGE: &#39;PROD STAGE&#39;
+provider:
+  name: aws
+  runtime: nodejs8.10
+  environment:
+    APP_STAGE: ${self:custom.${opt:stage, self:provider.stage}_APP_STAGE}
+functions:
+  hello:
+    handler: handler.hello
+
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;and deploy to both &lt;code class=&quot;highlighter-rouge&quot;&gt;dev&lt;/code&gt; and &lt;code class=&quot;highlighter-rouge&quot;&gt;prod&lt;/code&gt; stages&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;sls deploy --stage=dev
+sls deploy --stage=prod
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;if you are using aws profiles you can deploy by specifiying the aws profile you’d like to use &lt;code class=&quot;highlighter-rouge&quot;&gt;sls --aws-profile=&amp;lt;aws-personal-profile&amp;gt; deploy --stage=dev&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;When you invoke the function on both envs, it should simply return the env name a string.&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;➜  serverless-api-gateway-multi-stage-demo git:(master) ✗ sls invoke -f hello --stage=dev
+{
+    &quot;statusCode&quot;: 200,
+    &quot;body&quot;: &quot;{\&quot;message\&quot;:\&quot;Current lambda function env DEV STAGE\&quot;,\&quot;input\&quot;:{}}&quot;
+}
+
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;➜  serverless-api-gateway-multi-stage-demo git:(master) ✗ sls invoke -f hello --stage=prod
+{
+    &quot;statusCode&quot;: 200,
+    &quot;body&quot;: &quot;{\&quot;message\&quot;:\&quot;Current lambda function env PROD STAGE\&quot;,\&quot;input\&quot;:{}}&quot;
+}
+
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;Now we want to create a openapi(swagger) file to define paths for our api. Also we will add api gateway stages, deployment and associated stage variables for api gateway.&lt;/p&gt;
+
+&lt;p&gt;One gotcha of this setup is that we need to give permissions to api gateway to execute each individual function based on env. This is because we are using lambda functions stage name as a api gateway stage variable.&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;swagger: &quot;2.0&quot;
+schemes:
+- &quot;https&quot;
+paths:
+  /:
+    get:
+      produces:
+      - &quot;application/json&quot;
+      responses:
+        200:
+          description: &quot;200 response&quot;
+          schema:
+            $ref: &quot;#/definitions/Empty&quot;
+      x-amazon-apigateway-integration:
+        uri: &quot;arn:aws:apigateway:us-east-1:lambda:path/2015-03-31/functions/arn:aws:lambda:us-east-1:174076265606:function:serverless-multistage-${stageVariables.Stage}-hello/invocations&quot;
+        responses:
+          default:
+            statusCode: &quot;200&quot;
+        passthroughBehavior: &quot;when_no_match&quot;
+        httpMethod: &quot;POST&quot;
+        contentHandling: &quot;CONVERT_TO_TEXT&quot;
+        type: &quot;aws&quot;
+definitions:
+  Empty:
+    type: &quot;object&quot;
+    title: &quot;Empty Schema&quot;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;We will include the swagger file in our serverless.yml. One gotcha of using api gateway stage variables in serverless is that both serverless and api gateway and serverless framework is using the same syntax to refer to variables. In order to get around this we will use custom variable syntax so serverless does not interpret this as a serverless variable.&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;//serverless.yml
+provider:
+  name: aws
+  runtime: nodejs8.10
+  environment:
+    APP_STAGE: ${self:custom.${opt:stage, self:provider.stage}_APP_STAGE}
+  variableSyntax: &quot;\\${((?!stageVariables)[ ~:a-zA-Z0-9._&#39;\&quot;,\\-\\/\\(\\)]+?)}&quot;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;//swagger.yml
+ x-amazon-apigateway-integration:
+        uri: &quot;arn:aws:apigateway:us-east-1:lambda:path/2015-03-31/functions/arn:aws:lambda:us-east-1:174076265606:function:serverless-multistage-${stageVariables.Stage}-hello/invocations&quot;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;p&gt;Give api-gateway execute perm on dev hello function 
+````&lt;/p&gt;
+
+&lt;p&gt;aws lambda add-permission    –function-name “arn:aws:lambda:us-east-1:174076265606:function:serverless-multistage-dev-hello”    –source-arn “arn:aws:execute-api:us-east-1:174076265606:rci6d8tuc7/*/GET/”   –principal apigateway.amazonaws.com    –statement-id 8513374b-509d-4cfc-920c-c69e72264c7a    –action lambda:InvokeFunction&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;
+Give api-gateway execute perm on prod  hello function 
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;p&gt;aws lambda add-permission    –function-name “arn:aws:lambda:us-east-1:174076265606:function:serverless-multistage-prod-hello”    –source-arn “arn:aws:execute-api:us-east-1:174076265606:rci6d8tuc7/*/GET/”   –principal apigateway.amazonaws.com    –statement-id 8513374b-509d-4cfc-920c-c69e72264c7a    –action lambda:InvokeFunction&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;
+
+Final `serverless.yml` should look like below. 
+
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;service: serverless-multistage&lt;/p&gt;
+
+&lt;h5 id=&quot;this-is-where-we-setup-env-variables-that-will-be-set-for-different-stages-of-lambda-functions&quot;&gt;This is where we setup env variables that will be set for different stages of lambda functions.&lt;/h5&gt;
+&lt;p&gt;custom:
+  dev_APP_STAGE: ‘DEV STAGE’
+  prod_APP_STAGE: ‘PROD STAGE’&lt;/p&gt;
+
+&lt;p&gt;provider:
+  name: aws
+  runtime: nodejs8.10
+  environment:
+    APP_STAGE: ${self:custom.${opt:stage, self:provider.stage}&lt;em&gt;APP_STAGE}
+  variableSyntax: “\${((?!stageVariables)[ ~:a-zA-Z0-9.&lt;/em&gt;’&quot;,\-\/\(\)]+?)}”
+resources:
+  Resources:
+    ApiGatewayRestApi:
+      Type: AWS::ApiGateway::RestApi
+      Properties:
+        Name: ${self:service}
+        Body: ${file(swagger.yml)}
+    ApiGatewayDeploymentDev:
+      Type: AWS::ApiGateway::Deployment
+      Properties:
+        RestApiId:
+          Ref: ApiGatewayRestApi
+        Description: ‘Dev deployment’&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;ApiGatewayDeploymentProd:
+  Type: AWS::ApiGateway::Deployment
+  Properties:
+    RestApiId:
+      Ref: ApiGatewayRestApi
+    Description: &#39;Prod Deployment&#39;
+
+ApiGatewayStageDev:
+    Type: &#39;AWS::ApiGateway::Stage&#39;
+    Properties:
+      StageName: dev
+      Description: Dev Stage
+      RestApiId: 
+        Ref: ApiGatewayRestApi
+      DeploymentId: 
+        Ref: ApiGatewayDeploymentDev
+      Variables:
+        &quot;Stage&quot;: &quot;dev&quot;
+ApiGatewayStageProd:
+    Type: &#39;AWS::ApiGateway::Stage&#39;
+    Properties:
+      StageName: prod
+      Description: Prod Stage
+      RestApiId: 
+        Ref: ApiGatewayRestApi
+      DeploymentId: 
+        Ref: ApiGatewayDeploymentProd
+      Variables:
+        &quot;Stage&quot;: &quot;prod&quot;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;functions:
+  hello:
+    handler: handler.hello&lt;/p&gt;
+
+&lt;p&gt;````&lt;/p&gt;
+
+&lt;p&gt;To test the &lt;code class=&quot;highlighter-rouge&quot;&gt;dev&lt;/code&gt; and &lt;code class=&quot;highlighter-rouge&quot;&gt;prod&lt;/code&gt; functionality in api gateway simply go into api gateway console -&amp;gt;
+ Resources -&amp;gt; Get method&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/images/lambda-integration-req1.png&quot; alt=&quot;Screenshot&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Test -&amp;gt; Enter dev into &lt;code class=&quot;highlighter-rouge&quot;&gt;Stage&lt;/code&gt; stage variable.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/images/dev-test.png&quot; alt=&quot;dev stage var&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Test -&amp;gt; Enter prod into &lt;code class=&quot;highlighter-rouge&quot;&gt;Stage&lt;/code&gt; stage variable.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/images/prod-test.png&quot; alt=&quot;prod stage var&quot; /&gt;&lt;/p&gt;
+</description>
+				<pubDate>Mon, 06 Aug 2018 11:51:00 -0400</pubDate>
+				<link>/aws,/lambda,/serverless,cloudformation/2018/08/06/multi-stage-api-gateway-deployment-with-serverless.html</link>
+				<guid isPermaLink="true">/aws,/lambda,/serverless,cloudformation/2018/08/06/multi-stage-api-gateway-deployment-with-serverless.html</guid>
+			</item>
+		
+			<item>
+				<title>Useful aws cli rds  commands i use often. </title>
+				<description>&lt;h4 id=&quot;get-the-full-attributes-of-rds-instances-with-its-instancesidentifier&quot;&gt;Get the full attributes of rds instances with its instancesidentifier&lt;/h4&gt;
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;aws --profile=HA rds describe-db-instances --query &#39;DBInstances[?DBInstanceIdentifier==`evox-dev`]&#39;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;h4 id=&quot;get-list-of-snapshots-of-rds-database&quot;&gt;Get list of snapshots of RDS database.&lt;/h4&gt;
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;aws --profile=HA rds describe-db-snapshots --db-instance-identifier evox-dev
+
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;h4 id=&quot;get-list-of-snapshots-of-rds-databse-but-only-display-snapshot-id-and-creation-time-with-jq&quot;&gt;Get list of snapshots of RDS databse but only display snapshot id and creation time with jq.&lt;/h4&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;aws --profile=HA rds describe-db-snapshots --db-instance-identifier evox-dev | jq &#39;[.DBSnapshots[] | {Snapshot_Identifier:.DBSnapshotIdentifier,Creationtime:.SnapshotCreateTime}]&#39;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;h4 id=&quot;get-the-latestrestorabletime-that-is-typically-within-the-range-of-5-min-of-current-time&quot;&gt;Get the LatestRestorableTime that is typically within the range of 5 min of current time.&lt;/h4&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;aws --profile=HA rds  describe-db-instances --query &#39;DBInstances[?DBInstanceIdentifier==`evox-dev`].LatestRestorableTime&#39;  --output text
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;➜  serkanh.github.io git:(master) aws --profile=HA rds  describe-db-instances --query &#39;DBInstances[?DBInstanceIdentifier==`evox-dev`].LatestRestorableTime&#39;  --output text | TZ=&#39;America/New_York&#39; date
+Mon Jul 23 13:01:59 EDT 2018
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+</description>
+				<pubDate>Wed, 11 Jul 2018 11:51:00 -0400</pubDate>
+				<link>/aws,/rds,/cli/2018/07/11/aws-cli-rds-commands.html</link>
+				<guid isPermaLink="true">/aws,/rds,/cli/2018/07/11/aws-cli-rds-commands.html</guid>
+			</item>
+		
+			<item>
+				<title>Some useful cloudtrail commands i use often. </title>
+				<description>&lt;p&gt;&lt;a href=&quot;https://docs.aws.amazon.com/awscloudtrail/latest/userguide/view-cloudtrail-events-cli.html#attribute-lookup-example&quot;&gt;AWS Docs&lt;/a&gt;&lt;/p&gt;
+
+&lt;h5 id=&quot;get-the-last-10-actions-done-by-iam-user&quot;&gt;Get the last 10 actions done by IAM user.&lt;/h5&gt;
+
+&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;
+➜  ~ aws cloudtrail lookup-events --lookup-attributes aws lookup-events --lookup-attributes AttributeKey=Username,AttributeValue=username --max-items 10
+&lt;/code&gt;&lt;/p&gt;
+
+</description>
+				<pubDate>Tue, 10 Jul 2018 11:51:00 -0400</pubDate>
+				<link>/aws,/clooudtrail,/cli/2018/07/10/useful-aws-cli-cloudtrail-commands.html</link>
+				<guid isPermaLink="true">/aws,/clooudtrail,/cli/2018/07/10/useful-aws-cli-cloudtrail-commands.html</guid>
+			</item>
+		
+			<item>
 				<title>TIL -AWS has a nice api endpoint to get its ip ranges. </title>
 				<description>&lt;h5 id=&quot;not-only-you-can-query-by-service-but-also-you-can-get-notification-of-any-changes-to-ip-ranges-by-subscribing-to-sns-amazonipspacechanged-sourcehttpsdocsawsamazoncomgenerallatestgraws-ip-rangeshtml&quot;&gt;Not only you can query by service but also you can get notification of any changes to ip ranges by subscribing to SNS &lt;code class=&quot;highlighter-rouge&quot;&gt;AmazonIpSpaceChanged&lt;/code&gt;. &lt;a href=&quot;https://docs.aws.amazon.com/general/latest/gr/aws-ip-ranges.html&quot;&gt;source&lt;/a&gt;&lt;/h5&gt;
 
@@ -301,136 +564,6 @@ my super secret information
 				<pubDate>Mon, 09 Nov 2015 10:40:56 -0500</pubDate>
 				<link>/vpn,/docker/2015/11/09/open-vpn-setup-with-docker.html</link>
 				<guid isPermaLink="true">/vpn,/docker/2015/11/09/open-vpn-setup-with-docker.html</guid>
-			</item>
-		
-			<item>
-				<title>Bastion Host Setup for CoreOS</title>
-				<description>&lt;p&gt;A common server access pattern is to prevent any connection to your production servers from outside of their private subnet, and use a bastion host to access the private subnet. This pattern is very
-useful when you want to limit; for example ssh access, from only within the network.&lt;/p&gt;
-
-&lt;p&gt;Typically you set up a bastion host, and execute a nc command to the destination host located within the private network.&lt;/p&gt;
-
-&lt;h4 id=&quot;section&quot;&gt;#&lt;/h4&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;#~/.ssh/config
-Host bastion-host
-        Hostname 54.54.54.54
-        User ec2-user
-        RequestTTY yes
-        ForwardAgent yes
-        IdentityFile ~/.ssh/id_rsa
-
-Host destination-host
-        Hostname 10.0.1.141
-        port 22
-        User core
-        ProxyCommand ssh -A bastion-host nc %h %p
-
-
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-
-&lt;p&gt;This works on most systems where netcat installed on both destination and bastion host.
-Recently i have been working on a project to deploy a Mesosphere cluster with Cloudformation.
-All the instances in the cluster were Coreos based so as usual i set up my config file with the bastion 
-host pattern like above which suprisingly did not work. Turns out Coreos uses a newer implementation
-of netcat which is called ncat. By modifying ProxyCommand lin on ~/.ssh/config file and change &lt;strong&gt;nc&lt;/strong&gt; to &lt;strong&gt;ncat&lt;/strong&gt;, i was able to 
-ssh into hosts within private instances with ease.&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;#~/.ssh/config
-Host bastion-host
-        Hostname 54.54.54.54
-        User ec2-user
-        RequestTTY yes 
-        ForwardAgent yes 
-        IdentityFile ~/.ssh/id_rsa
-
-Host destination-host
-        Hostname 10.0.1.141
-        port 22
-        User core
-        ProxyCommand ssh -A bastion-host ncat %h %p
-
-
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-
-</description>
-				<pubDate>Sat, 07 Nov 2015 09:14:56 -0500</pubDate>
-				<link>/coreos,ssh/2015/11/07/coreos-bastion-host-setup.html</link>
-				<guid isPermaLink="true">/coreos,ssh/2015/11/07/coreos-bastion-host-setup.html</guid>
-			</item>
-		
-			<item>
-				<title>Quickstart with Vault</title>
-				<description>&lt;p&gt;Vault is a secure storage server that secures, stores, passwords, tokens, API keys etc. It is the from Hashicorp which had some great products such as Vault, Terraform and i think the most popular of all Vagrant.
-“Vault handles leasing, key revocation, key rolling, and auditing. I want to give a simple to follow setup example for anyone to try out this awesome tool.&lt;/p&gt;
-
-&lt;h5 id=&quot;start-the-server&quot;&gt;1. Start the server&lt;/h5&gt;
-
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt; 
-vault server -config&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;vault.hcl &lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;#vault.hcl
-backend &quot;file&quot; {
-  path=&quot;vault&quot;
-}
-
-listener &quot;tcp&quot; {
-  tls_disable = 1 
-  address=&quot;127.0.0.1:8200&quot;
-}
-
-disable_mlock = true
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-&lt;p&gt;##### 2. Initiate vault and copy/save root token and the keys. &lt;em&gt;*This is only done when initating a new server.&lt;/em&gt;
-&lt;code class=&quot;highlighter-rouge&quot;&gt;
-VAULT_ADDR=http://127.0.0.1:8200 vault init 
-&lt;/code&gt;&lt;/p&gt;
-
-&lt;h5 id=&quot;authenticate-with-master-token&quot;&gt;3. Authenticate with master token.&lt;/h5&gt;
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;VAULT_ADDR=http://127.0.0.1:8200 vault auth &amp;lt;root-token&amp;gt;
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-
-&lt;h5 id=&quot;unseal-to-add-new-authentication-tokens-default-threshold-is-set-to-3-only-root-token-can-unseal-the-vault-vault-is-sealed-everytime-it-is-restarted-and-has-to-be-unsealed-for-services-to-acces&quot;&gt;4. Unseal to add new authentication tokens. Default threshold is set to 3. Only root token can unseal the vault. Vault is sealed everytime it is restarted and has to be unsealed for services to acces&lt;/h5&gt;
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;VAULT_ADDR=http://127.0.0.1:8200 vault unseal  
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-
-&lt;h5 id=&quot;create-a-policy&quot;&gt;5. Create a policy.&lt;/h5&gt;
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;VAULT_ADDR=http://127.0.0.1:8200 vault policy-write secret acl.hcl
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;#acl.hcl
-path &quot;secret/*&quot; {
-  policy = &quot;read&quot;
-}
-
-
-path &quot;auth/token/lookup-self&quot; {
-  policy = &quot;read&quot;
-}
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-&lt;p&gt;##### 6. Create a token that services will be using with the previously created policy. Token generated will be used for services so make a copy of it. 
-&lt;code class=&quot;highlighter-rouge&quot;&gt;
-VAULT_ADDR=http://127.0.0.1:8200 vault token-create -policy=&quot;secret&quot;   
-&lt;/code&gt;&lt;/p&gt;
-
-&lt;h5 id=&quot;while-still-in-root-and-add-new-keyvalues&quot;&gt;7. While still in root and add new key/values&lt;/h5&gt;
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;VAULT_ADDR=http://127.0.0.1:8200 vault write secret/AWS_SECRET_KEY value=&amp;lt;key goes here&amp;gt;
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-
-&lt;h5 id=&quot;authenticate-with-service-token-that-was-generated-on-step-6-and-read-the-key-entered&quot;&gt;8. Authenticate with service token that was generated on step 6 and read the key entered.&lt;/h5&gt;
-
-</description>
-				<pubDate>Tue, 20 Oct 2015 11:40:56 -0400</pubDate>
-				<link>/jekyll/2015/10/20/hashicorp-vault-setup.html</link>
-				<guid isPermaLink="true">/jekyll/2015/10/20/hashicorp-vault-setup.html</guid>
 			</item>
 		
 	</channel>
