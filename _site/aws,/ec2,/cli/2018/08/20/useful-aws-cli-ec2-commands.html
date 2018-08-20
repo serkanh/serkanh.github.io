@@ -2,7 +2,7 @@
 <html>
 <head>
 	<meta charset="utf-8">
-	<title>Useful aws cli rds  commands i use often. </title>
+	<title>Useful EC2 cli commands. </title>
 	
 	<meta name="author" content="serkan haytac">
     
@@ -149,7 +149,7 @@
 
 	<div class="col-sm-9 col-sm-offset-3">
 		<div class="page-header">
-  <h1>Useful aws cli rds  commands i use often.  </h1>
+  <h1>Useful EC2 cli commands.  </h1>
 </div>
 	
 <article>
@@ -157,37 +157,47 @@
 	<div class="col-sm-10">
 	 <span class="post-date">
 	   
-	   July 
-	   11th,
+	   August 
+	   20th,
 	   
 	   2018
 	 </span>
 	  <div class="article_body">
-	  <h4 id="get-the-full-attributes-of-rds-instances-with-its-instancesidentifier">Get the full attributes of rds instances with its instancesidentifier</h4>
-<div class="highlighter-rouge"><pre class="highlight"><code>aws --profile=HA rds describe-db-instances --query 'DBInstances[?DBInstanceIdentifier==`evox-dev`]'
+	  <p><a href="https://docs.aws.amazon.com/cli/latest/userguide/controlling-output.html">AWS Docs</a></p>
+
+<h5 id="get-the-internal-ip-address-of-ec2-instances-that-are-on-windows-platform">Get the internal ip address of ec2 instances that are on Windows platform.</h5>
+<div class="highlighter-rouge"><pre class="highlight"><code>➜  ~ aws ec2 describe-instances --filters "Name=platform,Values=windows" "Name=instance-state-name,Values=running" --query 'Reservations[*].Instances[*].[InstanceId, PrivateIpAddress,PublicIpAdress]' --output table --region us-east-1 
+-------------------------------------------
+|            DescribeInstances            |
++----------------------+------------------+
+|  i-7a644a55          |  192.168.43.26   |
+|  i-24d62cdc          |  192.168.43.80   |
+|  i-8f0ff908          |  10.0.4.35       |
+|  i-7eb3a95e          |  10.0.1.115      |
+|  i-6b612644          |  192.168.43.75   |
+|  i-071708d7          |  10.0.4.31       |
+|  i-8f2e57a0          |  192.168.43.69   |
+|  i-8a273eaa          |  10.0.2.136      |
+|  i-0ac96c4d095cee4d4 |  10.0.1.251      |
+|  i-729a4a51          |  10.0.2.156      |
+|  i-68349581          |  10.0.5.89       |
+|  i-fe8e69dd          |  10.0.2.179      |
+|  i-91d87eb2          |  10.0.1.30       |
+|  i-988cf1b7          |  192.168.43.43   |
+|  i-52011b72          |  10.0.2.203      |
+|  i-1fb75cc9          |  10.0.1.254      |
+|  i-bb044044          |  192.168.33.20   |
+|  i-960e75b9          |  192.168.43.62   |
+|  i-88b493a7          |  192.168.43.117  |
+|  i-6a573485          |  10.0.3.140      |
+|  i-462217c2          |  10.0.4.96       |
+|  i-adf5267b          |  10.0.1.17       |
++----------------------+------------------+
 </code></pre>
 </div>
 
-<h4 id="get-list-of-snapshots-of-rds-database">Get list of snapshots of RDS database.</h4>
-<div class="highlighter-rouge"><pre class="highlight"><code>aws --profile=HA rds describe-db-snapshots --db-instance-identifier evox-dev
-
-</code></pre>
-</div>
-
-<h4 id="get-list-of-snapshots-of-rds-databse-but-only-display-snapshot-id-and-creation-time-with-jq">Get list of snapshots of RDS databse but only display snapshot id and creation time with jq.</h4>
-
-<div class="highlighter-rouge"><pre class="highlight"><code>aws --profile=HA rds describe-db-snapshots --db-instance-identifier evox-dev | jq '[.DBSnapshots[] | {Snapshot_Identifier:.DBSnapshotIdentifier,Creationtime:.SnapshotCreateTime}]'
-</code></pre>
-</div>
-
-<h4 id="get-the-latestrestorabletime-that-is-typically-within-the-range-of-5-min-of-current-time">Get the LatestRestorableTime that is typically within the range of 5 min of current time.</h4>
-
-<div class="highlighter-rouge"><pre class="highlight"><code>aws --profile=HA rds  describe-db-instances --query 'DBInstances[?DBInstanceIdentifier==`evox-dev`].LatestRestorableTime'  --output text
-</code></pre>
-</div>
-
-<div class="highlighter-rouge"><pre class="highlight"><code>➜  serkanh.github.io git:(master) aws --profile=HA rds  describe-db-instances --query 'DBInstances[?DBInstanceIdentifier==`evox-dev`].LatestRestorableTime'  --output text | TZ='America/New_York' date
-Mon Jul 23 13:01:59 EDT 2018
+<h5 id="get-both-public-and-private-ip-address-of-ec2-instances-that-are-on-windows-platform">Get both public and private ip address of ec2 instances that are on Windows platform.</h5>
+<div class="highlighter-rouge"><pre class="highlight"><code>➜  ~ aws ec2 describe-instances --filters "Name=platform,Values=windows" "Name=instance-state-name,Values=running" --query 'Reservations[*].Instances[*].[InstanceId, PrivateIpAddress,PublicIpAdress]' --output table --region us-east-1 
 </code></pre>
 </div>
 
@@ -204,8 +214,8 @@ Mon Jul 23 13:01:59 EDT 2018
 					,
 				</a></li>
 			 
-				<li><a href="/categories.html#rds,-ref">
-					rds, <span>(1)</span>
+				<li><a href="/categories.html#ec2,-ref">
+					ec2, <span>(1)</span>
 					,
 				</a></li>
 			 
@@ -225,7 +235,7 @@ Mon Jul 23 13:01:59 EDT 2018
 		<div>
       <section class="share col-sm-6">
         <h4 class="section-title">Share Post</h4>
-        <a class="btn btn-default btn-sm twitter" href="http://twitter.com/share?text=Useful aws cli rds  commands i use often. &via=shaytac"
+        <a class="btn btn-default btn-sm twitter" href="http://twitter.com/share?text=Useful EC2 cli commands. &via=shaytac"
            onclick="window.open(this.href, 'twitter-share', 'width=550,height=235');return false;">
           <i class="fa fa-twitter fa-lg"></i>
           Twitter
@@ -253,10 +263,10 @@ Mon Jul 23 13:01:59 EDT 2018
 
 		<ul class="pager">
 		  
-		  <li class="previous"><a href="/aws,/clooudtrail,/cli/2018/07/10/useful-aws-cli-cloudtrail-commands.html" title="Some useful cloudtrail commands i use often. ">&larr; Previous</a></li>
+		  <li class="previous"><a href="/aws,/lambda,/serverless,cloudformation/2018/08/09/multi-stage-api-gateway-deployment-with-serverless.html" title="Multi stage api gateway deployment with serverless framework.">&larr; Previous</a></li>
 		  
 		  
-		  <li class="next"><a href="/aws,/lambda,/serverless,cloudformation/2018/08/09/multi-stage-api-gateway-deployment-with-serverless.html" title="Multi stage api gateway deployment with serverless framework.">Next &rarr;</a></li>
+			<li class="next disabled"><a>Next &rarr;</a>
 		  
 		</ul>
 

@@ -7,6 +7,51 @@
 		<atom:link href="/feed.xml" rel="self" type="application/rss+xml" />
 		
 			<item>
+				<title>Useful EC2 cli commands. </title>
+				<description>&lt;p&gt;&lt;a href=&quot;https://docs.aws.amazon.com/cli/latest/userguide/controlling-output.html&quot;&gt;AWS Docs&lt;/a&gt;&lt;/p&gt;
+
+&lt;h5 id=&quot;get-the-internal-ip-address-of-ec2-instances-that-are-on-windows-platform&quot;&gt;Get the internal ip address of ec2 instances that are on Windows platform.&lt;/h5&gt;
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;➜  ~ aws ec2 describe-instances --filters &quot;Name=platform,Values=windows&quot; &quot;Name=instance-state-name,Values=running&quot; --query &#39;Reservations[*].Instances[*].[InstanceId, PrivateIpAddress,PublicIpAdress]&#39; --output table --region us-east-1 
+-------------------------------------------
+|            DescribeInstances            |
++----------------------+------------------+
+|  i-7a644a55          |  192.168.43.26   |
+|  i-24d62cdc          |  192.168.43.80   |
+|  i-8f0ff908          |  10.0.4.35       |
+|  i-7eb3a95e          |  10.0.1.115      |
+|  i-6b612644          |  192.168.43.75   |
+|  i-071708d7          |  10.0.4.31       |
+|  i-8f2e57a0          |  192.168.43.69   |
+|  i-8a273eaa          |  10.0.2.136      |
+|  i-0ac96c4d095cee4d4 |  10.0.1.251      |
+|  i-729a4a51          |  10.0.2.156      |
+|  i-68349581          |  10.0.5.89       |
+|  i-fe8e69dd          |  10.0.2.179      |
+|  i-91d87eb2          |  10.0.1.30       |
+|  i-988cf1b7          |  192.168.43.43   |
+|  i-52011b72          |  10.0.2.203      |
+|  i-1fb75cc9          |  10.0.1.254      |
+|  i-bb044044          |  192.168.33.20   |
+|  i-960e75b9          |  192.168.43.62   |
+|  i-88b493a7          |  192.168.43.117  |
+|  i-6a573485          |  10.0.3.140      |
+|  i-462217c2          |  10.0.4.96       |
+|  i-adf5267b          |  10.0.1.17       |
++----------------------+------------------+
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;h5 id=&quot;get-both-public-and-private-ip-address-of-ec2-instances-that-are-on-windows-platform&quot;&gt;Get both public and private ip address of ec2 instances that are on Windows platform.&lt;/h5&gt;
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;➜  ~ aws ec2 describe-instances --filters &quot;Name=platform,Values=windows&quot; &quot;Name=instance-state-name,Values=running&quot; --query &#39;Reservations[*].Instances[*].[InstanceId, PrivateIpAddress,PublicIpAdress]&#39; --output table --region us-east-1 
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+</description>
+				<pubDate>Mon, 20 Aug 2018 07:40:00 -0400</pubDate>
+				<link>/aws,/ec2,/cli/2018/08/20/useful-aws-cli-ec2-commands.html</link>
+				<guid isPermaLink="true">/aws,/ec2,/cli/2018/08/20/useful-aws-cli-ec2-commands.html</guid>
+			</item>
+		
+			<item>
 				<title>Multi stage api gateway deployment with serverless framework.</title>
 				<description>&lt;p&gt;Both serverless framework and api gateway has the concept of stages.&lt;/p&gt;
 
@@ -14,10 +59,7 @@
 
 &lt;p&gt;First we start by setting up multiple stages for our lambda functions. To keep it simple we will simply set different environment variables per lambda function stage. Function basically will read from the env var and return its value as a string. We will deploy to different stages with serverless’ &lt;code class=&quot;highlighter-rouge&quot;&gt;--stage&lt;/code&gt; flag.&lt;/p&gt;
 
-&lt;p&gt;You can follow this steps by cloning  serverless-api-gateway-multi-stage-demo repo and checkout corresponding steps.&lt;/p&gt;
-
-&lt;h2 id=&quot;step1&quot;&gt;Step1&lt;/h2&gt;
-&lt;p&gt;If you cloned the repo checkout &lt;code class=&quot;highlighter-rouge&quot;&gt;step1&lt;/code&gt; and issue &lt;code class=&quot;highlighter-rouge&quot;&gt;sls&lt;/code&gt; commands as directed below in the specified order.&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;https://github.com/serkanh/serverless-api-gateway-multi-stage-demo&quot;&gt;Repo url&lt;/a&gt;&lt;/p&gt;
 
 &lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;
 service: serverless-api-gateway-multi-stage-demo
@@ -213,9 +255,9 @@ ApiGatewayStageProd:
 
 &lt;p&gt;&lt;img src=&quot;/images/prod-test.png&quot; alt=&quot;prod stage var&quot; /&gt;&lt;/p&gt;
 </description>
-				<pubDate>Mon, 06 Aug 2018 11:51:00 -0400</pubDate>
-				<link>/aws,/lambda,/serverless,cloudformation/2018/08/06/multi-stage-api-gateway-deployment-with-serverless.html</link>
-				<guid isPermaLink="true">/aws,/lambda,/serverless,cloudformation/2018/08/06/multi-stage-api-gateway-deployment-with-serverless.html</guid>
+				<pubDate>Thu, 09 Aug 2018 11:51:00 -0400</pubDate>
+				<link>/aws,/lambda,/serverless,cloudformation/2018/08/09/multi-stage-api-gateway-deployment-with-serverless.html</link>
+				<guid isPermaLink="true">/aws,/lambda,/serverless,cloudformation/2018/08/09/multi-stage-api-gateway-deployment-with-serverless.html</guid>
 			</item>
 		
 			<item>
@@ -524,46 +566,6 @@ my super secret information
 				<pubDate>Sun, 10 Jul 2016 11:40:56 -0400</pubDate>
 				<link>/osx,/screenshot/2016/07/10/save-screenshot-to-clipboard-on-osx.html</link>
 				<guid isPermaLink="true">/osx,/screenshot/2016/07/10/save-screenshot-to-clipboard-on-osx.html</guid>
-			</item>
-		
-			<item>
-				<title>OpenVpn Setup with Docker</title>
-				<description>&lt;p&gt;This is a basic summary of excellent tutorial from Digital Ocean on how to setup OpenVpn with Docker.&lt;/p&gt;
-
-&lt;p&gt;&lt;a href=&quot;https://github.com/kylemanna/docker-openvpn&quot;&gt;https://github.com/kylemanna/docker-openvpn&lt;/a&gt; &lt;br /&gt;
-&lt;a href=&quot;https://www.digitalocean.com/community/tutorials/how-to-run-openvpn-in-a-docker-container-on-ubuntu-14-04&quot;&gt;https://www.digitalocean.com/community/tutorials/how-to-run-openvpn-in-a-docker-container-on-ubuntu-14-04&lt;/a&gt;&lt;/p&gt;
-
-&lt;h5 id=&quot;create-an-fqdn&quot;&gt;1. Create an fqdn&lt;/h5&gt;
-
-&lt;p&gt;I am using AWS Route53 for this step so when you login create an A record(assuming you are pointing to an ip.) for your vpn. Assuming your domain name is yourdomain.com, create something like vpn.yourdomain.com&lt;/p&gt;
-
-&lt;h5 id=&quot;create-a-data-container&quot;&gt;2. Create a data container.&lt;/h5&gt;
-
-&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;export OVPN_DATA=&quot;ovpn-data&quot;&lt;/code&gt; &lt;br /&gt;&lt;br /&gt;
-&lt;code class=&quot;highlighter-rouge&quot;&gt;docker run -name $OVPN_DATA -v /etc/openvpn busybox&lt;/code&gt;&lt;/p&gt;
-
-&lt;h5 id=&quot;generate-vpn-config-file-based-on-fqdn&quot;&gt;3. Generate vpn config file based on fqdn.&lt;/h5&gt;
-
-&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;docker run --volumes-from $OVPN_DATA --rm kylemanna/openvpn ovpn_genconfig -u udp://vpn.yourdomain.com:1194&lt;/code&gt;&lt;/p&gt;
-
-&lt;h4 id=&quot;generate-ovpninitpki&quot;&gt;4. Generate ovpn_initpki&lt;/h4&gt;
-
-&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;docker run --volumes-from $OVPN_DATA --rm -it kylemanna/openvpn ovpn_initpki&lt;/code&gt;&lt;/p&gt;
-
-&lt;h4 id=&quot;run-the-server&quot;&gt;5. Run the server&lt;/h4&gt;
-&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;docker run --volumes-from $OVPN_DATA --rm -p 1194:1194/udp --cap-add=NET_ADMIN kylemanna/openvpn&lt;/code&gt;&lt;/p&gt;
-
-&lt;h4 id=&quot;generate-client-keys&quot;&gt;6. Generate client keys&lt;/h4&gt;
-&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;docker run --volumes-from $OVPN_DATA rm -it  kylemanna/openvpn easyrsa build-client-full serkan nopass&lt;/code&gt; &lt;br /&gt;&lt;br /&gt;
-&lt;code class=&quot;highlighter-rouge&quot;&gt;docker run --volumes-from $OVPN_DATA -rm kylemanna/openvpn ovpn_getclient serkan &amp;gt; serkan.ovpn&lt;/code&gt;&lt;/p&gt;
-
-&lt;h4 id=&quot;run-the-server-1&quot;&gt;7. Run the server&lt;/h4&gt;
-
-&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;docker run -d --volumes-from $OVPN_DATA -p 0.0.0.0:1194:1193/udp --cap-add=NET_ADMIN kylemanna/openvpn&lt;/code&gt;&lt;/p&gt;
-</description>
-				<pubDate>Mon, 09 Nov 2015 10:40:56 -0500</pubDate>
-				<link>/vpn,/docker/2015/11/09/open-vpn-setup-with-docker.html</link>
-				<guid isPermaLink="true">/vpn,/docker/2015/11/09/open-vpn-setup-with-docker.html</guid>
 			</item>
 		
 	</channel>
