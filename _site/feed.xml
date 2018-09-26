@@ -7,11 +7,343 @@
 		<atom:link href="/feed.xml" rel="self" type="application/rss+xml" />
 		
 			<item>
+				<title>jq Cheat Sheet </title>
+				<description>&lt;h5 id=&quot;to-follow-the-examples-you-can-download-the-sample-json-file-generated-via-httpswwwjson-generatorcom&quot;&gt;To follow the examples you can download the &lt;a href=&quot;/download/example.json&quot;&gt;sample json file&lt;/a&gt;. Generated via https://www.json-generator.com/&lt;/h5&gt;
+
+&lt;h5 id=&quot;get-the-first-2-elements-of-the-a-given-array&quot;&gt;Get the first 2 elements of the a given array&lt;/h5&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;
+➜  cat assets/example.json | jq '.[:2]'
+[
+  {
+    &quot;_id&quot;: &quot;5babe2f088e7e9921a13e74b&quot;,
+    &quot;index&quot;: 0,
+    &quot;guid&quot;: &quot;e3440a1a-c657-4f27-9f34-f42fc45ca458&quot;,
+    &quot;isActive&quot;: false,
+    &quot;balance&quot;: &quot;$2,402.13&quot;,
+    &quot;picture&quot;: &quot;http://placehold.it/32x32&quot;,
+    &quot;age&quot;: 33,
+    &quot;eyeColor&quot;: &quot;blue&quot;,
+    &quot;name&quot;: &quot;Mildred Sexton&quot;,
+    &quot;gender&quot;: &quot;female&quot;,
+    &quot;company&quot;: &quot;HOPELI&quot;,
+    &quot;email&quot;: &quot;mildredsexton@hopeli.com&quot;,
+    &quot;phone&quot;: &quot;+1 (953) 555-2073&quot;,
+    &quot;address&quot;: &quot;781 Whitney Avenue, Fruitdale, Maryland, 5417&quot;,
+    &quot;about&quot;: &quot;Dolore aliquip ad officia elit qui commodo occaecat. Irure ipsum incididunt elit duis minim eu duis quis aliquip incididunt exercitation. Incididunt excepteur velit pariatur pariatur.\r\n&quot;,
+    &quot;registered&quot;: &quot;2015-09-20T02:42:27 +04:00&quot;,
+    &quot;latitude&quot;: -60.076234,
+    &quot;longitude&quot;: -150.210389,
+    &quot;tags&quot;: [
+      &quot;aliqua&quot;,
+      &quot;incididunt&quot;,
+      &quot;ipsum&quot;,
+      &quot;ipsum&quot;,
+      &quot;fugiat&quot;,
+      &quot;magna&quot;,
+      &quot;eiusmod&quot;
+    ],
+    &quot;friends&quot;: [
+      {
+        &quot;id&quot;: 0,
+        &quot;name&quot;: &quot;Lorraine Potter&quot;
+      },
+      {
+        &quot;id&quot;: 1,
+        &quot;name&quot;: &quot;Lamb Barber&quot;
+      },
+      {
+        &quot;id&quot;: 2,
+        &quot;name&quot;: &quot;Finch Santos&quot;
+      }
+    ],
+    &quot;greeting&quot;: &quot;Hello, Mildred Sexton! You have 7 unread messages.&quot;,
+    &quot;favoriteFruit&quot;: &quot;banana&quot;
+  },
+  {
+    &quot;_id&quot;: &quot;5babe2f042d8e766498685c7&quot;,
+    &quot;index&quot;: 1,
+    &quot;guid&quot;: &quot;86e6083d-24e8-4b51-aafe-82edeacfd8ed&quot;,
+    &quot;isActive&quot;: false,
+    &quot;balance&quot;: &quot;$1,254.83&quot;,
+    &quot;picture&quot;: &quot;http://placehold.it/32x32&quot;,
+    &quot;age&quot;: 27,
+    &quot;eyeColor&quot;: &quot;blue&quot;,
+    &quot;name&quot;: &quot;Judith Hunter&quot;,
+    &quot;gender&quot;: &quot;female&quot;,
+    &quot;company&quot;: &quot;FIBEROX&quot;,
+    &quot;email&quot;: &quot;judithhunter@fiberox.com&quot;,
+    &quot;phone&quot;: &quot;+1 (838) 510-3504&quot;,
+    &quot;address&quot;: &quot;253 Orange Street, Gila, Vermont, 7709&quot;,
+    &quot;about&quot;: &quot;Minim magna amet labore ex est elit amet officia amet anim. Elit aliqua ipsum do sit dolor laborum qui quis nulla. Amet non sit minim amet ea mollit elit ex pariatur.\r\n&quot;,
+    &quot;registered&quot;: &quot;2014-03-26T07:07:10 +04:00&quot;,
+    &quot;latitude&quot;: 59.112031,
+    &quot;longitude&quot;: -47.288141,
+    &quot;tags&quot;: [
+      &quot;ea&quot;,
+      &quot;minim&quot;,
+      &quot;mollit&quot;,
+      &quot;est&quot;,
+      &quot;excepteur&quot;,
+      &quot;eu&quot;,
+      &quot;dolor&quot;
+    ],
+    &quot;friends&quot;: [
+      {
+        &quot;id&quot;: 0,
+        &quot;name&quot;: &quot;Flora Richard&quot;
+      },
+      {
+        &quot;id&quot;: 1,
+        &quot;name&quot;: &quot;Courtney Holden&quot;
+      },
+      {
+        &quot;id&quot;: 2,
+        &quot;name&quot;: &quot;Skinner Villarreal&quot;
+      }
+    ],
+    &quot;greeting&quot;: &quot;Hello, Judith Hunter! You have 3 unread messages.&quot;,
+    &quot;favoriteFruit&quot;: &quot;banana&quot;
+  }
+]
+
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h5 id=&quot;show-only-specific-keyvalue-pairs-ex-name-age&quot;&gt;Show only specific key/value pairs (ex: name, age)&lt;/h5&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;➜  cat download/example.json | jq '.[] | {name:.name,age:.age}'
+{
+  &quot;name&quot;: &quot;Mildred Sexton&quot;,
+  &quot;age&quot;: 33
+}
+{
+  &quot;name&quot;: &quot;Judith Hunter&quot;,
+  &quot;age&quot;: 27
+}
+{
+  &quot;name&quot;: &quot;Morton Harrell&quot;,
+  &quot;age&quot;: 28
+}
+{
+  &quot;name&quot;: &quot;Sherri Bowers&quot;,
+  &quot;age&quot;: 22
+}
+{
+  &quot;name&quot;: &quot;Lambert Stark&quot;,
+  &quot;age&quot;: 33
+}
+{
+  &quot;name&quot;: &quot;Jessie Turner&quot;,
+  &quot;age&quot;: 27
+}
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h5 id=&quot;query-based-on-gender-field&quot;&gt;Query based on gender field&lt;/h5&gt;
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;➜  cat assets/example.json | jq '.[]|select(.gender==&quot;male&quot;)' 
+{
+  &quot;_id&quot;: &quot;5babe2f0c2aa2072304da586&quot;,
+  &quot;index&quot;: 2,
+  &quot;guid&quot;: &quot;81be2a22-04e2-43c1-9c38-14b01802612f&quot;,
+  &quot;isActive&quot;: false,
+  &quot;balance&quot;: &quot;$2,737.55&quot;,
+  &quot;picture&quot;: &quot;http://placehold.it/32x32&quot;,
+  &quot;age&quot;: 28,
+  &quot;eyeColor&quot;: &quot;brown&quot;,
+  &quot;name&quot;: &quot;Morton Harrell&quot;,
+  &quot;gender&quot;: &quot;male&quot;,
+  &quot;company&quot;: &quot;GLEAMINK&quot;,
+  &quot;email&quot;: &quot;mortonharrell@gleamink.com&quot;,
+  &quot;phone&quot;: &quot;+1 (934) 471-3056&quot;,
+  &quot;address&quot;: &quot;341 Hall Street, Lloyd, Georgia, 6420&quot;,
+  &quot;about&quot;: &quot;Id irure ipsum elit cupidatat. Qui do commodo quis consectetur ea sint pariatur minim. Enim consequat ex incididunt quis consectetur est nostrud proident velit Lorem nulla laboris mollit. Non duis id nisi eiusmod.\r\n&quot;,
+  &quot;registered&quot;: &quot;2016-11-20T04:59:36 +05:00&quot;,
+  &quot;latitude&quot;: -72.735366,
+  &quot;longitude&quot;: 173.475387,
+  &quot;tags&quot;: [
+    &quot;mollit&quot;,
+    &quot;nisi&quot;,
+    &quot;dolor&quot;,
+    &quot;amet&quot;,
+    &quot;minim&quot;,
+    &quot;eu&quot;,
+    &quot;non&quot;
+  ],
+  &quot;friends&quot;: [
+    {
+      &quot;id&quot;: 0,
+      &quot;name&quot;: &quot;Wendy Horne&quot;
+    },
+    {
+      &quot;id&quot;: 1,
+      &quot;name&quot;: &quot;Terrell Cantrell&quot;
+    },
+    {
+      &quot;id&quot;: 2,
+      &quot;name&quot;: &quot;Gallagher Brock&quot;
+    }
+  ],
+  &quot;greeting&quot;: &quot;Hello, Morton Harrell! You have 10 unread messages.&quot;,
+  &quot;favoriteFruit&quot;: &quot;apple&quot;
+}
+{
+  &quot;_id&quot;: &quot;5babe2f047ed2184c3ffdd15&quot;,
+  &quot;index&quot;: 4,
+  &quot;guid&quot;: &quot;7da190d7-1b3f-4c13-ad85-c8ea74ec961a&quot;,
+  &quot;isActive&quot;: true,
+  &quot;balance&quot;: &quot;$2,428.25&quot;,
+  &quot;picture&quot;: &quot;http://placehold.it/32x32&quot;,
+  &quot;age&quot;: 33,
+  &quot;eyeColor&quot;: &quot;green&quot;,
+  &quot;name&quot;: &quot;Lambert Stark&quot;,
+  &quot;gender&quot;: &quot;male&quot;,
+  &quot;company&quot;: &quot;BEADZZA&quot;,
+  &quot;email&quot;: &quot;lambertstark@beadzza.com&quot;,
+  &quot;phone&quot;: &quot;+1 (968) 526-3075&quot;,
+  &quot;address&quot;: &quot;498 Remsen Street, Deltaville, Kentucky, 362&quot;,
+  &quot;about&quot;: &quot;Deserunt nulla dolor eiusmod consectetur nostrud non. Sint ea officia velit aliqua occaecat id ad. Dolor non adipisicing irure dolore id eu esse anim pariatur sint irure. Id nisi anim ipsum aute quis nisi ex exercitation velit nostrud proident cupidatat. Consectetur culpa minim cillum officia aliqua do culpa pariatur sit excepteur adipisicing. Exercitation commodo dolor reprehenderit reprehenderit aliqua ad sint amet est mollit aute. Fugiat aliqua laboris cupidatat duis enim tempor voluptate ipsum nulla exercitation.\r\n&quot;,
+  &quot;registered&quot;: &quot;2018-09-10T10:10:26 +04:00&quot;,
+  &quot;latitude&quot;: 10.212328,
+  &quot;longitude&quot;: 15.899575,
+  &quot;tags&quot;: [
+    &quot;non&quot;,
+    &quot;exercitation&quot;,
+    &quot;veniam&quot;,
+    &quot;proident&quot;,
+    &quot;excepteur&quot;,
+    &quot;velit&quot;,
+    &quot;in&quot;
+  ],
+  &quot;friends&quot;: [
+    {
+      &quot;id&quot;: 0,
+      &quot;name&quot;: &quot;Trina Guerrero&quot;
+    },
+    {
+      &quot;id&quot;: 1,
+      &quot;name&quot;: &quot;Flynn Sullivan&quot;
+    },
+    {
+      &quot;id&quot;: 2,
+      &quot;name&quot;: &quot;Cochran Wolf&quot;
+    }
+  ],
+  &quot;greeting&quot;: &quot;Hello, Lambert Stark! You have 7 unread messages.&quot;,
+  &quot;favoriteFruit&quot;: &quot;strawberry&quot;
+}
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h5 id=&quot;query-male-and-active-users&quot;&gt;Query male and active users&lt;/h5&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;➜ cat assets/example.json | jq '.[]|select(.gender==&quot;male&quot; and .isActive==true )'
+
+{
+  &quot;_id&quot;: &quot;5babe2f047ed2184c3ffdd15&quot;,
+  &quot;index&quot;: 4,
+  &quot;guid&quot;: &quot;7da190d7-1b3f-4c13-ad85-c8ea74ec961a&quot;,
+  &quot;isActive&quot;: true,
+  &quot;balance&quot;: &quot;$2,428.25&quot;,
+  &quot;picture&quot;: &quot;http://placehold.it/32x32&quot;,
+  &quot;age&quot;: 33,
+  &quot;eyeColor&quot;: &quot;green&quot;,
+  &quot;name&quot;: &quot;Lambert Stark&quot;,
+  &quot;gender&quot;: &quot;male&quot;,
+  &quot;company&quot;: &quot;BEADZZA&quot;,
+  &quot;email&quot;: &quot;lambertstark@beadzza.com&quot;,
+  &quot;phone&quot;: &quot;+1 (968) 526-3075&quot;,
+  &quot;address&quot;: &quot;498 Remsen Street, Deltaville, Kentucky, 362&quot;,
+  &quot;about&quot;: &quot;Deserunt nulla dolor eiusmod consectetur nostrud non. Sint ea officia velit aliqua occaecat id ad. Dolor non adipisicing irure dolore id eu esse anim pariatur sint irure. Id nisi anim ipsum aute quis nisi ex exercitation velit nostrud proident cupidatat. Consectetur culpa minim cillum officia aliqua do culpa pariatur sit excepteur adipisicing. Exercitation commodo dolor reprehenderit reprehenderit aliqua ad sint amet est mollit aute. Fugiat aliqua laboris cupidatat duis enim tempor voluptate ipsum nulla exercitation.\r\n&quot;,
+  &quot;registered&quot;: &quot;2018-09-10T10:10:26 +04:00&quot;,
+  &quot;latitude&quot;: 10.212328,
+  &quot;longitude&quot;: 15.899575,
+  &quot;tags&quot;: [
+    &quot;non&quot;,
+    &quot;exercitation&quot;,
+    &quot;veniam&quot;,
+    &quot;proident&quot;,
+    &quot;excepteur&quot;,
+    &quot;velit&quot;,
+    &quot;in&quot;
+  ],
+  &quot;friends&quot;: [
+    {
+      &quot;id&quot;: 0,
+      &quot;name&quot;: &quot;Trina Guerrero&quot;
+    },
+    {
+      &quot;id&quot;: 1,
+      &quot;name&quot;: &quot;Flynn Sullivan&quot;
+    },
+    {
+      &quot;id&quot;: 2,
+      &quot;name&quot;: &quot;Cochran Wolf&quot;
+    }
+  ],
+  &quot;greeting&quot;: &quot;Hello, Lambert Stark! You have 7 unread messages.&quot;,
+  &quot;favoriteFruit&quot;: &quot;strawberry&quot;
+}
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;h5 id=&quot;search-for-string-in-key-values&quot;&gt;Search for string in key values.&lt;/h5&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;➜  cat assets/example.json | jq '.[]|select(.address | contains(&quot;781 Whitney&quot;))'  
+{
+  &quot;_id&quot;: &quot;5babe2f088e7e9921a13e74b&quot;,
+  &quot;index&quot;: 0,
+  &quot;guid&quot;: &quot;e3440a1a-c657-4f27-9f34-f42fc45ca458&quot;,
+  &quot;isActive&quot;: false,
+  &quot;balance&quot;: &quot;$2,402.13&quot;,
+  &quot;picture&quot;: &quot;http://placehold.it/32x32&quot;,
+  &quot;age&quot;: 33,
+  &quot;eyeColor&quot;: &quot;blue&quot;,
+  &quot;name&quot;: &quot;Mildred Sexton&quot;,
+  &quot;gender&quot;: &quot;female&quot;,
+  &quot;company&quot;: &quot;HOPELI&quot;,
+  &quot;email&quot;: &quot;mildredsexton@hopeli.com&quot;,
+  &quot;phone&quot;: &quot;+1 (953) 555-2073&quot;,
+  &quot;address&quot;: &quot;781 Whitney Avenue, Fruitdale, Maryland, 5417&quot;,
+  &quot;about&quot;: &quot;Dolore aliquip ad officia elit qui commodo occaecat. Irure ipsum incididunt elit duis minim eu duis quis aliquip incididunt exercitation. Incididunt excepteur velit pariatur pariatur.\r\n&quot;,
+  &quot;registered&quot;: &quot;2015-09-20T02:42:27 +04:00&quot;,
+  &quot;latitude&quot;: -60.076234,
+  &quot;longitude&quot;: -150.210389,
+  &quot;tags&quot;: [
+    &quot;aliqua&quot;,
+    &quot;incididunt&quot;,
+    &quot;ipsum&quot;,
+    &quot;ipsum&quot;,
+    &quot;fugiat&quot;,
+    &quot;magna&quot;,
+    &quot;eiusmod&quot;
+  ],
+  &quot;friends&quot;: [
+    {
+      &quot;id&quot;: 0,
+      &quot;name&quot;: &quot;Lorraine Potter&quot;
+    },
+    {
+      &quot;id&quot;: 1,
+      &quot;name&quot;: &quot;Lamb Barber&quot;
+    },
+    {
+      &quot;id&quot;: 2,
+      &quot;name&quot;: &quot;Finch Santos&quot;
+    }
+  ],
+  &quot;greeting&quot;: &quot;Hello, Mildred Sexton! You have 7 unread messages.&quot;,
+  &quot;favoriteFruit&quot;: &quot;banana&quot;
+}
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+</description>
+				<pubDate>Wed, 26 Sep 2018 10:40:00 +0000</pubDate>
+				<link>/jq,cli/2018/09/26/jq-cheat-sheet.html</link>
+				<guid isPermaLink="true">/jq,cli/2018/09/26/jq-cheat-sheet.html</guid>
+			</item>
+		
+			<item>
 				<title>Useful EC2 cli commands. </title>
 				<description>&lt;p&gt;&lt;a href=&quot;https://docs.aws.amazon.com/cli/latest/userguide/controlling-output.html&quot;&gt;AWS Docs&lt;/a&gt;&lt;/p&gt;
 
 &lt;h5 id=&quot;get-the-internal-ip-address-of-ec2-instances-that-are-on-windows-platform&quot;&gt;Get the internal ip address of ec2 instances that are on Windows platform.&lt;/h5&gt;
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;➜  ~ aws ec2 describe-instances --filters &quot;Name=platform,Values=windows&quot; &quot;Name=instance-state-name,Values=running&quot; --query &#39;Reservations[*].Instances[*].[InstanceId, PrivateIpAddress,PublicIpAdress]&#39; --output table --region us-east-1 
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;➜  ~ aws ec2 describe-instances --filters &quot;Name=platform,Values=windows&quot; &quot;Name=instance-state-name,Values=running&quot; --query 'Reservations[*].Instances[*].[InstanceId, PrivateIpAddress,PublicIpAdress]' --output table --region us-east-1 
 -------------------------------------------
 |            DescribeInstances            |
 +----------------------+------------------+
@@ -38,17 +370,15 @@
 |  i-462217c2          |  10.0.4.96       |
 |  i-adf5267b          |  10.0.1.17       |
 +----------------------+------------------+
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
 &lt;h5 id=&quot;get-both-public-and-private-ip-address-of-ec2-instances-that-are-on-windows-platform&quot;&gt;Get both public and private ip address of ec2 instances that are on Windows platform.&lt;/h5&gt;
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;➜  ~ aws ec2 describe-instances --filters &quot;Name=platform,Values=windows&quot; &quot;Name=instance-state-name,Values=running&quot; --query &#39;Reservations[*].Instances[*].[InstanceId, PrivateIpAddress,PublicIpAdress]&#39; --output table --region us-east-1 
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;➜  ~ aws ec2 describe-instances --filters &quot;Name=platform,Values=windows&quot; &quot;Name=instance-state-name,Values=running&quot; --query 'Reservations[*].Instances[*].[InstanceId, PrivateIpAddress,PublicIpAdress]' --output table --region us-east-1 
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
 &lt;h5 id=&quot;get-public--private-ip-address-as-well-as-tags&quot;&gt;Get public &amp;amp; private ip address as well as tags&lt;/h5&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;aws ec2 describe-instances --filters &quot;Name=platform,Values=windows&quot; &quot;Name=instance-state-name,Values=running&quot; --query &#39;Reservations[*].Instances[*].[InstanceId, PrivateIpAddress, PublicIpAddress, Tags[0].Value, Tags[1].Value, Tags[2].Value,Tags[3].Value]&#39; --output table --region us-east-1 
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;aws ec2 describe-instances --filters &quot;Name=platform,Values=windows&quot; &quot;Name=instance-state-name,Values=running&quot; --query 'Reservations[*].Instances[*].[InstanceId, PrivateIpAddress, PublicIpAddress, Tags[0].Value, Tags[1].Value, Tags[2].Value,Tags[3].Value]' --output table --region us-east-1 
 ----------------------------------------------------------------------------------------------------------------------------------------
 |                                                           DescribeInstances                                                          |
 +---------------------+-----------------+----------------+------------------------+-------------+----------------------+---------------+
@@ -69,10 +399,9 @@
 |  i-52011b72         |  10.0.2.203     |  11.11.11.11   |  backup                |  Prod       |  WEB                 |  AmzEWeb02    |
 |  i-1fb75cc9         |  10.0.1.254     |  11.11.11.11  |  AMZESQLSTG            |  BI         |  Prod                |  backup       |
 +---------------------+-----------------+----------------+------------------------+-------------+----------------------+---------------+
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 </description>
-				<pubDate>Mon, 20 Aug 2018 07:40:00 -0400</pubDate>
+				<pubDate>Mon, 20 Aug 2018 11:40:00 +0000</pubDate>
 				<link>/aws,/ec2,/cli/2018/08/20/useful-aws-cli-ec2-commands.html</link>
 				<guid isPermaLink="true">/aws,/ec2,/cli/2018/08/20/useful-aws-cli-ec2-commands.html</guid>
 			</item>
@@ -87,13 +416,13 @@
 
 &lt;p&gt;&lt;a href=&quot;https://github.com/serkanh/serverless-api-gateway-multi-stage-demo&quot;&gt;Repo url&lt;/a&gt;&lt;/p&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;
 service: serverless-api-gateway-multi-stage-demo
 
 ## This is where we setup env variables that will be set for different stages of lambda functions.
 custom:
-  dev_APP_STAGE: &#39;DEV STAGE&#39;
-  prod_APP_STAGE: &#39;PROD STAGE&#39;
+  dev_APP_STAGE: 'DEV STAGE'
+  prod_APP_STAGE: 'PROD STAGE'
 provider:
   name: aws
   runtime: nodejs8.10
@@ -103,43 +432,39 @@ functions:
   hello:
     handler: handler.hello
 
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
 &lt;p&gt;and deploy to both &lt;code class=&quot;highlighter-rouge&quot;&gt;dev&lt;/code&gt; and &lt;code class=&quot;highlighter-rouge&quot;&gt;prod&lt;/code&gt; stages&lt;/p&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;sls deploy --stage=dev
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;sls deploy --stage=dev
 sls deploy --stage=prod
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
 &lt;p&gt;if you are using aws profiles you can deploy by specifiying the aws profile you’d like to use &lt;code class=&quot;highlighter-rouge&quot;&gt;sls --aws-profile=&amp;lt;aws-personal-profile&amp;gt; deploy --stage=dev&lt;/code&gt;&lt;/p&gt;
 
 &lt;p&gt;When you invoke the function on both envs, it should simply return the env name a string.&lt;/p&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;➜  serverless-api-gateway-multi-stage-demo git:(master) ✗ sls invoke -f hello --stage=dev
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;➜  serverless-api-gateway-multi-stage-demo git:(master) ✗ sls invoke -f hello --stage=dev
 {
     &quot;statusCode&quot;: 200,
     &quot;body&quot;: &quot;{\&quot;message\&quot;:\&quot;Current lambda function env DEV STAGE\&quot;,\&quot;input\&quot;:{}}&quot;
 }
 
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;➜  serverless-api-gateway-multi-stage-demo git:(master) ✗ sls invoke -f hello --stage=prod
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;➜  serverless-api-gateway-multi-stage-demo git:(master) ✗ sls invoke -f hello --stage=prod
 {
     &quot;statusCode&quot;: 200,
     &quot;body&quot;: &quot;{\&quot;message\&quot;:\&quot;Current lambda function env PROD STAGE\&quot;,\&quot;input\&quot;:{}}&quot;
 }
 
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
 &lt;p&gt;Now we want to create a openapi(swagger) file to define paths for our api. Also we will add api gateway stages, deployment and associated stage variables for api gateway.&lt;/p&gt;
 
 &lt;p&gt;One gotcha of this setup is that we need to give permissions to api gateway to execute each individual function based on env. This is because we are using lambda functions stage name as a api gateway stage variable.&lt;/p&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;swagger: &quot;2.0&quot;
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;swagger: &quot;2.0&quot;
 schemes:
 - &quot;https&quot;
 paths:
@@ -165,57 +490,52 @@ definitions:
   Empty:
     type: &quot;object&quot;
     title: &quot;Empty Schema&quot;
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
 &lt;p&gt;We will include the swagger file in our serverless.yml. One gotcha of using api gateway stage variables in serverless is that both serverless and api gateway and serverless framework is using the same syntax to refer to variables. In order to get around this we will use custom variable syntax so serverless does not interpret this as a serverless variable.&lt;/p&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;//serverless.yml
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;//serverless.yml
 provider:
   name: aws
   runtime: nodejs8.10
   environment:
     APP_STAGE: ${self:custom.${opt:stage, self:provider.stage}_APP_STAGE}
-  variableSyntax: &quot;\\${((?!stageVariables)[ ~:a-zA-Z0-9._&#39;\&quot;,\\-\\/\\(\\)]+?)}&quot;
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
+  variableSyntax: &quot;\\${((?!stageVariables)[ ~:a-zA-Z0-9._'\&quot;,\\-\\/\\(\\)]+?)}&quot;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;//swagger.yml
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;//swagger.yml
  x-amazon-apigateway-integration:
         uri: &quot;arn:aws:apigateway:us-east-1:lambda:path/2015-03-31/functions/arn:aws:lambda:us-east-1:174076265606:function:serverless-multistage-${stageVariables.Stage}-hello/invocations&quot;
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-&lt;p&gt;Give api-gateway execute perm on dev hello function 
-````&lt;/p&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;p&gt;Give api-gateway execute perm on dev hello function&lt;/p&gt;
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;
+aws lambda add-permission    --function-name &quot;arn:aws:lambda:us-east-1:174076265606:function:serverless-multistage-dev-hello&quot;    --source-arn &quot;arn:aws:execute-api:us-east-1:174076265606:rci6d8tuc7/*/GET/&quot;   --principal apigateway.amazonaws.com    --statement-id 8513374b-509d-4cfc-920c-c69e72264c7a    --action lambda:InvokeFunction
 
-&lt;p&gt;aws lambda add-permission    –function-name “arn:aws:lambda:us-east-1:174076265606:function:serverless-multistage-dev-hello”    –source-arn “arn:aws:execute-api:us-east-1:174076265606:rci6d8tuc7/*/GET/”   –principal apigateway.amazonaws.com    –statement-id 8513374b-509d-4cfc-920c-c69e72264c7a    –action lambda:InvokeFunction&lt;/p&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;
-Give api-gateway execute perm on prod  hello function 
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-&lt;p&gt;aws lambda add-permission    –function-name “arn:aws:lambda:us-east-1:174076265606:function:serverless-multistage-prod-hello”    –source-arn “arn:aws:execute-api:us-east-1:174076265606:rci6d8tuc7/*/GET/”   –principal apigateway.amazonaws.com    –statement-id 8513374b-509d-4cfc-920c-c69e72264c7a    –action lambda:InvokeFunction&lt;/p&gt;
+&lt;p&gt;Give api-gateway execute perm on prod  hello function&lt;/p&gt;
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;aws lambda add-permission    --function-name &quot;arn:aws:lambda:us-east-1:174076265606:function:serverless-multistage-prod-hello&quot;    --source-arn &quot;arn:aws:execute-api:us-east-1:174076265606:rci6d8tuc7/*/GET/&quot;   --principal apigateway.amazonaws.com    --statement-id 8513374b-509d-4cfc-920c-c69e72264c7a    --action lambda:InvokeFunction
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
-Final `serverless.yml` should look like below. 
+&lt;p&gt;Final &lt;code class=&quot;highlighter-rouge&quot;&gt;serverless.yml&lt;/code&gt; should look like below.&lt;/p&gt;
 
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;
 
-&lt;p&gt;service: serverless-multistage&lt;/p&gt;
+service: serverless-multistage
 
-&lt;h5 id=&quot;this-is-where-we-setup-env-variables-that-will-be-set-for-different-stages-of-lambda-functions&quot;&gt;This is where we setup env variables that will be set for different stages of lambda functions.&lt;/h5&gt;
-&lt;p&gt;custom:
-  dev_APP_STAGE: ‘DEV STAGE’
-  prod_APP_STAGE: ‘PROD STAGE’&lt;/p&gt;
+##### This is where we setup env variables that will be set for different stages of lambda functions.
+custom:
+  dev_APP_STAGE: 'DEV STAGE'
+  prod_APP_STAGE: 'PROD STAGE'
 
-&lt;p&gt;provider:
+
+provider:
   name: aws
   runtime: nodejs8.10
   environment:
-    APP_STAGE: ${self:custom.${opt:stage, self:provider.stage}&lt;em&gt;APP_STAGE}
-  variableSyntax: “\${((?!stageVariables)[ ~:a-zA-Z0-9.&lt;/em&gt;’&quot;,\-\/\(\)]+?)}”
+    APP_STAGE: ${self:custom.${opt:stage, self:provider.stage}_APP_STAGE}
+  variableSyntax: &quot;\\${((?!stageVariables)[ ~:a-zA-Z0-9._'\&quot;,\\-\\/\\(\\)]+?)}&quot;
 resources:
   Resources:
     ApiGatewayRestApi:
@@ -228,45 +548,45 @@ resources:
       Properties:
         RestApiId:
           Ref: ApiGatewayRestApi
-        Description: ‘Dev deployment’&lt;/p&gt;
+        Description: 'Dev deployment'
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;ApiGatewayDeploymentProd:
-  Type: AWS::ApiGateway::Deployment
-  Properties:
-    RestApiId:
-      Ref: ApiGatewayRestApi
-    Description: &#39;Prod Deployment&#39;
+    
+    ApiGatewayDeploymentProd:
+      Type: AWS::ApiGateway::Deployment
+      Properties:
+        RestApiId:
+          Ref: ApiGatewayRestApi
+        Description: 'Prod Deployment'
 
-ApiGatewayStageDev:
-    Type: &#39;AWS::ApiGateway::Stage&#39;
-    Properties:
-      StageName: dev
-      Description: Dev Stage
-      RestApiId: 
-        Ref: ApiGatewayRestApi
-      DeploymentId: 
-        Ref: ApiGatewayDeploymentDev
-      Variables:
-        &quot;Stage&quot;: &quot;dev&quot;
-ApiGatewayStageProd:
-    Type: &#39;AWS::ApiGateway::Stage&#39;
-    Properties:
-      StageName: prod
-      Description: Prod Stage
-      RestApiId: 
-        Ref: ApiGatewayRestApi
-      DeploymentId: 
-        Ref: ApiGatewayDeploymentProd
-      Variables:
-        &quot;Stage&quot;: &quot;prod&quot;
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
+    ApiGatewayStageDev:
+        Type: 'AWS::ApiGateway::Stage'
+        Properties:
+          StageName: dev
+          Description: Dev Stage
+          RestApiId: 
+            Ref: ApiGatewayRestApi
+          DeploymentId: 
+            Ref: ApiGatewayDeploymentDev
+          Variables:
+            &quot;Stage&quot;: &quot;dev&quot;
+    ApiGatewayStageProd:
+        Type: 'AWS::ApiGateway::Stage'
+        Properties:
+          StageName: prod
+          Description: Prod Stage
+          RestApiId: 
+            Ref: ApiGatewayRestApi
+          DeploymentId: 
+            Ref: ApiGatewayDeploymentProd
+          Variables:
+            &quot;Stage&quot;: &quot;prod&quot;
 
-&lt;p&gt;functions:
+functions:
   hello:
-    handler: handler.hello&lt;/p&gt;
+    handler: handler.hello
 
-&lt;p&gt;````&lt;/p&gt;
+
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
 &lt;p&gt;To test the &lt;code class=&quot;highlighter-rouge&quot;&gt;dev&lt;/code&gt; and &lt;code class=&quot;highlighter-rouge&quot;&gt;prod&lt;/code&gt; functionality in api gateway simply go into api gateway console -&amp;gt;
  Resources -&amp;gt; Get method&lt;/p&gt;
@@ -281,7 +601,7 @@ ApiGatewayStageProd:
 
 &lt;p&gt;&lt;img src=&quot;/images/prod-test.png&quot; alt=&quot;prod stage var&quot; /&gt;&lt;/p&gt;
 </description>
-				<pubDate>Thu, 09 Aug 2018 11:51:00 -0400</pubDate>
+				<pubDate>Thu, 09 Aug 2018 15:51:00 +0000</pubDate>
 				<link>/aws,/lambda,/serverless,cloudformation/2018/08/09/multi-stage-api-gateway-deployment-with-serverless.html</link>
 				<guid isPermaLink="true">/aws,/lambda,/serverless,cloudformation/2018/08/09/multi-stage-api-gateway-deployment-with-serverless.html</guid>
 			</item>
@@ -289,34 +609,29 @@ ApiGatewayStageProd:
 			<item>
 				<title>Useful aws cli rds  commands i use often. </title>
 				<description>&lt;h4 id=&quot;get-the-full-attributes-of-rds-instances-with-its-instancesidentifier&quot;&gt;Get the full attributes of rds instances with its instancesidentifier&lt;/h4&gt;
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;aws --profile=HA rds describe-db-instances --query &#39;DBInstances[?DBInstanceIdentifier==`evox-dev`]&#39;
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;aws --profile=HA rds describe-db-instances --query 'DBInstances[?DBInstanceIdentifier==`evox-dev`]'
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
 &lt;h4 id=&quot;get-list-of-snapshots-of-rds-database&quot;&gt;Get list of snapshots of RDS database.&lt;/h4&gt;
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;aws --profile=HA rds describe-db-snapshots --db-instance-identifier evox-dev
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;aws --profile=HA rds describe-db-snapshots --db-instance-identifier evox-dev
 
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
 &lt;h4 id=&quot;get-list-of-snapshots-of-rds-databse-but-only-display-snapshot-id-and-creation-time-with-jq&quot;&gt;Get list of snapshots of RDS databse but only display snapshot id and creation time with jq.&lt;/h4&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;aws --profile=HA rds describe-db-snapshots --db-instance-identifier evox-dev | jq &#39;[.DBSnapshots[] | {Snapshot_Identifier:.DBSnapshotIdentifier,Creationtime:.SnapshotCreateTime}]&#39;
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;aws --profile=HA rds describe-db-snapshots --db-instance-identifier evox-dev | jq '[.DBSnapshots[] | {Snapshot_Identifier:.DBSnapshotIdentifier,Creationtime:.SnapshotCreateTime}]'
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
 &lt;h4 id=&quot;get-the-latestrestorabletime-that-is-typically-within-the-range-of-5-min-of-current-time&quot;&gt;Get the LatestRestorableTime that is typically within the range of 5 min of current time.&lt;/h4&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;aws --profile=HA rds  describe-db-instances --query &#39;DBInstances[?DBInstanceIdentifier==`evox-dev`].LatestRestorableTime&#39;  --output text
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;aws --profile=HA rds  describe-db-instances --query 'DBInstances[?DBInstanceIdentifier==`evox-dev`].LatestRestorableTime'  --output text
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;➜  serkanh.github.io git:(master) aws --profile=HA rds  describe-db-instances --query &#39;DBInstances[?DBInstanceIdentifier==`evox-dev`].LatestRestorableTime&#39;  --output text | TZ=&#39;America/New_York&#39; date
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;➜  serkanh.github.io git:(master) aws --profile=HA rds  describe-db-instances --query 'DBInstances[?DBInstanceIdentifier==`evox-dev`].LatestRestorableTime'  --output text | TZ='America/New_York' date
 Mon Jul 23 13:01:59 EDT 2018
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 </description>
-				<pubDate>Wed, 11 Jul 2018 11:51:00 -0400</pubDate>
+				<pubDate>Wed, 11 Jul 2018 15:51:00 +0000</pubDate>
 				<link>/aws,/rds,/cli/2018/07/11/aws-cli-rds-commands.html</link>
 				<guid isPermaLink="true">/aws,/rds,/cli/2018/07/11/aws-cli-rds-commands.html</guid>
 			</item>
@@ -327,29 +642,27 @@ Mon Jul 23 13:01:59 EDT 2018
 
 &lt;h5 id=&quot;get-the-last-10-actions-done-by-iam-user&quot;&gt;Get the last 10 actions done by IAM user.&lt;/h5&gt;
 
-&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;
-➜  ~ aws cloudtrail lookup-events --lookup-attributes aws lookup-events --lookup-attributes AttributeKey=Username,AttributeValue=username --max-items 10
-&lt;/code&gt;&lt;/p&gt;
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;➜  ~ aws cloudtrail lookup-events --lookup-attributes aws lookup-events --lookup-attributes AttributeKey=Username,AttributeValue=username --max-items 10
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
 </description>
-				<pubDate>Tue, 10 Jul 2018 11:51:00 -0400</pubDate>
+				<pubDate>Tue, 10 Jul 2018 15:51:00 +0000</pubDate>
 				<link>/aws,/clooudtrail,/cli/2018/07/10/useful-aws-cli-cloudtrail-commands.html</link>
 				<guid isPermaLink="true">/aws,/clooudtrail,/cli/2018/07/10/useful-aws-cli-cloudtrail-commands.html</guid>
 			</item>
 		
 			<item>
 				<title>TIL -AWS has a nice api endpoint to get its ip ranges. </title>
-				<description>&lt;h5 id=&quot;not-only-you-can-query-by-service-but-also-you-can-get-notification-of-any-changes-to-ip-ranges-by-subscribing-to-sns-amazonipspacechanged-sourcehttpsdocsawsamazoncomgenerallatestgraws-ip-rangeshtml&quot;&gt;Not only you can query by service but also you can get notification of any changes to ip ranges by subscribing to SNS &lt;code class=&quot;highlighter-rouge&quot;&gt;AmazonIpSpaceChanged&lt;/code&gt;. &lt;a href=&quot;https://docs.aws.amazon.com/general/latest/gr/aws-ip-ranges.html&quot;&gt;source&lt;/a&gt;&lt;/h5&gt;
+				<description>&lt;h5 id=&quot;not-only-you-can-query-by-service-but-also-you-can-get-notification-of-any-changes-to-ip-ranges-by-subscribing-to-sns-amazonipspacechanged-source&quot;&gt;Not only you can query by service but also you can get notification of any changes to ip ranges by subscribing to SNS &lt;code class=&quot;highlighter-rouge&quot;&gt;AmazonIpSpaceChanged&lt;/code&gt;. &lt;a href=&quot;https://docs.aws.amazon.com/general/latest/gr/aws-ip-ranges.html&quot;&gt;source&lt;/a&gt;&lt;/h5&gt;
 
 &lt;h5 id=&quot;to-get-ec2-service-ip-ranges&quot;&gt;To get ec2 service ip ranges&lt;/h5&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&amp;gt;&amp;gt; curl -s https://ip-ranges.amazonaws.com/ip-ranges.json | jq -r &#39;.prefixes[] | select(.service==&quot;EC2&quot;) | .ip_prefix&#39;
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&amp;gt;&amp;gt; curl -s https://ip-ranges.amazonaws.com/ip-ranges.json | jq -r '.prefixes[] | select(.service==&quot;EC2&quot;) | .ip_prefix'
 
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-&lt;p&gt;#### To select services in us-east-1 and us-west-2. This type of filtering might come handy when a service provider  who runs on AWS specifically mentions which regions they run their service on ie &lt;a href=&quot;https://discuss.circleci.com/t/circleci-ip-range/10759&quot;&gt;circleci&lt;/a&gt;&lt;/p&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;h4 id=&quot;to-select-services-in-us-east-1-and-us-west-2-this-type-of-filtering-might-come-handy-when-a-service-provider--who-runs-on-aws-specifically-mentions-which-regions-they-run-their-service-on-ie-circleci&quot;&gt;To select services in us-east-1 and us-west-2. This type of filtering might come handy when a service provider  who runs on AWS specifically mentions which regions they run their service on ie &lt;a href=&quot;https://discuss.circleci.com/t/circleci-ip-range/10759&quot;&gt;circleci&lt;/a&gt;&lt;/h4&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&amp;gt;&amp;gt; curl -s https://ip-ranges.amazonaws.com/ip-ranges.json | jq -r &#39;.prefixes[] | select(select(.region==&quot;us-east-1&quot; or .region==&quot;us-east-2&quot; or .region==&quot;us-west-1&quot;) and .service==&quot;EC2&quot;) | .ip_prefix&#39;
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&amp;gt;&amp;gt; curl -s https://ip-ranges.amazonaws.com/ip-ranges.json | jq -r '.prefixes[] | select(select(.region==&quot;us-east-1&quot; or .region==&quot;us-east-2&quot; or .region==&quot;us-west-1&quot;) and .service==&quot;EC2&quot;) | .ip_prefix'
 18.208.0.0/13
 52.95.245.0/24
 54.196.0.0/15
@@ -371,10 +684,9 @@ Mon Jul 23 13:01:59 EDT 2018
 .
 
 54.172.0.0/15
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&amp;gt;&amp;gt;&amp;gt; curl -s https://ip-ranges.amazonaws.com/ip-ranges.json | jq -r &#39;.prefixes[] | select(select(.region==&quot;us-east-1&quot; or .region==&quot;us-east-2&quot; or .region==&quot;us-west-1&quot; ) and .service==&quot;EC2&quot;) | .ip_prefix+ &quot; &quot; +.region&#39; &#39; 
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&amp;gt;&amp;gt;&amp;gt; curl -s https://ip-ranges.amazonaws.com/ip-ranges.json | jq -r '.prefixes[] | select(select(.region==&quot;us-east-1&quot; or .region==&quot;us-east-2&quot; or .region==&quot;us-west-1&quot; ) and .service==&quot;EC2&quot;) | .ip_prefix+ &quot; &quot; +.region' ' 
 18.208.0.0/13 us-east-1
 52.95.245.0/24 us-east-1
 54.196.0.0/15 us-east-1
@@ -391,22 +703,21 @@ Mon Jul 23 13:01:59 EDT 2018
 .
 .
 54.172.0.0/15 us-east-1
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 </description>
-				<pubDate>Mon, 09 Jul 2018 11:51:00 -0400</pubDate>
+				<pubDate>Mon, 09 Jul 2018 15:51:00 +0000</pubDate>
 				<link>/aws,/til,/2018/07/09/TIL-AWS-ip-range-api.html</link>
 				<guid isPermaLink="true">/aws,/til,/2018/07/09/TIL-AWS-ip-range-api.html</guid>
 			</item>
 		
 			<item>
 				<title>Setting up SQS as event source with serverless and cloudformation. </title>
-				<description>&lt;h5 id=&quot;aws-recently-announced-sqs-as-an-event-source-for-lambda-functions-this-is-now-ga-and-looks-like-there-is-already-a-prhttpsgithubcomserverlessserverlesspull5074-for-it-to-to-be-soon-implemened-in-serverless-frameworkhttpsserverlesscom-as-well&quot;&gt;AWS recently announced SQS as an event source for lambda functions. This is now GA and looks like there is already a &lt;a href=&quot;https://github.com/serverless/serverless/pull/5074&quot;&gt;pr&lt;/a&gt; for it to to be soon implemened in &lt;a href=&quot;https://serverless.com/&quot;&gt;serverless framework&lt;/a&gt; as well.&lt;/h5&gt;
+				<description>&lt;h5 id=&quot;aws-recently-announced-sqs-as-an-event-source-for-lambda-functions-this-is-now-ga-and-looks-like-there-is-already-a-pr-for-it-to-to-be-soon-implemened-in-serverless-framework-as-well&quot;&gt;AWS recently announced SQS as an event source for lambda functions. This is now GA and looks like there is already a &lt;a href=&quot;https://github.com/serverless/serverless/pull/5074&quot;&gt;pr&lt;/a&gt; for it to to be soon implemened in &lt;a href=&quot;https://serverless.com/&quot;&gt;serverless framework&lt;/a&gt; as well.&lt;/h5&gt;
 
 &lt;h5 id=&quot;as-soon-as-it-was-announced-we-had-a-use-case-for-this-implementation-in-a-project-that-we-built-with-serverless--so-instead-of-waiting-pr-to-be-merged--i-decided-to-impletemented-via-cloudformation&quot;&gt;As soon as it was announced we had a use case for this implementation in a project that we built with serverless . So instead of waiting pr to be merged  i decided to impletemented via cloudformation.&lt;/h5&gt;
 
 &lt;h5 id=&quot;below-is-the-serverlessyml-file-with-its-entirety-cloudformation-creates-a-sqs-and-and-eventsourcemapping-for-the-function-supervisor&quot;&gt;Below is the &lt;code class=&quot;highlighter-rouge&quot;&gt;serverless.yml&lt;/code&gt; file with its entirety. Cloudformation creates a sqs and and EventSourceMapping for the function &lt;code class=&quot;highlighter-rouge&quot;&gt;supervisor&lt;/code&gt;.&lt;/h5&gt;
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;
 
 service: cd-evox
 
@@ -414,7 +725,7 @@ provider:
   name: aws
   runtime:  nodejs8.10
   iamRoleStatements:
-    - Effect: &#39;Allow&#39;
+    - Effect: 'Allow'
       Action:
         - &quot;lambda:InvokeFunction&quot;
         - &quot;lambda:InvokeAsync&quot;
@@ -449,52 +760,46 @@ resources:
       Type: AWS::SQS::Queue
       Properties:
         QueueName: cd_evox_${opt:stage}
-        MessageRetentionPeriod: &#39;1209600&#39;
-        VisibilityTimeout: &#39;60&#39;
+        MessageRetentionPeriod: '1209600'
+        VisibilityTimeout: '60'
 
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
 &lt;p&gt;&lt;img src=&quot;/images/sqs-as-eventsource.png&quot; alt=&quot;Screenshot&quot; /&gt;&lt;/p&gt;
 
 &lt;p&gt;Maximum batch size currently supported is between 1-10 so if you define a  batch size higher than 10 you will receive the error message:
 &lt;code class=&quot;highlighter-rouge&quot;&gt;An error occurred: mapping - Maximum batch size must be between 1 and 10 inclusive (Service: AWSLambda; Status Code: 400; Error Code: InvalidParameterValueException; Request ID: a03c1359-7cd5-11e8-8e95-8fcb11ee2f63).&lt;/code&gt;&lt;/p&gt;
 </description>
-				<pubDate>Sat, 30 Jun 2018 18:33:00 -0400</pubDate>
+				<pubDate>Sat, 30 Jun 2018 22:33:00 +0000</pubDate>
 				<link>/aws,/lambda,/serverless/2018/06/30/setting-up-sqs-as-event-source-with-serverless-and-cloudformation..html</link>
 				<guid isPermaLink="true">/aws,/lambda,/serverless/2018/06/30/setting-up-sqs-as-event-source-with-serverless-and-cloudformation..html</guid>
 			</item>
 		
 			<item>
 				<title>Useful github search queries </title>
-				<description>&lt;h5 id=&quot;search-a-npm-package-that-is-used-in-a-project-this-is-useful-to-get-ideas-of-how-package-is-setup-and-used-githubhttpsgithubcomsearchutf8e29c93qrbacfilename3apackagejsonrefsimplesearch&quot;&gt;Search a npm package that is used in a project. This is useful to get ideas of how package is setup and used. &lt;a href=&quot;https://github.com/search?utf8=%E2%9C%93&amp;amp;q=rbac+filename%3Apackage.json&amp;amp;ref=simplesearch&quot;&gt;github&lt;/a&gt;&lt;/h5&gt;
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;rbac filename:package.json
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-&lt;p&gt;##### Search repos with more than 100 stars. &lt;a href=&quot;https://github.com/search?q=rbac+filename%3Apackage.json+stars%3A%3E100&amp;amp;type=Repositories&quot;&gt;github&lt;/a&gt;&lt;/p&gt;
+				<description>&lt;h5 id=&quot;search-a-npm-package-that-is-used-in-a-project-this-is-useful-to-get-ideas-of-how-package-is-setup-and-used-github&quot;&gt;Search a npm package that is used in a project. This is useful to get ideas of how package is setup and used. &lt;a href=&quot;https://github.com/search?utf8=%E2%9C%93&amp;amp;q=rbac+filename%3Apackage.json&amp;amp;ref=simplesearch&quot;&gt;github&lt;/a&gt;&lt;/h5&gt;
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;rbac filename:package.json
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;h5 id=&quot;search-repos-with-more-than-100-stars-github&quot;&gt;Search repos with more than 100 stars. &lt;a href=&quot;https://github.com/search?q=rbac+filename%3Apackage.json+stars%3A%3E100&amp;amp;type=Repositories&quot;&gt;github&lt;/a&gt;&lt;/h5&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt; rbac filename:package.json stars:&amp;gt;100
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt; rbac filename:package.json stars:&amp;gt;100
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
-&lt;h5 id=&quot;search-repos-with-more-than-100-stars-and-a-javascript-repogithubhttpsgithubcomsearchqrbacfilename3apackagejsonstars3a3e100language3ajavascripttyperepositories&quot;&gt;Search repos with more than 100 stars and a javascript repo.&lt;a href=&quot;https://github.com/search?q=rbac+filename%3Apackage.json+stars%3A%3E100+language%3Ajavascript&amp;amp;type=Repositories&quot;&gt;github&lt;/a&gt;&lt;/h5&gt;
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;rbac filename:package.json stars:&amp;gt;100 language:javascript 
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
+&lt;h5 id=&quot;search-repos-with-more-than-100-stars-and-a-javascript-repogithub&quot;&gt;Search repos with more than 100 stars and a javascript repo.&lt;a href=&quot;https://github.com/search?q=rbac+filename%3Apackage.json+stars%3A%3E100+language%3Ajavascript&amp;amp;type=Repositories&quot;&gt;github&lt;/a&gt;&lt;/h5&gt;
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;rbac filename:package.json stars:&amp;gt;100 language:javascript 
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
-&lt;h5 id=&quot;search-string-ecs-in-a-file-with-tf-extension-githubhttpsgithubcomsearchutf8e29c93qecsextension3atftyperepositoriesrefadvsearchll&quot;&gt;Search string &lt;code class=&quot;highlighter-rouge&quot;&gt;ecs&lt;/code&gt; in a file with .tf extension. &lt;a href=&quot;https://github.com/search?utf8=%E2%9C%93&amp;amp;q=ecs+extension%3Atf&amp;amp;type=Repositories&amp;amp;ref=advsearch&amp;amp;l=&amp;amp;l=&quot;&gt;github&lt;/a&gt;&lt;/h5&gt;
+&lt;h5 id=&quot;search-string-ecs-in-a-file-with-tf-extension-github&quot;&gt;Search string &lt;code class=&quot;highlighter-rouge&quot;&gt;ecs&lt;/code&gt; in a file with .tf extension. &lt;a href=&quot;https://github.com/search?utf8=%E2%9C%93&amp;amp;q=ecs+extension%3Atf&amp;amp;type=Repositories&amp;amp;ref=advsearch&amp;amp;l=&amp;amp;l=&quot;&gt;github&lt;/a&gt;&lt;/h5&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;ecs extension:tf
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;ecs extension:tf
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
-&lt;h5 id=&quot;another-practical-example-is-to-search-for-content-that-are-usually-in-a-certain-path-for-example-circleci-20-files-are-are-stored-in-repo-rootcircleciconfigyml-say-you-want-to-find-an-example-of-psql-usage-in-circleci-manifest-file-githubhttpsgithubcomsearchqpsqlfilename3aconfigymlpath3acirclecityperepositories&quot;&gt;Another practical example is to search for content that are usually in a certain path. For example circleci 2.0 files are are stored in &lt;code class=&quot;highlighter-rouge&quot;&gt;&amp;lt;repo-root&amp;gt;/.circleci/config.yml&lt;/code&gt;. Say you want to find an example of psql usage in circleci manifest file: &lt;a href=&quot;https://github.com/search?q=psql+filename%3Aconfig.yml+path%3A.circleci&amp;amp;type=Repositories&quot;&gt;github&lt;/a&gt;&lt;/h5&gt;
-&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;
- psql filename:config.yml path:.circleci
-&lt;/code&gt;`&lt;/p&gt;
+&lt;h5 id=&quot;another-practical-example-is-to-search-for-content-that-are-usually-in-a-certain-path-for-example-circleci-20-files-are-are-stored-in-repo-rootcircleciconfigyml-say-you-want-to-find-an-example-of-psql-usage-in-circleci-manifest-file-github&quot;&gt;Another practical example is to search for content that are usually in a certain path. For example circleci 2.0 files are are stored in &lt;code class=&quot;highlighter-rouge&quot;&gt;&amp;lt;repo-root&amp;gt;/.circleci/config.yml&lt;/code&gt;. Say you want to find an example of psql usage in circleci manifest file: &lt;a href=&quot;https://github.com/search?q=psql+filename%3Aconfig.yml+path%3A.circleci&amp;amp;type=Repositories&quot;&gt;github&lt;/a&gt;&lt;/h5&gt;
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt; psql filename:config.yml path:.circleci
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
 </description>
-				<pubDate>Sun, 01 Apr 2018 18:13:00 -0400</pubDate>
+				<pubDate>Sun, 01 Apr 2018 22:13:00 +0000</pubDate>
 				<link>/git,/github/2018/04/01/useful-github-search-queries.html</link>
 				<guid isPermaLink="true">/git,/github/2018/04/01/useful-github-search-queries.html</guid>
 			</item>
@@ -504,27 +809,25 @@ resources:
 				<description>&lt;p&gt;Per AWS docs requirements for encryptions are:
 https://docs.aws.amazon.com/AmazonS3/latest/dev/ServerSideEncryptionCustomerKeys.html&lt;/p&gt;
 
-&lt;h5 id=&quot;generate-your-aes256-keys&quot;&gt;1. Generate your AES256 keys.&lt;/h5&gt;
+&lt;h5 id=&quot;1-generate-your-aes256-keys&quot;&gt;1. Generate your AES256 keys.&lt;/h5&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;➜ cat testing
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;➜ cat testing
 this is a test
 ➜ echo -n your-super-secret-phrase-string | openssl dgst -sha256 -binary &amp;gt; aes256.key    
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
-&lt;h5 id=&quot;encrypt-and-upload-your-file&quot;&gt;3. Encrypt and upload your file&lt;/h5&gt;
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;➜ aws --profile=personal \
+&lt;h5 id=&quot;3-encrypt-and-upload-your-file&quot;&gt;3. Encrypt and upload your file&lt;/h5&gt;
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;➜ aws --profile=personal \
 s3api put-object \
 --bucket=shaytac-test \
 --key=test2 \
 --body=testing \
 --sse-customer-algorithm=AES256 \
 --sse-customer-key=fileb://aes256.key
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
-&lt;h5 id=&quot;decrypt-and-download-your-file&quot;&gt;4. Decrypt and download your file&lt;/h5&gt;
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;➜ aws --profile=personal \
+&lt;h5 id=&quot;4-decrypt-and-download-your-file&quot;&gt;4. Decrypt and download your file&lt;/h5&gt;
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;➜ aws --profile=personal \
 s3api get-object \
 --bucket=shaytac-test \
 --key=test2  \
@@ -532,11 +835,10 @@ s3api get-object \
 --sse-customer-key=fileb://aes256.key testing-downloaded
 ➜ cat testing-downloaded
 this is a test
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
 </description>
-				<pubDate>Fri, 05 Jan 2018 17:13:00 -0500</pubDate>
+				<pubDate>Fri, 05 Jan 2018 22:13:00 +0000</pubDate>
 				<link>/s3,/encryption/2018/01/05/S3-server-side-encryption-with-customer-provided-enc-keys.html</link>
 				<guid isPermaLink="true">/s3,/encryption/2018/01/05/S3-server-side-encryption-with-customer-provided-enc-keys.html</guid>
 			</item>
@@ -546,52 +848,35 @@ this is a test
 				<description>&lt;p&gt;My day job i use ssh… alot. When you manage hundreds of servers with mission critical infastructure running on passswordless login with ssh keys can be huge time saver. I also take security pretty seriously when it comes to store sensitive information and always looking to find better ways to store sensitive information securely and also in  a convenient way for it to be not cumbersome. 
 With that thought combining ssh keys to encrypt/decrypt files made quite sense so here is a quick write up to do it for anyone else that are interested in it.&lt;/p&gt;
 
-&lt;h5 id=&quot;create-or-open-a-file-that-you-would-like-to-encrypt&quot;&gt;1. Create or open a file that you would like to encrypt.&lt;/h5&gt;
+&lt;h5 id=&quot;1-create-or-open-a-file-that-you-would-like-to-encrypt&quot;&gt;1. Create or open a file that you would like to encrypt.&lt;/h5&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;➜  ~ echo &quot;my super secret information&quot; &amp;gt; secret.txt
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;➜  ~ echo &quot;my super secret information&quot; &amp;gt; secret.txt
 ➜  ~ cat secret.txt 
 my super secret information
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-&lt;p&gt;##### 2. If you havent already create a rsa key pair. If you would like to use existing rsa key pair skip this step and continue to step 3.
-&lt;code class=&quot;highlighter-rouge&quot;&gt;
-ssh-keygen
-&lt;/code&gt;&lt;/p&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;h5 id=&quot;2-if-you-havent-already-create-a-rsa-key-pair-if-you-would-like-to-use-existing-rsa-key-pair-skip-this-step-and-continue-to-step-3&quot;&gt;2. If you havent already create a rsa key pair. If you would like to use existing rsa key pair skip this step and continue to step 3.&lt;/h5&gt;
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;ssh-keygen
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
-&lt;h5 id=&quot;export-your-generated-or-existing-public-key-to-pem-format&quot;&gt;3. Export your generated or existing public key to pem format.&lt;/h5&gt;
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;openssl rsa -in ~/.ssh/id_rsa -pubout &amp;gt; ~/id_rsa.pub.pem
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
+&lt;h5 id=&quot;3-export-your-generated-or-existing-public-key-to-pem-format&quot;&gt;3. Export your generated or existing public key to pem format.&lt;/h5&gt;
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;openssl rsa -in ~/.ssh/id_rsa -pubout &amp;gt; ~/id_rsa.pub.pem
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
-&lt;h5 id=&quot;now-you-are-ready-encrypt-the-file-you-created-earliear&quot;&gt;4. Now you are ready encrypt the file you created earliear.&lt;/h5&gt;
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;cat secret.txt  | openssl rsautl -encrypt -pubin -inkey ~/id_rsa.pub.pem &amp;gt; encrypted-secret.txt
+&lt;h5 id=&quot;4-now-you-are-ready-encrypt-the-file-you-created-earliear&quot;&gt;4. Now you are ready encrypt the file you created earliear.&lt;/h5&gt;
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;cat secret.txt  | openssl rsautl -encrypt -pubin -inkey ~/id_rsa.pub.pem &amp;gt; encrypted-secret.txt
 cat encrypted-secret.txt 
-????uG?????$?&amp;amp;?????VN?&#39;?(????,þQaE咫:?i??t?(?jr.g?#?ջO???=*?e??&amp;lt;&quot;?y&#39;% 
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
+????uG?????$?&amp;amp;?????VN?'?(????,þQaE咫:?i??t?(?jr.g?#?ջO???=*?e??&amp;lt;&quot;?y'% 
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
-&lt;h5 id=&quot;to-decypt-the-secret&quot;&gt;5. To decypt the secret&lt;/h5&gt;
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;➜  ~ cat encrypted-secret.txt  | openssl rsautl -decrypt -inkey ~/.ssh/id_rsa
+&lt;h5 id=&quot;5-to-decypt-the-secret&quot;&gt;5. To decypt the secret&lt;/h5&gt;
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;➜  ~ cat encrypted-secret.txt  | openssl rsautl -decrypt -inkey ~/.ssh/id_rsa
 my super secret information
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
 </description>
-				<pubDate>Sun, 03 Dec 2017 17:13:00 -0500</pubDate>
+				<pubDate>Sun, 03 Dec 2017 22:13:00 +0000</pubDate>
 				<link>/ssh,/encryption/2017/12/03/encrypting-files-rsa-key-pairs.html</link>
 				<guid isPermaLink="true">/ssh,/encryption/2017/12/03/encrypting-files-rsa-key-pairs.html</guid>
-			</item>
-		
-			<item>
-				<title>Save screenshot to clipboard on OSX</title>
-				<description>&lt;p&gt;Screenshots are saved as .png files on the desktop in Mac OS X v10.6 and later. They’re automatically named “Screen Shot date at time .png.” To save your screenshot to the Clipboard instead of a file on your desktop, use&lt;/p&gt;
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;Command-Shift-Control-4&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
-&lt;p&gt;.&lt;/p&gt;
-
-</description>
-				<pubDate>Sun, 10 Jul 2016 11:40:56 -0400</pubDate>
-				<link>/osx,/screenshot/2016/07/10/save-screenshot-to-clipboard-on-osx.html</link>
-				<guid isPermaLink="true">/osx,/screenshot/2016/07/10/save-screenshot-to-clipboard-on-osx.html</guid>
 			</item>
 		
 	</channel>

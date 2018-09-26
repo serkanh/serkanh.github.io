@@ -163,17 +163,16 @@
 	   2018
 	 </span>
 	  <div class="article_body">
-	  <h5 id="not-only-you-can-query-by-service-but-also-you-can-get-notification-of-any-changes-to-ip-ranges-by-subscribing-to-sns-amazonipspacechanged-sourcehttpsdocsawsamazoncomgenerallatestgraws-ip-rangeshtml">Not only you can query by service but also you can get notification of any changes to ip ranges by subscribing to SNS <code class="highlighter-rouge">AmazonIpSpaceChanged</code>. <a href="https://docs.aws.amazon.com/general/latest/gr/aws-ip-ranges.html">source</a></h5>
+	  <h5 id="not-only-you-can-query-by-service-but-also-you-can-get-notification-of-any-changes-to-ip-ranges-by-subscribing-to-sns-amazonipspacechanged-source">Not only you can query by service but also you can get notification of any changes to ip ranges by subscribing to SNS <code class="highlighter-rouge">AmazonIpSpaceChanged</code>. <a href="https://docs.aws.amazon.com/general/latest/gr/aws-ip-ranges.html">source</a></h5>
 
 <h5 id="to-get-ec2-service-ip-ranges">To get ec2 service ip ranges</h5>
 
-<div class="highlighter-rouge"><pre class="highlight"><code>&gt;&gt; curl -s https://ip-ranges.amazonaws.com/ip-ranges.json | jq -r '.prefixes[] | select(.service=="EC2") | .ip_prefix'
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&gt;&gt; curl -s https://ip-ranges.amazonaws.com/ip-ranges.json | jq -r '.prefixes[] | select(.service=="EC2") | .ip_prefix'
 
-</code></pre>
-</div>
-<p>#### To select services in us-east-1 and us-west-2. This type of filtering might come handy when a service provider  who runs on AWS specifically mentions which regions they run their service on ie <a href="https://discuss.circleci.com/t/circleci-ip-range/10759">circleci</a></p>
+</code></pre></div></div>
+<h4 id="to-select-services-in-us-east-1-and-us-west-2-this-type-of-filtering-might-come-handy-when-a-service-provider--who-runs-on-aws-specifically-mentions-which-regions-they-run-their-service-on-ie-circleci">To select services in us-east-1 and us-west-2. This type of filtering might come handy when a service provider  who runs on AWS specifically mentions which regions they run their service on ie <a href="https://discuss.circleci.com/t/circleci-ip-range/10759">circleci</a></h4>
 
-<div class="highlighter-rouge"><pre class="highlight"><code>&gt;&gt; curl -s https://ip-ranges.amazonaws.com/ip-ranges.json | jq -r '.prefixes[] | select(select(.region=="us-east-1" or .region=="us-east-2" or .region=="us-west-1") and .service=="EC2") | .ip_prefix'
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&gt;&gt; curl -s https://ip-ranges.amazonaws.com/ip-ranges.json | jq -r '.prefixes[] | select(select(.region=="us-east-1" or .region=="us-east-2" or .region=="us-west-1") and .service=="EC2") | .ip_prefix'
 18.208.0.0/13
 52.95.245.0/24
 54.196.0.0/15
@@ -195,10 +194,9 @@
 .
 
 54.172.0.0/15
-</code></pre>
-</div>
+</code></pre></div></div>
 
-<div class="highlighter-rouge"><pre class="highlight"><code>&gt;&gt;&gt; curl -s https://ip-ranges.amazonaws.com/ip-ranges.json | jq -r '.prefixes[] | select(select(.region=="us-east-1" or .region=="us-east-2" or .region=="us-west-1" ) and .service=="EC2") | .ip_prefix+ " " +.region' ' 
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&gt;&gt;&gt; curl -s https://ip-ranges.amazonaws.com/ip-ranges.json | jq -r '.prefixes[] | select(select(.region=="us-east-1" or .region=="us-east-2" or .region=="us-west-1" ) and .service=="EC2") | .ip_prefix+ " " +.region' ' 
 18.208.0.0/13 us-east-1
 52.95.245.0/24 us-east-1
 54.196.0.0/15 us-east-1
@@ -215,8 +213,7 @@
 .
 .
 54.172.0.0/15 us-east-1
-</code></pre>
-</div>
+</code></pre></div></div>
 
 	  </div>
 

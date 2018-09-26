@@ -1,0 +1,589 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>jq Cheat Sheet </title>
+	
+	<meta name="author" content="serkan haytac">
+    
+	<!-- Enable responsive viewport -->
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+	<!-- Le HTML5 shim, for IE6-8 support of HTML elements -->
+	<!--[if lt IE 9]>
+	<script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+	<![endif]-->
+
+	<!-- Le styles -->
+	<link href="/assets/resources/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+	<link href="/assets/resources/font-awesome/css/font-awesome.min.css" rel="stylesheet">
+	<link href="/assets/resources/syntax/syntax.css" rel="stylesheet">
+	<link href="/assets/css/style.css" rel="stylesheet">
+
+	<!-- Le fav and touch icons -->
+	<!-- Update these with your own images
+	<link rel="shortcut icon" href="images/favicon.ico">
+	<link rel="apple-touch-icon" href="images/apple-touch-icon.png">
+	<link rel="apple-touch-icon" sizes="72x72" href="images/apple-touch-icon-72x72.png">
+	<link rel="apple-touch-icon" sizes="114x114" href="images/apple-touch-icon-114x114.png">
+	-->
+
+	<link rel="alternate" type="application/rss+xml" title="" href="/feed.xml">
+</head>
+
+<body>
+	<nav class="navbar navbar-default visible-xs" role="navigation">
+		<!-- Brand and toggle get grouped for better mobile display -->
+		<div class="navbar-header">
+			<button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+				<span class="sr-only">Toggle navigation</span>
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+			</button>
+			
+			<a type="button" class="navbar-toggle nav-link" href="http://github.com/serkanh">
+				<i class="fa fa-github"></i>
+			</a>
+			
+			
+			<a type="button" class="navbar-toggle nav-link" href="http://twitter.com/shaytac">
+				<i class="fa fa-twitter"></i>
+			</a>
+			
+			
+			<a type="button" class="navbar-toggle nav-link" href="mailto:shaytac at gmail.com">
+				<i class="fa fa-envelope"></i>
+			</a>
+			
+			<a class="navbar-brand" href="/">
+				<img src="/assets/imgs/profileimg.jpg" class="img-circle" />
+				serkan haytac
+			</a>
+		</div>
+
+		<!-- Collect the nav links, forms, and other content for toggling -->
+		<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+			<ul class="nav navbar-nav">
+				<li class="active"><a href="/">Home</a></li>
+				<li><a href="/categories.html">Categories</a></li>
+				<li><a href="/tags.html">Tags</a></li>
+			</ul>
+		</div><!-- /.navbar-collapse -->
+	</nav>
+
+	<!-- nav-menu-dropdown -->
+	<div class="btn-group hidden-xs" id="nav-menu">
+		<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+			<i class="fa fa-bars"></i>
+		</button>
+		<ul class="dropdown-menu" role="menu">
+			<li><a href="/"><i class="fa fa-home"></i>Home</a></li>
+			<li><a href="/categories.html"><i class="fa fa-folder"></i>Categories</a></li>
+			<li><a href="/tags.html"><i class="fa fa-tags"></i>Tags</a></li>
+			<li class="divider"></li>
+			<li><a href="#"><i class="fa fa-arrow-up"></i>Top of Page</a></li>
+		</ul>
+	</div>
+
+	<div class="col-sm-3 sidebar hidden-xs" style="">
+		<!-- sidebar.html -->
+<header class="sidebar-header" role="banner">
+	<a href="/">
+		<img src="/assets/imgs/profileimg.jpg" class="img-circle" />
+	</a>
+	<h3 class="title">
+        <a href="/">serkan haytac</a>
+    </h3>
+</header>
+
+
+<div id="bio" class="text-center">
+	<a href="https://www.certmetrics.com/amazon/public/badge.aspx?i=1&t=c&d=2016-07-01&ci=AWS00186868">AWS Certified Solutions Architect - Associate</a><br /><a href="https://www.certmetrics.com/amazon/public/badge.aspx?i=2&t=c&d=2016-07-23&ci=AWS00186868">AWS Certified Developer - Associate</a><br /><a href="https://www.certmetrics.com/amazon/public/badge.aspx?i=3&t=c&d=2018-01-12&ci=AWS00186868">AWS Certified SysOps Administrator - Associate</a><br /> <a href="https://gist.github.com/serkanh">Gists</><br /><a href="/resources">Resources</a><br /><a href="/one-liners">One liners</a>
+</div>
+
+
+<div id="contact-list" class="text-center">
+	<ul class="list-unstyled list-inline">
+		
+		<li>
+			<a class="btn btn-default btn-sm" href="https://github.com/serkanh">
+				<i class="fa fa-github-alt fa-lg"></i>
+			</a>
+		</li>
+		
+		
+		<li>
+			<a class="btn btn-default btn-sm" href="https://twitter.com/shaytac">
+				<i class="fa fa-twitter fa-lg"></i>
+			</a>
+		</li>
+		
+		
+		<li>
+			<a class="btn btn-default btn-sm" href="mailto:shaytac at gmail.com">
+				<i class="fa fa-envelope fa-lg"></i>
+			</a>
+		</li>
+		
+	</ul>
+	<ul id="contact-list-secondary" class="list-unstyled list-inline">
+		
+		
+		<li>
+			<a class="btn btn-default btn-sm" href="https://linkedin.com/in/serkanhaytac">
+				<i class="fa fa-linkedin fa-lg"></i>
+			</a>
+		</li>
+		
+		<li>
+			<a class="btn btn-default btn-sm" href="/feed.xml">
+				<i class="fa fa-rss fa-lg"></i>
+			</a>
+		</li>
+	</ul>
+</div>
+<!-- sidebar.html end -->
+
+	</div>
+
+	<div class="col-sm-9 col-sm-offset-3">
+		<div class="page-header">
+  <h1>jq Cheat Sheet  </h1>
+</div>
+	
+<article>
+
+	<div class="col-sm-10">
+	 <span class="post-date">
+	   
+	   September 
+	   26th,
+	   
+	   2018
+	 </span>
+	  <div class="article_body">
+	  <h5 id="to-follow-the-examples-you-can-download-the-sample-json-file-generated-via-httpswwwjson-generatorcom">To follow the examples you can download the <a href="/download/example.json">sample json file</a>. Generated via https://www.json-generator.com/</h5>
+
+<h5 id="get-the-first-2-elements-of-the-a-given-array">Get the first 2 elements of the a given array</h5>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+➜  cat assets/example.json | jq '.[:2]'
+[
+  {
+    "_id": "5babe2f088e7e9921a13e74b",
+    "index": 0,
+    "guid": "e3440a1a-c657-4f27-9f34-f42fc45ca458",
+    "isActive": false,
+    "balance": "$2,402.13",
+    "picture": "http://placehold.it/32x32",
+    "age": 33,
+    "eyeColor": "blue",
+    "name": "Mildred Sexton",
+    "gender": "female",
+    "company": "HOPELI",
+    "email": "mildredsexton@hopeli.com",
+    "phone": "+1 (953) 555-2073",
+    "address": "781 Whitney Avenue, Fruitdale, Maryland, 5417",
+    "about": "Dolore aliquip ad officia elit qui commodo occaecat. Irure ipsum incididunt elit duis minim eu duis quis aliquip incididunt exercitation. Incididunt excepteur velit pariatur pariatur.\r\n",
+    "registered": "2015-09-20T02:42:27 +04:00",
+    "latitude": -60.076234,
+    "longitude": -150.210389,
+    "tags": [
+      "aliqua",
+      "incididunt",
+      "ipsum",
+      "ipsum",
+      "fugiat",
+      "magna",
+      "eiusmod"
+    ],
+    "friends": [
+      {
+        "id": 0,
+        "name": "Lorraine Potter"
+      },
+      {
+        "id": 1,
+        "name": "Lamb Barber"
+      },
+      {
+        "id": 2,
+        "name": "Finch Santos"
+      }
+    ],
+    "greeting": "Hello, Mildred Sexton! You have 7 unread messages.",
+    "favoriteFruit": "banana"
+  },
+  {
+    "_id": "5babe2f042d8e766498685c7",
+    "index": 1,
+    "guid": "86e6083d-24e8-4b51-aafe-82edeacfd8ed",
+    "isActive": false,
+    "balance": "$1,254.83",
+    "picture": "http://placehold.it/32x32",
+    "age": 27,
+    "eyeColor": "blue",
+    "name": "Judith Hunter",
+    "gender": "female",
+    "company": "FIBEROX",
+    "email": "judithhunter@fiberox.com",
+    "phone": "+1 (838) 510-3504",
+    "address": "253 Orange Street, Gila, Vermont, 7709",
+    "about": "Minim magna amet labore ex est elit amet officia amet anim. Elit aliqua ipsum do sit dolor laborum qui quis nulla. Amet non sit minim amet ea mollit elit ex pariatur.\r\n",
+    "registered": "2014-03-26T07:07:10 +04:00",
+    "latitude": 59.112031,
+    "longitude": -47.288141,
+    "tags": [
+      "ea",
+      "minim",
+      "mollit",
+      "est",
+      "excepteur",
+      "eu",
+      "dolor"
+    ],
+    "friends": [
+      {
+        "id": 0,
+        "name": "Flora Richard"
+      },
+      {
+        "id": 1,
+        "name": "Courtney Holden"
+      },
+      {
+        "id": 2,
+        "name": "Skinner Villarreal"
+      }
+    ],
+    "greeting": "Hello, Judith Hunter! You have 3 unread messages.",
+    "favoriteFruit": "banana"
+  }
+]
+
+</code></pre></div></div>
+
+<h5 id="show-only-specific-keyvalue-pairs-ex-name-age">Show only specific key/value pairs (ex: name, age)</h5>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>➜  cat download/example.json | jq '.[] | {name:.name,age:.age}'
+{
+  "name": "Mildred Sexton",
+  "age": 33
+}
+{
+  "name": "Judith Hunter",
+  "age": 27
+}
+{
+  "name": "Morton Harrell",
+  "age": 28
+}
+{
+  "name": "Sherri Bowers",
+  "age": 22
+}
+{
+  "name": "Lambert Stark",
+  "age": 33
+}
+{
+  "name": "Jessie Turner",
+  "age": 27
+}
+</code></pre></div></div>
+
+<h5 id="query-based-on-gender-field">Query based on gender field</h5>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>➜  cat assets/example.json | jq '.[]|select(.gender=="male")' 
+{
+  "_id": "5babe2f0c2aa2072304da586",
+  "index": 2,
+  "guid": "81be2a22-04e2-43c1-9c38-14b01802612f",
+  "isActive": false,
+  "balance": "$2,737.55",
+  "picture": "http://placehold.it/32x32",
+  "age": 28,
+  "eyeColor": "brown",
+  "name": "Morton Harrell",
+  "gender": "male",
+  "company": "GLEAMINK",
+  "email": "mortonharrell@gleamink.com",
+  "phone": "+1 (934) 471-3056",
+  "address": "341 Hall Street, Lloyd, Georgia, 6420",
+  "about": "Id irure ipsum elit cupidatat. Qui do commodo quis consectetur ea sint pariatur minim. Enim consequat ex incididunt quis consectetur est nostrud proident velit Lorem nulla laboris mollit. Non duis id nisi eiusmod.\r\n",
+  "registered": "2016-11-20T04:59:36 +05:00",
+  "latitude": -72.735366,
+  "longitude": 173.475387,
+  "tags": [
+    "mollit",
+    "nisi",
+    "dolor",
+    "amet",
+    "minim",
+    "eu",
+    "non"
+  ],
+  "friends": [
+    {
+      "id": 0,
+      "name": "Wendy Horne"
+    },
+    {
+      "id": 1,
+      "name": "Terrell Cantrell"
+    },
+    {
+      "id": 2,
+      "name": "Gallagher Brock"
+    }
+  ],
+  "greeting": "Hello, Morton Harrell! You have 10 unread messages.",
+  "favoriteFruit": "apple"
+}
+{
+  "_id": "5babe2f047ed2184c3ffdd15",
+  "index": 4,
+  "guid": "7da190d7-1b3f-4c13-ad85-c8ea74ec961a",
+  "isActive": true,
+  "balance": "$2,428.25",
+  "picture": "http://placehold.it/32x32",
+  "age": 33,
+  "eyeColor": "green",
+  "name": "Lambert Stark",
+  "gender": "male",
+  "company": "BEADZZA",
+  "email": "lambertstark@beadzza.com",
+  "phone": "+1 (968) 526-3075",
+  "address": "498 Remsen Street, Deltaville, Kentucky, 362",
+  "about": "Deserunt nulla dolor eiusmod consectetur nostrud non. Sint ea officia velit aliqua occaecat id ad. Dolor non adipisicing irure dolore id eu esse anim pariatur sint irure. Id nisi anim ipsum aute quis nisi ex exercitation velit nostrud proident cupidatat. Consectetur culpa minim cillum officia aliqua do culpa pariatur sit excepteur adipisicing. Exercitation commodo dolor reprehenderit reprehenderit aliqua ad sint amet est mollit aute. Fugiat aliqua laboris cupidatat duis enim tempor voluptate ipsum nulla exercitation.\r\n",
+  "registered": "2018-09-10T10:10:26 +04:00",
+  "latitude": 10.212328,
+  "longitude": 15.899575,
+  "tags": [
+    "non",
+    "exercitation",
+    "veniam",
+    "proident",
+    "excepteur",
+    "velit",
+    "in"
+  ],
+  "friends": [
+    {
+      "id": 0,
+      "name": "Trina Guerrero"
+    },
+    {
+      "id": 1,
+      "name": "Flynn Sullivan"
+    },
+    {
+      "id": 2,
+      "name": "Cochran Wolf"
+    }
+  ],
+  "greeting": "Hello, Lambert Stark! You have 7 unread messages.",
+  "favoriteFruit": "strawberry"
+}
+</code></pre></div></div>
+
+<h5 id="query-male-and-active-users">Query male and active users</h5>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>➜ cat assets/example.json | jq '.[]|select(.gender=="male" and .isActive==true )'
+
+{
+  "_id": "5babe2f047ed2184c3ffdd15",
+  "index": 4,
+  "guid": "7da190d7-1b3f-4c13-ad85-c8ea74ec961a",
+  "isActive": true,
+  "balance": "$2,428.25",
+  "picture": "http://placehold.it/32x32",
+  "age": 33,
+  "eyeColor": "green",
+  "name": "Lambert Stark",
+  "gender": "male",
+  "company": "BEADZZA",
+  "email": "lambertstark@beadzza.com",
+  "phone": "+1 (968) 526-3075",
+  "address": "498 Remsen Street, Deltaville, Kentucky, 362",
+  "about": "Deserunt nulla dolor eiusmod consectetur nostrud non. Sint ea officia velit aliqua occaecat id ad. Dolor non adipisicing irure dolore id eu esse anim pariatur sint irure. Id nisi anim ipsum aute quis nisi ex exercitation velit nostrud proident cupidatat. Consectetur culpa minim cillum officia aliqua do culpa pariatur sit excepteur adipisicing. Exercitation commodo dolor reprehenderit reprehenderit aliqua ad sint amet est mollit aute. Fugiat aliqua laboris cupidatat duis enim tempor voluptate ipsum nulla exercitation.\r\n",
+  "registered": "2018-09-10T10:10:26 +04:00",
+  "latitude": 10.212328,
+  "longitude": 15.899575,
+  "tags": [
+    "non",
+    "exercitation",
+    "veniam",
+    "proident",
+    "excepteur",
+    "velit",
+    "in"
+  ],
+  "friends": [
+    {
+      "id": 0,
+      "name": "Trina Guerrero"
+    },
+    {
+      "id": 1,
+      "name": "Flynn Sullivan"
+    },
+    {
+      "id": 2,
+      "name": "Cochran Wolf"
+    }
+  ],
+  "greeting": "Hello, Lambert Stark! You have 7 unread messages.",
+  "favoriteFruit": "strawberry"
+}
+</code></pre></div></div>
+<h5 id="search-for-string-in-key-values">Search for string in key values.</h5>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>➜  cat assets/example.json | jq '.[]|select(.address | contains("781 Whitney"))'  
+{
+  "_id": "5babe2f088e7e9921a13e74b",
+  "index": 0,
+  "guid": "e3440a1a-c657-4f27-9f34-f42fc45ca458",
+  "isActive": false,
+  "balance": "$2,402.13",
+  "picture": "http://placehold.it/32x32",
+  "age": 33,
+  "eyeColor": "blue",
+  "name": "Mildred Sexton",
+  "gender": "female",
+  "company": "HOPELI",
+  "email": "mildredsexton@hopeli.com",
+  "phone": "+1 (953) 555-2073",
+  "address": "781 Whitney Avenue, Fruitdale, Maryland, 5417",
+  "about": "Dolore aliquip ad officia elit qui commodo occaecat. Irure ipsum incididunt elit duis minim eu duis quis aliquip incididunt exercitation. Incididunt excepteur velit pariatur pariatur.\r\n",
+  "registered": "2015-09-20T02:42:27 +04:00",
+  "latitude": -60.076234,
+  "longitude": -150.210389,
+  "tags": [
+    "aliqua",
+    "incididunt",
+    "ipsum",
+    "ipsum",
+    "fugiat",
+    "magna",
+    "eiusmod"
+  ],
+  "friends": [
+    {
+      "id": 0,
+      "name": "Lorraine Potter"
+    },
+    {
+      "id": 1,
+      "name": "Lamb Barber"
+    },
+    {
+      "id": 2,
+      "name": "Finch Santos"
+    }
+  ],
+  "greeting": "Hello, Mildred Sexton! You have 7 unread messages.",
+  "favoriteFruit": "banana"
+}
+</code></pre></div></div>
+
+
+	  </div>
+
+		
+		<ul class="tag_box list-unstyled list-inline">
+		  <li><i class="fa fa-folder-open"></i></li>
+		  
+		  
+			 
+				<li><a href="/categories.html#jq,cli-ref">
+					jq,cli <span>(1)</span>
+					
+				</a></li>
+			
+		  
+		</ul>
+		  
+
+		  
+
+		<hr>
+
+		<div>
+      <section class="share col-sm-6">
+        <h4 class="section-title">Share Post</h4>
+        <a class="btn btn-default btn-sm twitter" href="http://twitter.com/share?text=jq Cheat Sheet &via=shaytac"
+           onclick="window.open(this.href, 'twitter-share', 'width=550,height=235');return false;">
+          <i class="fa fa-twitter fa-lg"></i>
+          Twitter
+        </a>
+        <a class="btn btn-default btn-sm facebook" href="https://www.facebook.com/sharer/sharer.php"
+           onclick="window.open(this.href, 'facebook-share','width=580,height=296');return false;">
+          <i class="fa fa-facebook fa-lg"></i>
+          Facebook
+        </a>
+        <a class="btn btn-default btn-sm gplus"
+           onclick="window.open('https://plus.google.com/share?url='+window.location.href, 'google-plus-share', 'width=490,height=530');return false;">
+          <i class="fa fa-google-plus fa-lg"></i>
+          Google+
+        </a>
+      </section>
+
+      <section class="col-sm-6 author">
+        <img src="/assets/imgs/profileimg.jpg" class="img-rounded author-image" />
+        <h4 class="section-title author-name">serkan haytac</h4>
+        <p class="author-bio"><a href="https://www.certmetrics.com/amazon/public/badge.aspx?i=1&t=c&d=2016-07-01&ci=AWS00186868">AWS Certified Solutions Architect - Associate</a><br /><a href="https://www.certmetrics.com/amazon/public/badge.aspx?i=2&t=c&d=2016-07-23&ci=AWS00186868">AWS Certified Developer - Associate</a><br /><a href="https://www.certmetrics.com/amazon/public/badge.aspx?i=3&t=c&d=2018-01-12&ci=AWS00186868">AWS Certified SysOps Administrator - Associate</a><br /> <a href="https://gist.github.com/serkanh">Gists</><br /><a href="/resources">Resources</a><br /><a href="/one-liners">One liners</a></p>
+      </section>
+    </div>
+
+    <div class="clearfix"></div>
+
+		<ul class="pager">
+		  
+		  <li class="previous"><a href="/aws,/ec2,/cli/2018/08/20/useful-aws-cli-ec2-commands.html" title="Useful EC2 cli commands. ">&larr; Previous</a></li>
+		  
+		  
+			<li class="next disabled"><a>Next &rarr;</a>
+		  
+		</ul>
+
+		<hr>
+	</div>
+	
+	<div class="col-sm-2 sidebar-2">
+	
+	</div>
+</article>
+<div class="clearfix"></div>
+
+
+
+
+
+		<footer>
+			<hr/>
+			<p>
+				&copy; 2018 serkan haytac with <a href="http://jekyllrb.com/">Jekyll</a>. Theme: <a href="https://github.com/dbtek/dbyll">dbyll</a> by dbtek.
+			</p>
+		</footer>
+	</div>
+
+	<script type="text/javascript" src="/assets/resources/jquery/jquery.min.js"></script>
+	<script type="text/javascript" src="/assets/resources/bootstrap/js/bootstrap.min.js"></script>
+	<script type="text/javascript" src="/assets/js/app.js"></script>
+</body>
+</html>
+
+
+
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-900551-54"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-900551-54');
+</script>
+
+

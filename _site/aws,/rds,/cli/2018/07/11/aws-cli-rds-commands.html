@@ -164,32 +164,27 @@
 	 </span>
 	  <div class="article_body">
 	  <h4 id="get-the-full-attributes-of-rds-instances-with-its-instancesidentifier">Get the full attributes of rds instances with its instancesidentifier</h4>
-<div class="highlighter-rouge"><pre class="highlight"><code>aws --profile=HA rds describe-db-instances --query 'DBInstances[?DBInstanceIdentifier==`evox-dev`]'
-</code></pre>
-</div>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>aws --profile=HA rds describe-db-instances --query 'DBInstances[?DBInstanceIdentifier==`evox-dev`]'
+</code></pre></div></div>
 
 <h4 id="get-list-of-snapshots-of-rds-database">Get list of snapshots of RDS database.</h4>
-<div class="highlighter-rouge"><pre class="highlight"><code>aws --profile=HA rds describe-db-snapshots --db-instance-identifier evox-dev
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>aws --profile=HA rds describe-db-snapshots --db-instance-identifier evox-dev
 
-</code></pre>
-</div>
+</code></pre></div></div>
 
 <h4 id="get-list-of-snapshots-of-rds-databse-but-only-display-snapshot-id-and-creation-time-with-jq">Get list of snapshots of RDS databse but only display snapshot id and creation time with jq.</h4>
 
-<div class="highlighter-rouge"><pre class="highlight"><code>aws --profile=HA rds describe-db-snapshots --db-instance-identifier evox-dev | jq '[.DBSnapshots[] | {Snapshot_Identifier:.DBSnapshotIdentifier,Creationtime:.SnapshotCreateTime}]'
-</code></pre>
-</div>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>aws --profile=HA rds describe-db-snapshots --db-instance-identifier evox-dev | jq '[.DBSnapshots[] | {Snapshot_Identifier:.DBSnapshotIdentifier,Creationtime:.SnapshotCreateTime}]'
+</code></pre></div></div>
 
 <h4 id="get-the-latestrestorabletime-that-is-typically-within-the-range-of-5-min-of-current-time">Get the LatestRestorableTime that is typically within the range of 5 min of current time.</h4>
 
-<div class="highlighter-rouge"><pre class="highlight"><code>aws --profile=HA rds  describe-db-instances --query 'DBInstances[?DBInstanceIdentifier==`evox-dev`].LatestRestorableTime'  --output text
-</code></pre>
-</div>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>aws --profile=HA rds  describe-db-instances --query 'DBInstances[?DBInstanceIdentifier==`evox-dev`].LatestRestorableTime'  --output text
+</code></pre></div></div>
 
-<div class="highlighter-rouge"><pre class="highlight"><code>➜  serkanh.github.io git:(master) aws --profile=HA rds  describe-db-instances --query 'DBInstances[?DBInstanceIdentifier==`evox-dev`].LatestRestorableTime'  --output text | TZ='America/New_York' date
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>➜  serkanh.github.io git:(master) aws --profile=HA rds  describe-db-instances --query 'DBInstances[?DBInstanceIdentifier==`evox-dev`].LatestRestorableTime'  --output text | TZ='America/New_York' date
 Mon Jul 23 13:01:59 EDT 2018
-</code></pre>
-</div>
+</code></pre></div></div>
 
 	  </div>
 

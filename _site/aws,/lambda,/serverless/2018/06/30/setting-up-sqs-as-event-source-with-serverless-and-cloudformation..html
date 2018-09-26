@@ -163,12 +163,12 @@
 	   2018
 	 </span>
 	  <div class="article_body">
-	  <h5 id="aws-recently-announced-sqs-as-an-event-source-for-lambda-functions-this-is-now-ga-and-looks-like-there-is-already-a-prhttpsgithubcomserverlessserverlesspull5074-for-it-to-to-be-soon-implemened-in-serverless-frameworkhttpsserverlesscom-as-well">AWS recently announced SQS as an event source for lambda functions. This is now GA and looks like there is already a <a href="https://github.com/serverless/serverless/pull/5074">pr</a> for it to to be soon implemened in <a href="https://serverless.com/">serverless framework</a> as well.</h5>
+	  <h5 id="aws-recently-announced-sqs-as-an-event-source-for-lambda-functions-this-is-now-ga-and-looks-like-there-is-already-a-pr-for-it-to-to-be-soon-implemened-in-serverless-framework-as-well">AWS recently announced SQS as an event source for lambda functions. This is now GA and looks like there is already a <a href="https://github.com/serverless/serverless/pull/5074">pr</a> for it to to be soon implemened in <a href="https://serverless.com/">serverless framework</a> as well.</h5>
 
 <h5 id="as-soon-as-it-was-announced-we-had-a-use-case-for-this-implementation-in-a-project-that-we-built-with-serverless--so-instead-of-waiting-pr-to-be-merged--i-decided-to-impletemented-via-cloudformation">As soon as it was announced we had a use case for this implementation in a project that we built with serverless . So instead of waiting pr to be merged  i decided to impletemented via cloudformation.</h5>
 
 <h5 id="below-is-the-serverlessyml-file-with-its-entirety-cloudformation-creates-a-sqs-and-and-eventsourcemapping-for-the-function-supervisor">Below is the <code class="highlighter-rouge">serverless.yml</code> file with its entirety. Cloudformation creates a sqs and and EventSourceMapping for the function <code class="highlighter-rouge">supervisor</code>.</h5>
-<div class="highlighter-rouge"><pre class="highlight"><code>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
 
 service: cd-evox
 
@@ -214,8 +214,7 @@ resources:
         MessageRetentionPeriod: '1209600'
         VisibilityTimeout: '60'
 
-</code></pre>
-</div>
+</code></pre></div></div>
 
 <p><img src="/images/sqs-as-eventsource.png" alt="Screenshot" /></p>
 

@@ -4,7 +4,7 @@ title:  "jq Cheat Sheet "
 date:   2018-09-26 10:40:00
 categories: jq,cli 
 ---
-##### To follow the examples you can download the [sample json file](../download/example.json). Generated via https://www.json-generator.com/#
+##### To follow the examples you can download the [sample json file](/download/example.json). Generated via https://www.json-generator.com/#
 
 
 ##### Get the first 2 elements of the a given array  

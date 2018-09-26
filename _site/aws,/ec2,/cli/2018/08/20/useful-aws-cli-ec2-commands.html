@@ -166,7 +166,7 @@
 	  <p><a href="https://docs.aws.amazon.com/cli/latest/userguide/controlling-output.html">AWS Docs</a></p>
 
 <h5 id="get-the-internal-ip-address-of-ec2-instances-that-are-on-windows-platform">Get the internal ip address of ec2 instances that are on Windows platform.</h5>
-<div class="highlighter-rouge"><pre class="highlight"><code>➜  ~ aws ec2 describe-instances --filters "Name=platform,Values=windows" "Name=instance-state-name,Values=running" --query 'Reservations[*].Instances[*].[InstanceId, PrivateIpAddress,PublicIpAdress]' --output table --region us-east-1 
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>➜  ~ aws ec2 describe-instances --filters "Name=platform,Values=windows" "Name=instance-state-name,Values=running" --query 'Reservations[*].Instances[*].[InstanceId, PrivateIpAddress,PublicIpAdress]' --output table --region us-east-1 
 -------------------------------------------
 |            DescribeInstances            |
 +----------------------+------------------+
@@ -193,17 +193,15 @@
 |  i-462217c2          |  10.0.4.96       |
 |  i-adf5267b          |  10.0.1.17       |
 +----------------------+------------------+
-</code></pre>
-</div>
+</code></pre></div></div>
 
 <h5 id="get-both-public-and-private-ip-address-of-ec2-instances-that-are-on-windows-platform">Get both public and private ip address of ec2 instances that are on Windows platform.</h5>
-<div class="highlighter-rouge"><pre class="highlight"><code>➜  ~ aws ec2 describe-instances --filters "Name=platform,Values=windows" "Name=instance-state-name,Values=running" --query 'Reservations[*].Instances[*].[InstanceId, PrivateIpAddress,PublicIpAdress]' --output table --region us-east-1 
-</code></pre>
-</div>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>➜  ~ aws ec2 describe-instances --filters "Name=platform,Values=windows" "Name=instance-state-name,Values=running" --query 'Reservations[*].Instances[*].[InstanceId, PrivateIpAddress,PublicIpAdress]' --output table --region us-east-1 
+</code></pre></div></div>
 
 <h5 id="get-public--private-ip-address-as-well-as-tags">Get public &amp; private ip address as well as tags</h5>
 
-<div class="highlighter-rouge"><pre class="highlight"><code>aws ec2 describe-instances --filters "Name=platform,Values=windows" "Name=instance-state-name,Values=running" --query 'Reservations[*].Instances[*].[InstanceId, PrivateIpAddress, PublicIpAddress, Tags[0].Value, Tags[1].Value, Tags[2].Value,Tags[3].Value]' --output table --region us-east-1 
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>aws ec2 describe-instances --filters "Name=platform,Values=windows" "Name=instance-state-name,Values=running" --query 'Reservations[*].Instances[*].[InstanceId, PrivateIpAddress, PublicIpAddress, Tags[0].Value, Tags[1].Value, Tags[2].Value,Tags[3].Value]' --output table --region us-east-1 
 ----------------------------------------------------------------------------------------------------------------------------------------
 |                                                           DescribeInstances                                                          |
 +---------------------+-----------------+----------------+------------------------+-------------+----------------------+---------------+
@@ -224,8 +222,7 @@
 |  i-52011b72         |  10.0.2.203     |  11.11.11.11   |  backup                |  Prod       |  WEB                 |  AmzEWeb02    |
 |  i-1fb75cc9         |  10.0.1.254     |  11.11.11.11  |  AMZESQLSTG            |  BI         |  Prod                |  backup       |
 +---------------------+-----------------+----------------+------------------------+-------------+----------------------+---------------+
-</code></pre>
-</div>
+</code></pre></div></div>
 
 	  </div>
 
@@ -292,7 +289,7 @@
 		  <li class="previous"><a href="/aws,/lambda,/serverless,cloudformation/2018/08/09/multi-stage-api-gateway-deployment-with-serverless.html" title="Multi stage api gateway deployment with serverless framework.">&larr; Previous</a></li>
 		  
 		  
-			<li class="next disabled"><a>Next &rarr;</a>
+		  <li class="next"><a href="/jq,cli/2018/09/26/jq-cheat-sheet.html" title="jq Cheat Sheet ">Next &rarr;</a></li>
 		  
 		</ul>
 

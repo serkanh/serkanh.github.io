@@ -166,27 +166,25 @@
 	  <p>Per AWS docs requirements for encryptions are:
 https://docs.aws.amazon.com/AmazonS3/latest/dev/ServerSideEncryptionCustomerKeys.html</p>
 
-<h5 id="generate-your-aes256-keys">1. Generate your AES256 keys.</h5>
+<h5 id="1-generate-your-aes256-keys">1. Generate your AES256 keys.</h5>
 
-<div class="highlighter-rouge"><pre class="highlight"><code>➜ cat testing
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>➜ cat testing
 this is a test
 ➜ echo -n your-super-secret-phrase-string | openssl dgst -sha256 -binary &gt; aes256.key    
-</code></pre>
-</div>
+</code></pre></div></div>
 
-<h5 id="encrypt-and-upload-your-file">3. Encrypt and upload your file</h5>
-<div class="highlighter-rouge"><pre class="highlight"><code>➜ aws --profile=personal \
+<h5 id="3-encrypt-and-upload-your-file">3. Encrypt and upload your file</h5>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>➜ aws --profile=personal \
 s3api put-object \
 --bucket=shaytac-test \
 --key=test2 \
 --body=testing \
 --sse-customer-algorithm=AES256 \
 --sse-customer-key=fileb://aes256.key
-</code></pre>
-</div>
+</code></pre></div></div>
 
-<h5 id="decrypt-and-download-your-file">4. Decrypt and download your file</h5>
-<div class="highlighter-rouge"><pre class="highlight"><code>➜ aws --profile=personal \
+<h5 id="4-decrypt-and-download-your-file">4. Decrypt and download your file</h5>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>➜ aws --profile=personal \
 s3api get-object \
 --bucket=shaytac-test \
 --key=test2  \
@@ -194,8 +192,7 @@ s3api get-object \
 --sse-customer-key=fileb://aes256.key testing-downloaded
 ➜ cat testing-downloaded
 this is a test
-</code></pre>
-</div>
+</code></pre></div></div>
 
 
 	  </div>
