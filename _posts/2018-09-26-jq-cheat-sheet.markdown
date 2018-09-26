@@ -303,3 +303,33 @@ categories: jq,cli
   "favoriteFruit": "banana"
 }
 ````
+
+##### Show only specific key/value pairs (ex: name, age)
+
+````
+➜  cat download/example.json | jq '.[] | {name:.name,age:.age}'
+{
+  "name": "Mildred Sexton",
+  "age": 33
+}
+{
+  "name": "Judith Hunter",
+  "age": 27
+}
+{
+  "name": "Morton Harrell",
+  "age": 28
+}
+{
+  "name": "Sherri Bowers",
+  "age": 22
+}
+{
+  "name": "Lambert Stark",
+  "age": 33
+}
+{
+  "name": "Jessie Turner",
+  "age": 27
+}
+````
