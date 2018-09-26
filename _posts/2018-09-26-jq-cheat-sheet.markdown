@@ -107,6 +107,37 @@ categories: jq,cli
 
 ````
 
+##### Show only specific key/value pairs (ex: name, age)
+
+````
+➜  cat download/example.json | jq '.[] | {name:.name,age:.age}'
+{
+  "name": "Mildred Sexton",
+  "age": 33
+}
+{
+  "name": "Judith Hunter",
+  "age": 27
+}
+{
+  "name": "Morton Harrell",
+  "age": 28
+}
+{
+  "name": "Sherri Bowers",
+  "age": 22
+}
+{
+  "name": "Lambert Stark",
+  "age": 33
+}
+{
+  "name": "Jessie Turner",
+  "age": 27
+}
+````
+
+
 ##### Query based on gender field 
 ````
 ➜  cat assets/example.json | jq '.[]|select(.gender=="male")' 
@@ -304,32 +335,3 @@ categories: jq,cli
 }
 ````
 
-##### Show only specific key/value pairs (ex: name, age)
-
-````
-➜  cat download/example.json | jq '.[] | {name:.name,age:.age}'
-{
-  "name": "Mildred Sexton",
-  "age": 33
-}
-{
-  "name": "Judith Hunter",
-  "age": 27
-}
-{
-  "name": "Morton Harrell",
-  "age": 28
-}
-{
-  "name": "Sherri Bowers",
-  "age": 22
-}
-{
-  "name": "Lambert Stark",
-  "age": 33
-}
-{
-  "name": "Jessie Turner",
-  "age": 27
-}
-````
