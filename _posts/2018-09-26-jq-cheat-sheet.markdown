@@ -11,7 +11,7 @@ categories: jq,cli
 
 ````
 
-➜  cat assets/example.json | jq '.[:2]'
+➜ curl http://serkanh.github.io/download/example.json  | jq '.[:2]'
 [
   {
     "_id": "5babe2f088e7e9921a13e74b",
@@ -110,7 +110,7 @@ categories: jq,cli
 ##### Show only specific key/value pairs (ex: name, age)
 
 ````
-➜  cat download/example.json | jq '.[] | {name:.name,age:.age}'
+➜  curl http://serkanh.github.io/download/example.json  | jq '.[] | {name:.name,age:.age}'
 {
   "name": "Mildred Sexton",
   "age": 33
@@ -140,7 +140,7 @@ categories: jq,cli
 
 ##### Query based on gender field 
 ````
-➜  cat assets/example.json | jq '.[]|select(.gender=="male")' 
+➜  curl http://serkanh.github.io/download/example.json  | jq '.[]|select(.gender=="male")' 
 {
   "_id": "5babe2f0c2aa2072304da586",
   "index": 2,
@@ -236,7 +236,7 @@ categories: jq,cli
 ##### Query male and active users
 
 ````
-➜ cat assets/example.json | jq '.[]|select(.gender=="male" and .isActive==true )'
+➜ curl http://serkanh.github.io/download/example.json  | jq '.[]|select(.gender=="male" and .isActive==true )'
 
 {
   "_id": "5babe2f047ed2184c3ffdd15",
@@ -287,7 +287,7 @@ categories: jq,cli
 ##### Search for string in key values.
 
 ````
-➜  cat assets/example.json | jq '.[]|select(.address | contains("781 Whitney"))'  
+➜  curl http://serkanh.github.io/download/example.json  | jq '.[]|select(.address | contains("781 Whitney"))'  
 {
   "_id": "5babe2f088e7e9921a13e74b",
   "index": 0,
