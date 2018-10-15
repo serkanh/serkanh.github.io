@@ -7,13 +7,79 @@
 		<atom:link href="/feed.xml" rel="self" type="application/rss+xml" />
 		
 			<item>
+				<title>Setup env variables for VScode integrated terminal.</title>
+				<description>&lt;p&gt;If you are working on a project that involves multiple aws profiles and vscode, this trick might come handy. Depending on the project you would like to make calls from vscode interated terminal to certail aws accounts. In order to do it you need to setup env var &lt;code class=&quot;highlighter-rouge&quot;&gt;AWS_PROFILE&lt;/code&gt; on the current shell session. So in order to that in vscode simply create &lt;code class=&quot;highlighter-rouge&quot;&gt;.vscode/settings.json&lt;/code&gt; in your projects root and append or add the following snippet. Depending on the os you might need to slightly use different settings.&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;{
+	&quot;terminal.integrated.env.osx&quot;: {
+		&quot;AWS_PROFILE&quot;:&quot;shaytacycombinator&quot;
+	}
+}
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;&lt;img src=&quot;/images/vscode-env.png&quot; alt=&quot;Screenshot&quot; /&gt;&lt;/p&gt;
+</description>
+				<pubDate>Mon, 15 Oct 2018 10:40:00 +0000</pubDate>
+				<link>/vscode,terminal,/2018/10/15/set-up-vscode-terminal-env-var.html</link>
+				<guid isPermaLink="true">/vscode,terminal,/2018/10/15/set-up-vscode-terminal-env-var.html</guid>
+			</item>
+		
+			<item>
+				<title>Serverless Framework cheat sheet.</title>
+				<description>&lt;h5 id=&quot;create-a-new-aws-lambda-project-in-pwd&quot;&gt;Create a new aws lambda project in pwd.&lt;/h5&gt;
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;➜  project serverless create --template aws-nodejs
+
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h5 id=&quot;create-a-new-aws-lambda-project-in-specific-folder&quot;&gt;Create a new aws lambda project in specific folder&lt;/h5&gt;
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;➜  serverless create --template aws-nodejs --path  my-project
+
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+</description>
+				<pubDate>Tue, 09 Oct 2018 10:40:00 +0000</pubDate>
+				<link>/serverless,lambda/2018/10/09/filter-and-delete-s3-objects-by-date.html</link>
+				<guid isPermaLink="true">/serverless,lambda/2018/10/09/filter-and-delete-s3-objects-by-date.html</guid>
+			</item>
+		
+			<item>
+				<title>Filter and delete s3 objects by date.</title>
+				<description>&lt;h5 id=&quot;filter-and-delete-aws-s3-object&quot;&gt;Filter and delete aws s3 object.&lt;/h5&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;➜  ~ aws s3api list-objects --bucket fake-bucket --query 'Contents[?LastModified&amp;gt;=`2018-10-04` ].{Key:Key}' --prefix &quot;2018-10-04&quot; --output text |  xargs -I {} aws  s3 rm s3://fake-bucket/{}                                                                                           
+delete: s3://fake-bucket/2018-10-04T19:00-0zdoEmH9Mp7Y897MGMIy.log
+delete: s3://fake-bucket/2018-10-04T19:00-16FZUUHHZZkWisbJhyn2.log
+delete: s3://fake-bucket/2018-10-04T19:00-3Uw2gy2OyjgkMvhStPfE.log
+
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+</description>
+				<pubDate>Tue, 09 Oct 2018 10:40:00 +0000</pubDate>
+				<link>/aws,cli,s3/2018/10/09/filter-and-delete-s3-objects-by-date.html</link>
+				<guid isPermaLink="true">/aws,cli,s3/2018/10/09/filter-and-delete-s3-objects-by-date.html</guid>
+			</item>
+		
+			<item>
+				<title>Search aws security groups for a given ip address.</title>
+				<description>&lt;h5 id=&quot;for-a-given-ip-addres-search-the-security-groups-that-includes-that-ip-address-in-their-rules&quot;&gt;For a given ip addres search the security groups that includes that ip address in their rules.&lt;/h5&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;➜  ~ aws ec2 describe-security-groups --query 'SecurityGroups[?IpPermissions[?contains(IpRanges[].CidrIp, `0.0.0.0/0`)]].{GroupId: GroupId, GroupName: GroupName}' --output text
+sg-c632eeaf     default
+sg-b632eedf     web
+
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+</description>
+				<pubDate>Fri, 28 Sep 2018 10:40:00 +0000</pubDate>
+				<link>/aws,cli/2018/09/28/search-aws-sg-for-a-given-ip.html</link>
+				<guid isPermaLink="true">/aws,cli/2018/09/28/search-aws-sg-for-a-given-ip.html</guid>
+			</item>
+		
+			<item>
 				<title>jq Cheat Sheet </title>
 				<description>&lt;h5 id=&quot;to-follow-the-examples-you-can-download-the-sample-json-file-generated-via-httpswwwjson-generatorcom&quot;&gt;To follow the examples you can download the &lt;a href=&quot;/download/example.json&quot;&gt;sample json file&lt;/a&gt;. Generated via https://www.json-generator.com/&lt;/h5&gt;
 
 &lt;h5 id=&quot;get-the-first-2-elements-of-the-a-given-array&quot;&gt;Get the first 2 elements of the a given array&lt;/h5&gt;
 
 &lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;
-➜  cat assets/example.json | jq '.[:2]'
+➜ curl http://serkanh.github.io/download/example.json  | jq '.[:2]'
 [
   {
     &quot;_id&quot;: &quot;5babe2f088e7e9921a13e74b&quot;,
@@ -111,7 +177,7 @@
 
 &lt;h5 id=&quot;show-only-specific-keyvalue-pairs-ex-name-age&quot;&gt;Show only specific key/value pairs (ex: name, age)&lt;/h5&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;➜  cat download/example.json | jq '.[] | {name:.name,age:.age}'
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;➜  curl http://serkanh.github.io/download/example.json  | jq '.[] | {name:.name,age:.age}'
 {
   &quot;name&quot;: &quot;Mildred Sexton&quot;,
   &quot;age&quot;: 33
@@ -139,7 +205,7 @@
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
 &lt;h5 id=&quot;query-based-on-gender-field&quot;&gt;Query based on gender field&lt;/h5&gt;
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;➜  cat assets/example.json | jq '.[]|select(.gender==&quot;male&quot;)' 
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;➜  curl http://serkanh.github.io/download/example.json  | jq '.[]|select(.gender==&quot;male&quot;)' 
 {
   &quot;_id&quot;: &quot;5babe2f0c2aa2072304da586&quot;,
   &quot;index&quot;: 2,
@@ -234,7 +300,7 @@
 
 &lt;h5 id=&quot;query-male-and-active-users&quot;&gt;Query male and active users&lt;/h5&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;➜ cat assets/example.json | jq '.[]|select(.gender==&quot;male&quot; and .isActive==true )'
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;➜ curl http://serkanh.github.io/download/example.json  | jq '.[]|select(.gender==&quot;male&quot; and .isActive==true )'
 
 {
   &quot;_id&quot;: &quot;5babe2f047ed2184c3ffdd15&quot;,
@@ -284,7 +350,7 @@
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 &lt;h5 id=&quot;search-for-string-in-key-values&quot;&gt;Search for string in key values.&lt;/h5&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;➜  cat assets/example.json | jq '.[]|select(.address | contains(&quot;781 Whitney&quot;))'  
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;➜  curl http://serkanh.github.io/download/example.json  | jq '.[]|select(.address | contains(&quot;781 Whitney&quot;))'  
 {
   &quot;_id&quot;: &quot;5babe2f088e7e9921a13e74b&quot;,
   &quot;index&quot;: 0,
@@ -708,175 +774,6 @@ Mon Jul 23 13:01:59 EDT 2018
 				<pubDate>Mon, 09 Jul 2018 15:51:00 +0000</pubDate>
 				<link>/aws,/til,/2018/07/09/TIL-AWS-ip-range-api.html</link>
 				<guid isPermaLink="true">/aws,/til,/2018/07/09/TIL-AWS-ip-range-api.html</guid>
-			</item>
-		
-			<item>
-				<title>Setting up SQS as event source with serverless and cloudformation. </title>
-				<description>&lt;h5 id=&quot;aws-recently-announced-sqs-as-an-event-source-for-lambda-functions-this-is-now-ga-and-looks-like-there-is-already-a-pr-for-it-to-to-be-soon-implemened-in-serverless-framework-as-well&quot;&gt;AWS recently announced SQS as an event source for lambda functions. This is now GA and looks like there is already a &lt;a href=&quot;https://github.com/serverless/serverless/pull/5074&quot;&gt;pr&lt;/a&gt; for it to to be soon implemened in &lt;a href=&quot;https://serverless.com/&quot;&gt;serverless framework&lt;/a&gt; as well.&lt;/h5&gt;
-
-&lt;h5 id=&quot;as-soon-as-it-was-announced-we-had-a-use-case-for-this-implementation-in-a-project-that-we-built-with-serverless--so-instead-of-waiting-pr-to-be-merged--i-decided-to-impletemented-via-cloudformation&quot;&gt;As soon as it was announced we had a use case for this implementation in a project that we built with serverless . So instead of waiting pr to be merged  i decided to impletemented via cloudformation.&lt;/h5&gt;
-
-&lt;h5 id=&quot;below-is-the-serverlessyml-file-with-its-entirety-cloudformation-creates-a-sqs-and-and-eventsourcemapping-for-the-function-supervisor&quot;&gt;Below is the &lt;code class=&quot;highlighter-rouge&quot;&gt;serverless.yml&lt;/code&gt; file with its entirety. Cloudformation creates a sqs and and EventSourceMapping for the function &lt;code class=&quot;highlighter-rouge&quot;&gt;supervisor&lt;/code&gt;.&lt;/h5&gt;
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;
-
-service: cd-evox
-
-provider:
-  name: aws
-  runtime:  nodejs8.10
-  iamRoleStatements:
-    - Effect: 'Allow'
-      Action:
-        - &quot;lambda:InvokeFunction&quot;
-        - &quot;lambda:InvokeAsync&quot;
-        - &quot;sqs:ReceiveMessage&quot;
-        - &quot;sqs:DeleteMessage&quot;
-        - &quot;sqs:GetQueueAttributes&quot;
-      Resource: &quot;*&quot;
-
-
-
-
-functions:
-  supervisor:
-    handler: lambdas.supervisor
-
-
-# Create Sqs Queue
-resources:
-  Resources:
-    mapping:
-      Type: AWS::Lambda::EventSourceMapping
-      Properties:
-        EventSourceArn:
-          Fn::GetAtt:
-            - CdEvoxQueue
-            - Arn
-        FunctionName:
-          Fn::GetAtt:
-            - SupervisorLambdaFunction
-            - Arn
-    CdEvoxQueue:
-      Type: AWS::SQS::Queue
-      Properties:
-        QueueName: cd_evox_${opt:stage}
-        MessageRetentionPeriod: '1209600'
-        VisibilityTimeout: '60'
-
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;&lt;img src=&quot;/images/sqs-as-eventsource.png&quot; alt=&quot;Screenshot&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;Maximum batch size currently supported is between 1-10 so if you define a  batch size higher than 10 you will receive the error message:
-&lt;code class=&quot;highlighter-rouge&quot;&gt;An error occurred: mapping - Maximum batch size must be between 1 and 10 inclusive (Service: AWSLambda; Status Code: 400; Error Code: InvalidParameterValueException; Request ID: a03c1359-7cd5-11e8-8e95-8fcb11ee2f63).&lt;/code&gt;&lt;/p&gt;
-</description>
-				<pubDate>Sat, 30 Jun 2018 22:33:00 +0000</pubDate>
-				<link>/aws,/lambda,/serverless/2018/06/30/setting-up-sqs-as-event-source-with-serverless-and-cloudformation..html</link>
-				<guid isPermaLink="true">/aws,/lambda,/serverless/2018/06/30/setting-up-sqs-as-event-source-with-serverless-and-cloudformation..html</guid>
-			</item>
-		
-			<item>
-				<title>Useful github search queries </title>
-				<description>&lt;h5 id=&quot;search-a-npm-package-that-is-used-in-a-project-this-is-useful-to-get-ideas-of-how-package-is-setup-and-used-github&quot;&gt;Search a npm package that is used in a project. This is useful to get ideas of how package is setup and used. &lt;a href=&quot;https://github.com/search?utf8=%E2%9C%93&amp;amp;q=rbac+filename%3Apackage.json&amp;amp;ref=simplesearch&quot;&gt;github&lt;/a&gt;&lt;/h5&gt;
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;rbac filename:package.json
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-&lt;h5 id=&quot;search-repos-with-more-than-100-stars-github&quot;&gt;Search repos with more than 100 stars. &lt;a href=&quot;https://github.com/search?q=rbac+filename%3Apackage.json+stars%3A%3E100&amp;amp;type=Repositories&quot;&gt;github&lt;/a&gt;&lt;/h5&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt; rbac filename:package.json stars:&amp;gt;100
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;h5 id=&quot;search-repos-with-more-than-100-stars-and-a-javascript-repogithub&quot;&gt;Search repos with more than 100 stars and a javascript repo.&lt;a href=&quot;https://github.com/search?q=rbac+filename%3Apackage.json+stars%3A%3E100+language%3Ajavascript&amp;amp;type=Repositories&quot;&gt;github&lt;/a&gt;&lt;/h5&gt;
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;rbac filename:package.json stars:&amp;gt;100 language:javascript 
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;h5 id=&quot;search-string-ecs-in-a-file-with-tf-extension-github&quot;&gt;Search string &lt;code class=&quot;highlighter-rouge&quot;&gt;ecs&lt;/code&gt; in a file with .tf extension. &lt;a href=&quot;https://github.com/search?utf8=%E2%9C%93&amp;amp;q=ecs+extension%3Atf&amp;amp;type=Repositories&amp;amp;ref=advsearch&amp;amp;l=&amp;amp;l=&quot;&gt;github&lt;/a&gt;&lt;/h5&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;ecs extension:tf
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;h5 id=&quot;another-practical-example-is-to-search-for-content-that-are-usually-in-a-certain-path-for-example-circleci-20-files-are-are-stored-in-repo-rootcircleciconfigyml-say-you-want-to-find-an-example-of-psql-usage-in-circleci-manifest-file-github&quot;&gt;Another practical example is to search for content that are usually in a certain path. For example circleci 2.0 files are are stored in &lt;code class=&quot;highlighter-rouge&quot;&gt;&amp;lt;repo-root&amp;gt;/.circleci/config.yml&lt;/code&gt;. Say you want to find an example of psql usage in circleci manifest file: &lt;a href=&quot;https://github.com/search?q=psql+filename%3Aconfig.yml+path%3A.circleci&amp;amp;type=Repositories&quot;&gt;github&lt;/a&gt;&lt;/h5&gt;
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt; psql filename:config.yml path:.circleci
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-</description>
-				<pubDate>Sun, 01 Apr 2018 22:13:00 +0000</pubDate>
-				<link>/git,/github/2018/04/01/useful-github-search-queries.html</link>
-				<guid isPermaLink="true">/git,/github/2018/04/01/useful-github-search-queries.html</guid>
-			</item>
-		
-			<item>
-				<title>Server-Side Encryption with Customer-Provided Encryption Keys </title>
-				<description>&lt;p&gt;Per AWS docs requirements for encryptions are:
-https://docs.aws.amazon.com/AmazonS3/latest/dev/ServerSideEncryptionCustomerKeys.html&lt;/p&gt;
-
-&lt;h5 id=&quot;1-generate-your-aes256-keys&quot;&gt;1. Generate your AES256 keys.&lt;/h5&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;➜ cat testing
-this is a test
-➜ echo -n your-super-secret-phrase-string | openssl dgst -sha256 -binary &amp;gt; aes256.key    
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;h5 id=&quot;3-encrypt-and-upload-your-file&quot;&gt;3. Encrypt and upload your file&lt;/h5&gt;
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;➜ aws --profile=personal \
-s3api put-object \
---bucket=shaytac-test \
---key=test2 \
---body=testing \
---sse-customer-algorithm=AES256 \
---sse-customer-key=fileb://aes256.key
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;h5 id=&quot;4-decrypt-and-download-your-file&quot;&gt;4. Decrypt and download your file&lt;/h5&gt;
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;➜ aws --profile=personal \
-s3api get-object \
---bucket=shaytac-test \
---key=test2  \
---sse-customer-algorithm=AES256 \
---sse-customer-key=fileb://aes256.key testing-downloaded
-➜ cat testing-downloaded
-this is a test
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-</description>
-				<pubDate>Fri, 05 Jan 2018 22:13:00 +0000</pubDate>
-				<link>/s3,/encryption/2018/01/05/S3-server-side-encryption-with-customer-provided-enc-keys.html</link>
-				<guid isPermaLink="true">/s3,/encryption/2018/01/05/S3-server-side-encryption-with-customer-provided-enc-keys.html</guid>
-			</item>
-		
-			<item>
-				<title>Encrypting files with rsa key pairs.</title>
-				<description>&lt;p&gt;My day job i use ssh… alot. When you manage hundreds of servers with mission critical infastructure running on passswordless login with ssh keys can be huge time saver. I also take security pretty seriously when it comes to store sensitive information and always looking to find better ways to store sensitive information securely and also in  a convenient way for it to be not cumbersome. 
-With that thought combining ssh keys to encrypt/decrypt files made quite sense so here is a quick write up to do it for anyone else that are interested in it.&lt;/p&gt;
-
-&lt;h5 id=&quot;1-create-or-open-a-file-that-you-would-like-to-encrypt&quot;&gt;1. Create or open a file that you would like to encrypt.&lt;/h5&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;➜  ~ echo &quot;my super secret information&quot; &amp;gt; secret.txt
-➜  ~ cat secret.txt 
-my super secret information
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-&lt;h5 id=&quot;2-if-you-havent-already-create-a-rsa-key-pair-if-you-would-like-to-use-existing-rsa-key-pair-skip-this-step-and-continue-to-step-3&quot;&gt;2. If you havent already create a rsa key pair. If you would like to use existing rsa key pair skip this step and continue to step 3.&lt;/h5&gt;
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;ssh-keygen
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;h5 id=&quot;3-export-your-generated-or-existing-public-key-to-pem-format&quot;&gt;3. Export your generated or existing public key to pem format.&lt;/h5&gt;
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;openssl rsa -in ~/.ssh/id_rsa -pubout &amp;gt; ~/id_rsa.pub.pem
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;h5 id=&quot;4-now-you-are-ready-encrypt-the-file-you-created-earliear&quot;&gt;4. Now you are ready encrypt the file you created earliear.&lt;/h5&gt;
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;cat secret.txt  | openssl rsautl -encrypt -pubin -inkey ~/id_rsa.pub.pem &amp;gt; encrypted-secret.txt
-cat encrypted-secret.txt 
-????uG?????$?&amp;amp;?????VN?'?(????,þQaE咫:?i??t?(?jr.g?#?ջO???=*?e??&amp;lt;&quot;?y'% 
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;h5 id=&quot;5-to-decypt-the-secret&quot;&gt;5. To decypt the secret&lt;/h5&gt;
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;➜  ~ cat encrypted-secret.txt  | openssl rsautl -decrypt -inkey ~/.ssh/id_rsa
-my super secret information
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-</description>
-				<pubDate>Sun, 03 Dec 2017 22:13:00 +0000</pubDate>
-				<link>/ssh,/encryption/2017/12/03/encrypting-files-rsa-key-pairs.html</link>
-				<guid isPermaLink="true">/ssh,/encryption/2017/12/03/encrypting-files-rsa-key-pairs.html</guid>
 			</item>
 		
 	</channel>
