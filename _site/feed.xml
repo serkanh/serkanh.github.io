@@ -25,23 +25,6 @@
 			</item>
 		
 			<item>
-				<title>Serverless Framework cheat sheet.</title>
-				<description>&lt;h5 id=&quot;create-a-new-aws-lambda-project-in-pwd&quot;&gt;Create a new aws lambda project in pwd.&lt;/h5&gt;
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;➜  project serverless create --template aws-nodejs
-
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;h5 id=&quot;create-a-new-aws-lambda-project-in-specific-folder&quot;&gt;Create a new aws lambda project in specific folder&lt;/h5&gt;
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;➜  serverless create --template aws-nodejs --path  my-project
-
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-</description>
-				<pubDate>Tue, 09 Oct 2018 10:40:00 +0000</pubDate>
-				<link>/serverless,lambda/2018/10/09/filter-and-delete-s3-objects-by-date.html</link>
-				<guid isPermaLink="true">/serverless,lambda/2018/10/09/filter-and-delete-s3-objects-by-date.html</guid>
-			</item>
-		
-			<item>
 				<title>Filter and delete s3 objects by date.</title>
 				<description>&lt;h5 id=&quot;filter-and-delete-aws-s3-object&quot;&gt;Filter and delete aws s3 object.&lt;/h5&gt;
 
@@ -774,6 +757,71 @@ Mon Jul 23 13:01:59 EDT 2018
 				<pubDate>Mon, 09 Jul 2018 15:51:00 +0000</pubDate>
 				<link>/aws,/til,/2018/07/09/TIL-AWS-ip-range-api.html</link>
 				<guid isPermaLink="true">/aws,/til,/2018/07/09/TIL-AWS-ip-range-api.html</guid>
+			</item>
+		
+			<item>
+				<title>Setting up SQS as event source with serverless and cloudformation. </title>
+				<description>&lt;h5 id=&quot;aws-recently-announced-sqs-as-an-event-source-for-lambda-functions-this-is-now-ga-and-looks-like-there-is-already-a-pr-for-it-to-to-be-soon-implemened-in-serverless-framework-as-well&quot;&gt;AWS recently announced SQS as an event source for lambda functions. This is now GA and looks like there is already a &lt;a href=&quot;https://github.com/serverless/serverless/pull/5074&quot;&gt;pr&lt;/a&gt; for it to to be soon implemened in &lt;a href=&quot;https://serverless.com/&quot;&gt;serverless framework&lt;/a&gt; as well.&lt;/h5&gt;
+
+&lt;h5 id=&quot;as-soon-as-it-was-announced-we-had-a-use-case-for-this-implementation-in-a-project-that-we-built-with-serverless--so-instead-of-waiting-pr-to-be-merged--i-decided-to-impletemented-via-cloudformation&quot;&gt;As soon as it was announced we had a use case for this implementation in a project that we built with serverless . So instead of waiting pr to be merged  i decided to impletemented via cloudformation.&lt;/h5&gt;
+
+&lt;h5 id=&quot;below-is-the-serverlessyml-file-with-its-entirety-cloudformation-creates-a-sqs-and-and-eventsourcemapping-for-the-function-supervisor&quot;&gt;Below is the &lt;code class=&quot;highlighter-rouge&quot;&gt;serverless.yml&lt;/code&gt; file with its entirety. Cloudformation creates a sqs and and EventSourceMapping for the function &lt;code class=&quot;highlighter-rouge&quot;&gt;supervisor&lt;/code&gt;.&lt;/h5&gt;
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;
+
+service: cd-evox
+
+provider:
+  name: aws
+  runtime:  nodejs8.10
+  iamRoleStatements:
+    - Effect: 'Allow'
+      Action:
+        - &quot;lambda:InvokeFunction&quot;
+        - &quot;lambda:InvokeAsync&quot;
+        - &quot;sqs:ReceiveMessage&quot;
+        - &quot;sqs:DeleteMessage&quot;
+        - &quot;sqs:GetQueueAttributes&quot;
+      Resource: &quot;*&quot;
+
+
+
+
+functions:
+  supervisor:
+    handler: lambdas.supervisor
+
+
+# Create Sqs Queue
+resources:
+  Resources:
+    mapping:
+      Type: AWS::Lambda::EventSourceMapping
+      Properties:
+        EventSourceArn:
+          Fn::GetAtt:
+            - CdEvoxQueue
+            - Arn
+        FunctionName:
+          Fn::GetAtt:
+            - SupervisorLambdaFunction
+            - Arn
+    CdEvoxQueue:
+      Type: AWS::SQS::Queue
+      Properties:
+        QueueName: cd_evox_${opt:stage}
+        MessageRetentionPeriod: '1209600'
+        VisibilityTimeout: '60'
+
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;&lt;img src=&quot;/images/sqs-as-eventsource.png&quot; alt=&quot;Screenshot&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Maximum batch size currently supported is between 1-10 so if you define a  batch size higher than 10 you will receive the error message:
+&lt;code class=&quot;highlighter-rouge&quot;&gt;An error occurred: mapping - Maximum batch size must be between 1 and 10 inclusive (Service: AWSLambda; Status Code: 400; Error Code: InvalidParameterValueException; Request ID: a03c1359-7cd5-11e8-8e95-8fcb11ee2f63).&lt;/code&gt;&lt;/p&gt;
+</description>
+				<pubDate>Sat, 30 Jun 2018 22:33:00 +0000</pubDate>
+				<link>/aws,/lambda,/serverless/2018/06/30/setting-up-sqs-as-event-source-with-serverless-and-cloudformation..html</link>
+				<guid isPermaLink="true">/aws,/lambda,/serverless/2018/06/30/setting-up-sqs-as-event-source-with-serverless-and-cloudformation..html</guid>
 			</item>
 		
 	</channel>
