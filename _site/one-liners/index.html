@@ -167,6 +167,12 @@
 
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">git</span> <span class="n">fetch</span> <span class="n">upstream</span> <span class="n">pull</span><span class="o">/</span><span class="mi">100</span><span class="o">/</span><span class="n">head</span><span class="p">:</span><span class="n">TICKET100</span>
 </code></pre></div></div>
+<hr />
+
+<p>To copy s3 files matching a certain pattern to another but excluding others. Use optional dryrun flag to make sure the operation going to be done is what your intend is.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">aws</span> <span class="n">s3</span> <span class="n">cp</span> <span class="n">s3</span><span class="p">:</span><span class="o">//</span><span class="n">mybucket</span><span class="o">/</span><span class="n">reports</span><span class="o">/</span> <span class="n">s3</span><span class="p">:</span><span class="o">//</span><span class="n">mybucket</span><span class="o">/</span><span class="n">reports</span><span class="o">/</span><span class="n">Archive</span><span class="o">/</span> <span class="o">--</span><span class="n">dryrun</span> <span class="o">--</span><span class="n">exclude</span> <span class="s">"*"</span> <span class="o">--</span><span class="n">include</span> <span class="s">"VER_Daily_Report_2016*"</span>
+</code></pre></div></div>
 
 
 
@@ -174,7 +180,7 @@
 		<footer>
 			<hr/>
 			<p>
-				&copy; 2018 serkan haytac with <a href="http://jekyllrb.com/">Jekyll</a>. Theme: <a href="https://github.com/dbtek/dbyll">dbyll</a> by dbtek.
+				&copy; 2019 serkan haytac with <a href="http://jekyllrb.com/">Jekyll</a>. Theme: <a href="https://github.com/dbtek/dbyll">dbyll</a> by dbtek.
 			</p>
 		</footer>
 	</div>

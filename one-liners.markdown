@@ -20,3 +20,10 @@ To fetch the `PR #100` and create a local branch named `TICKET100` on local env.
 ````python
 git fetch upstream pull/100/head:TICKET100
 ````
+---
+
+To copy s3 files matching a certain pattern to another but excluding others. Use optional dryrun flag to make sure the operation going to be done is what your intend is.
+
+````python
+aws s3 cp s3://mybucket/reports/ s3://mybucket/reports/Archive/ --dryrun --exclude "*" --include "VER_Daily_Report_2016*"
+````
