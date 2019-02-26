@@ -7,7 +7,7 @@ categories: github,github-topic-labels,github search
 
 Github.com ui .currently does not natively supoport search for multiple topic tags as of now. However their api allows you to query multiple tags. Below is a simple example to query github.com with `ecs` and `go` topic tags.
 
-```
+```sh
 curl -H "Accept: application/vnd.github.mercy-preview+json" \
 https://api.github.com/search/repositories?q=topic:ecs+topic:go
 ```
@@ -1227,10 +1227,11 @@ https://api.github.com/search/repositories?q=topic:ecs+topic:go
 </details>
 
 Response from the github can be rather verbose so lets filter only relavant info such repo url and description.
-
-```curl -H "Accept: application/vnd.github.mercy-preview+json" \
-https://api.github.com/search/repositories\?q\=topic:ecs+topic:go | jq '.items[] | {url:.url, description:.description}'
+<!--
 ```
+curl -H "Accept: application/vnd.github.mercy-preview+json" \
+https://api.github.com/search/repositories\?q\=topic:ecs+topic:go | jq '.items[] | {url:.url, description:.description}'
+``` -->
 
 <details>
 <summary>response</summary>
