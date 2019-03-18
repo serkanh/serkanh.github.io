@@ -1287,10 +1287,12 @@ https://api.github.com/search/repositories\?q\=topic:ecs+topic:go | jq '.items[]
 
 &lt;/p&gt;
 &lt;/details&gt;
+
+&lt;h4 id=&quot;update-a-react-app-to-query-multiple-topics-can-be-found-here-and-working-example-hosted-on-firebase-here&quot;&gt;Update: A react app to query multiple topics can be found &lt;a href=&quot;https://github.com/serkanh/github-explorer&quot;&gt;here&lt;/a&gt; and working example hosted on firebase &lt;a href=&quot;https://github-explorer-1289d.firebaseapp.com/search&quot;&gt;here&lt;/a&gt;.&lt;/h4&gt;
 </description>
 				<pubDate>Tue, 26 Feb 2019 02:40:00 -0500</pubDate>
-				<link>/github,github-topic-labels,github/search/2019/02/26/set-up-vscode-terminal-env-var.html</link>
-				<guid isPermaLink="true">/github,github-topic-labels,github/search/2019/02/26/set-up-vscode-terminal-env-var.html</guid>
+				<link>/github,github-topic-labels,github/search/2019/02/26/sarching-github-multiple-topics.html</link>
+				<guid isPermaLink="true">/github,github-topic-labels,github/search/2019/02/26/sarching-github-multiple-topics.html</guid>
 			</item>
 		
 			<item>
