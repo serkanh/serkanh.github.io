@@ -11,7 +11,7 @@ To get the [LatestRestorableTime](https://docs.aws.amazon.com/AmazonRDS/latest/U
 				 --query "DBInstances[*].[DBInstanceIdentifier,LatestRestorableTime]" --output text \
 				| awk '{print $2}' | TZ='America/New_York' date
 Thu Jul  5 10:51:02 EDT 2018
-➜  ~ 
+➜  ~
 ````
 ---
 
@@ -27,3 +27,8 @@ To copy s3 files matching a certain pattern to another but excluding others. Use
 ````python
 aws s3 cp s3://mybucket/reports/ s3://mybucket/reports/Archive/ --dryrun --exclude "*" --include "VER_Daily_Report_2016*"
 ````
+
+Record tmux session with (asciinema)[https://asciinema.org/]
+```python
+asciinema rec -c "tmux attach -t 1"
+```
