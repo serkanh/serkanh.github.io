@@ -28,7 +28,7 @@ To copy s3 files matching a certain pattern to another but excluding others. Use
 aws s3 cp s3://mybucket/reports/ s3://mybucket/reports/Archive/ --dryrun --exclude "*" --include "VER_Daily_Report_2016*"
 ````
 
-Record tmux session with (asciinema)[https://asciinema.org/]
+Record tmux session with [asciinema](https://asciinema.org/)
 ```python
 asciinema rec -c "tmux attach -t 1"
 ```
