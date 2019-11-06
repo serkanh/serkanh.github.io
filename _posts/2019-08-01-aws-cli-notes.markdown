@@ -5,7 +5,16 @@ date: 2019-08-01 7:40:00
 categories: aws,cli,aws-cli
 ---
 
-[cloudfront](#cloudfront) | [ec2](#ec2) | [ecr](#ecr) | [elb](#elb) | [ecs](#ecs) | [events](#events) [kms](#kms) | [sns](#sns) | [s3](#s3)
+[cloudfront](#cloudfront) | [ec2](#ec2) | [ecr](#ecr) | [elb](#elb) | [ecs](#ecs) | [events](#events) [kms](#kms) | [sns](#sns) | [s3](#s3) | [resourcegroupstaggingapi](#Resourcegroupstaggingapi)
+
+
+##### Resourcegroupstaggingapi
+
+**Get all the resources in a region tagged by certain tags regardless of their type.**
+
+````
+aws resourcegroupstaggingapi get-resources --tag-filters 'Key=<key-name>,Values=["key-value"]'
+````
 
 ##### Cloudfront 
 
