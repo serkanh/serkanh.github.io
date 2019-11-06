@@ -167,7 +167,7 @@
 
 <h5 id="get-the-first-2-elements-of-the-a-given-array">Get the first 2 elements of the a given array</h5>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
 ➜ curl http://serkanh.github.io/download/example.json  | jq '.[:2]'
 [
   {
@@ -266,7 +266,7 @@
 
 <h5 id="show-only-specific-keyvalue-pairs-ex-name-age">Show only specific key/value pairs (ex: name, age)</h5>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>➜  curl http://serkanh.github.io/download/example.json  | jq '.[] | {name:.name,age:.age}'
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>➜  curl http://serkanh.github.io/download/example.json  | jq '.[] | {name:.name,age:.age}'
 {
   "name": "Mildred Sexton",
   "age": 33
@@ -294,7 +294,7 @@
 </code></pre></div></div>
 
 <h5 id="query-based-on-gender-field">Query based on gender field</h5>
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>➜  curl http://serkanh.github.io/download/example.json  | jq '.[]|select(.gender=="male")' 
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>➜  curl http://serkanh.github.io/download/example.json  | jq '.[]|select(.gender=="male")' 
 {
   "_id": "5babe2f0c2aa2072304da586",
   "index": 2,
@@ -389,7 +389,7 @@
 
 <h5 id="query-male-and-active-users">Query male and active users</h5>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>➜ curl http://serkanh.github.io/download/example.json  | jq '.[]|select(.gender=="male" and .isActive==true )'
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>➜ curl http://serkanh.github.io/download/example.json  | jq '.[]|select(.gender=="male" and .isActive==true )'
 
 {
   "_id": "5babe2f047ed2184c3ffdd15",
@@ -439,7 +439,7 @@
 </code></pre></div></div>
 <h5 id="search-for-string-in-key-values">Search for string in key values.</h5>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>➜  curl http://serkanh.github.io/download/example.json  | jq '.[]|select(.address | contains("781 Whitney"))'  
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>➜  curl http://serkanh.github.io/download/example.json  | jq '.[]|select(.address | contains("781 Whitney"))'  
 {
   "_id": "5babe2f088e7e9921a13e74b",
   "index": 0,

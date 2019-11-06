@@ -167,8 +167,8 @@
 
 <h5 id="as-soon-as-it-was-announced-we-had-a-use-case-for-this-implementation-in-a-project-that-we-built-with-serverless--so-instead-of-waiting-pr-to-be-merged--i-decided-to-impletemented-via-cloudformation">As soon as it was announced we had a use case for this implementation in a project that we built with serverless . So instead of waiting pr to be merged  i decided to impletemented via cloudformation.</h5>
 
-<h5 id="below-is-the-serverlessyml-file-with-its-entirety-cloudformation-creates-a-sqs-and-and-eventsourcemapping-for-the-function-supervisor">Below is the <code class="highlighter-rouge">serverless.yml</code> file with its entirety. Cloudformation creates a sqs and and EventSourceMapping for the function <code class="highlighter-rouge">supervisor</code>.</h5>
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+<h5 id="below-is-the-serverlessyml-file-with-its-entirety-cloudformation-creates-a-sqs-and-and-eventsourcemapping-for-the-function-supervisor">Below is the <code class="language-plaintext highlighter-rouge">serverless.yml</code> file with its entirety. Cloudformation creates a sqs and and EventSourceMapping for the function <code class="language-plaintext highlighter-rouge">supervisor</code>.</h5>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
 
 service: cd-evox
 
@@ -219,7 +219,7 @@ resources:
 <p><img src="/images/sqs-as-eventsource.png" alt="Screenshot" /></p>
 
 <p>Maximum batch size currently supported is between 1-10 so if you define a  batch size higher than 10 you will receive the error message:
-<code class="highlighter-rouge">An error occurred: mapping - Maximum batch size must be between 1 and 10 inclusive (Service: AWSLambda; Status Code: 400; Error Code: InvalidParameterValueException; Request ID: a03c1359-7cd5-11e8-8e95-8fcb11ee2f63).</code></p>
+<code class="language-plaintext highlighter-rouge">An error occurred: mapping - Maximum batch size must be between 1 and 10 inclusive (Service: AWSLambda; Status Code: 400; Error Code: InvalidParameterValueException; Request ID: a03c1359-7cd5-11e8-8e95-8fcb11ee2f63).</code></p>
 
 	  </div>
 

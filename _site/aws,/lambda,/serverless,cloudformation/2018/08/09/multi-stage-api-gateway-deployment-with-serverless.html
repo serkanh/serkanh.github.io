@@ -165,13 +165,13 @@
 	  <div class="article_body">
 	  <p>Both serverless framework and api gateway has the concept of stages.</p>
 
-<p>We will build a serverless application with api gateway and deploy it to multiple stages. What this means is that <code class="highlighter-rouge">dev</code> lambda functions will be associated with the api gateways <code class="highlighter-rouge">/dev/</code> stage and prod with <code class="highlighter-rouge">prod</code> stage.</p>
+<p>We will build a serverless application with api gateway and deploy it to multiple stages. What this means is that <code class="language-plaintext highlighter-rouge">dev</code> lambda functions will be associated with the api gateways <code class="language-plaintext highlighter-rouge">/dev/</code> stage and prod with <code class="language-plaintext highlighter-rouge">prod</code> stage.</p>
 
-<p>First we start by setting up multiple stages for our lambda functions. To keep it simple we will simply set different environment variables per lambda function stage. Function basically will read from the env var and return its value as a string. We will deploy to different stages with serverless’ <code class="highlighter-rouge">--stage</code> flag.</p>
+<p>First we start by setting up multiple stages for our lambda functions. To keep it simple we will simply set different environment variables per lambda function stage. Function basically will read from the env var and return its value as a string. We will deploy to different stages with serverless’ <code class="language-plaintext highlighter-rouge">--stage</code> flag.</p>
 
 <p><a href="https://github.com/serkanh/serverless-api-gateway-multi-stage-demo">Repo url</a></p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
 service: serverless-api-gateway-multi-stage-demo
 
 ## This is where we setup env variables that will be set for different stages of lambda functions.
@@ -189,17 +189,17 @@ functions:
 
 </code></pre></div></div>
 
-<p>and deploy to both <code class="highlighter-rouge">dev</code> and <code class="highlighter-rouge">prod</code> stages</p>
+<p>and deploy to both <code class="language-plaintext highlighter-rouge">dev</code> and <code class="language-plaintext highlighter-rouge">prod</code> stages</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>sls deploy --stage=dev
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>sls deploy --stage=dev
 sls deploy --stage=prod
 </code></pre></div></div>
 
-<p>if you are using aws profiles you can deploy by specifiying the aws profile you’d like to use <code class="highlighter-rouge">sls --aws-profile=&lt;aws-personal-profile&gt; deploy --stage=dev</code></p>
+<p>if you are using aws profiles you can deploy by specifiying the aws profile you’d like to use <code class="language-plaintext highlighter-rouge">sls --aws-profile=&lt;aws-personal-profile&gt; deploy --stage=dev</code></p>
 
 <p>When you invoke the function on both envs, it should simply return the env name a string.</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>➜  serverless-api-gateway-multi-stage-demo git:(master) ✗ sls invoke -f hello --stage=dev
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>➜  serverless-api-gateway-multi-stage-demo git:(master) ✗ sls invoke -f hello --stage=dev
 {
     "statusCode": 200,
     "body": "{\"message\":\"Current lambda function env DEV STAGE\",\"input\":{}}"
@@ -207,7 +207,7 @@ sls deploy --stage=prod
 
 </code></pre></div></div>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>➜  serverless-api-gateway-multi-stage-demo git:(master) ✗ sls invoke -f hello --stage=prod
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>➜  serverless-api-gateway-multi-stage-demo git:(master) ✗ sls invoke -f hello --stage=prod
 {
     "statusCode": 200,
     "body": "{\"message\":\"Current lambda function env PROD STAGE\",\"input\":{}}"
@@ -219,7 +219,7 @@ sls deploy --stage=prod
 
 <p>One gotcha of this setup is that we need to give permissions to api gateway to execute each individual function based on env. This is because we are using lambda functions stage name as a api gateway stage variable.</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>swagger: "2.0"
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>swagger: "2.0"
 schemes:
 - "https"
 paths:
@@ -249,7 +249,7 @@ definitions:
 
 <p>We will include the swagger file in our serverless.yml. One gotcha of using api gateway stage variables in serverless is that both serverless and api gateway and serverless framework is using the same syntax to refer to variables. In order to get around this we will use custom variable syntax so serverless does not interpret this as a serverless variable.</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>//serverless.yml
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>//serverless.yml
 provider:
   name: aws
   runtime: nodejs8.10
@@ -258,24 +258,24 @@ provider:
   variableSyntax: "\\${((?!stageVariables)[ ~:a-zA-Z0-9._'\",\\-\\/\\(\\)]+?)}"
 </code></pre></div></div>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>//swagger.yml
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>//swagger.yml
  x-amazon-apigateway-integration:
         uri: "arn:aws:apigateway:us-east-1:lambda:path/2015-03-31/functions/arn:aws:lambda:us-east-1:174076265606:function:serverless-multistage-${stageVariables.Stage}-hello/invocations"
 </code></pre></div></div>
 <p>Give api-gateway execute perm on dev hello function</p>
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
 aws lambda add-permission    --function-name "arn:aws:lambda:us-east-1:174076265606:function:serverless-multistage-dev-hello"    --source-arn "arn:aws:execute-api:us-east-1:174076265606:rci6d8tuc7/*/GET/"   --principal apigateway.amazonaws.com    --statement-id 8513374b-509d-4cfc-920c-c69e72264c7a    --action lambda:InvokeFunction
 
 </code></pre></div></div>
 
 <p>Give api-gateway execute perm on prod  hello function</p>
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>aws lambda add-permission    --function-name "arn:aws:lambda:us-east-1:174076265606:function:serverless-multistage-prod-hello"    --source-arn "arn:aws:execute-api:us-east-1:174076265606:rci6d8tuc7/*/GET/"   --principal apigateway.amazonaws.com    --statement-id 8513374b-509d-4cfc-920c-c69e72264c7a    --action lambda:InvokeFunction
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>aws lambda add-permission    --function-name "arn:aws:lambda:us-east-1:174076265606:function:serverless-multistage-prod-hello"    --source-arn "arn:aws:execute-api:us-east-1:174076265606:rci6d8tuc7/*/GET/"   --principal apigateway.amazonaws.com    --statement-id 8513374b-509d-4cfc-920c-c69e72264c7a    --action lambda:InvokeFunction
 
 </code></pre></div></div>
 
-<p>Final <code class="highlighter-rouge">serverless.yml</code> should look like below.</p>
+<p>Final <code class="language-plaintext highlighter-rouge">serverless.yml</code> should look like below.</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
 
 service: serverless-multistage
 
@@ -343,16 +343,16 @@ functions:
 
 </code></pre></div></div>
 
-<p>To test the <code class="highlighter-rouge">dev</code> and <code class="highlighter-rouge">prod</code> functionality in api gateway simply go into api gateway console -&gt;
+<p>To test the <code class="language-plaintext highlighter-rouge">dev</code> and <code class="language-plaintext highlighter-rouge">prod</code> functionality in api gateway simply go into api gateway console -&gt;
  Resources -&gt; Get method</p>
 
 <p><img src="/images/lambda-integration-req1.png" alt="Screenshot" /></p>
 
-<p>Test -&gt; Enter dev into <code class="highlighter-rouge">Stage</code> stage variable.</p>
+<p>Test -&gt; Enter dev into <code class="language-plaintext highlighter-rouge">Stage</code> stage variable.</p>
 
 <p><img src="/images/dev-test.png" alt="dev stage var" /></p>
 
-<p>Test -&gt; Enter prod into <code class="highlighter-rouge">Stage</code> stage variable.</p>
+<p>Test -&gt; Enter prod into <code class="language-plaintext highlighter-rouge">Stage</code> stage variable.</p>
 
 <p><img src="/images/prod-test.png" alt="prod stage var" /></p>
 

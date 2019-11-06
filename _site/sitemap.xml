@@ -29,7 +29,7 @@
 <lastmod>2018-04-01T18:13:00-04:00</lastmod>
 </url>
 <url>
-<loc>http://localhost:4000/aws,/lambda,/serverless/2018/06/30/setting-up-sqs-as-event-source-with-serverless-and-cloudformation..html</loc>
+<loc>http://localhost:4000/aws,/lambda,/serverless/2018/06/30/setting-up-sqs-as-event-source-with-serverless-and-cloudformation/html</loc>
 <lastmod>2018-06-30T18:33:00-04:00</lastmod>
 </url>
 <url>
@@ -69,8 +69,12 @@
 <lastmod>2018-10-15T06:40:00-04:00</lastmod>
 </url>
 <url>
-<loc>http://localhost:4000/github,github-topic-labels,github/search/2019/02/26/sarching-github-multiple-topics.html</loc>
+<loc>http://localhost:4000/github,github-topic-labels,github/search/2019/02/26/sarching-github-multiple-topics-copy.html</loc>
 <lastmod>2019-02-26T02:40:00-05:00</lastmod>
+</url>
+<url>
+<loc>http://localhost:4000/terraform,circleci/2019/08/01/terraform-notes.html</loc>
+<lastmod>2019-08-01T03:40:00-04:00</lastmod>
 </url>
 <url>
 <loc>http://localhost:4000/categories.html</loc>

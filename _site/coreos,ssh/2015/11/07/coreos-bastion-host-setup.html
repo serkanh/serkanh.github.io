@@ -170,7 +170,7 @@ useful when you want to limit; for example ssh access, from only within the netw
 
 <p>#####</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>#~/.ssh/config
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>#~/.ssh/config
 Host bastion-host
         Hostname 54.54.54.54
         User ec2-user
@@ -194,7 +194,7 @@ host pattern like above which suprisingly did not work. Turns out Coreos uses a 
 of netcat which is called ncat. By modifying ProxyCommand lin on ~/.ssh/config file and change <strong>nc</strong> to <strong>ncat</strong>, i was able to 
 ssh into hosts within private instances with ease.</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>#~/.ssh/config
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>#~/.ssh/config
 Host bastion-host
         Hostname 54.54.54.54
         User ec2-user

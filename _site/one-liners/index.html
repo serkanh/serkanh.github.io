@@ -158,12 +158,12 @@
 				 <span class="o">--</span><span class="n">db</span><span class="o">-</span><span class="n">instance</span><span class="o">-</span><span class="n">identifier</span><span class="o">=</span><span class="s">"evox-dev"</span> \
 				 <span class="o">--</span><span class="n">query</span> <span class="s">"DBInstances[*].[DBInstanceIdentifier,LatestRestorableTime]"</span> <span class="o">--</span><span class="n">output</span> <span class="n">text</span> \
 				<span class="o">|</span> <span class="n">awk</span> <span class="s">'{print $2}'</span> <span class="o">|</span> <span class="n">TZ</span><span class="o">=</span><span class="s">'America/New_York'</span> <span class="n">date</span>
-<span class="n">Thu</span> <span class="n">Jul</span>  <span class="mi">5</span> <span class="mi">10</span><span class="p">:</span><span class="mi">51</span><span class="p">:</span><span class="mo">02</span> <span class="n">EDT</span> <span class="mi">2018</span>
-<span class="err">➜</span>  <span class="o">~</span> 
+<span class="n">Thu</span> <span class="n">Jul</span>  <span class="mi">5</span> <span class="mi">10</span><span class="p">:</span><span class="mi">51</span><span class="p">:</span><span class="mi">02</span> <span class="n">EDT</span> <span class="mi">2018</span>
+<span class="err">➜</span>  <span class="o">~</span>
 </code></pre></div></div>
 <hr />
 
-<p>To fetch the <code class="highlighter-rouge">PR #100</code> and create a local branch named <code class="highlighter-rouge">TICKET100</code> on local env.</p>
+<p>To fetch the <code class="language-plaintext highlighter-rouge">PR #100</code> and create a local branch named <code class="language-plaintext highlighter-rouge">TICKET100</code> on local env.</p>
 
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">git</span> <span class="n">fetch</span> <span class="n">upstream</span> <span class="n">pull</span><span class="o">/</span><span class="mi">100</span><span class="o">/</span><span class="n">head</span><span class="p">:</span><span class="n">TICKET100</span>
 </code></pre></div></div>
@@ -172,6 +172,10 @@
 <p>To copy s3 files matching a certain pattern to another but excluding others. Use optional dryrun flag to make sure the operation going to be done is what your intend is.</p>
 
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">aws</span> <span class="n">s3</span> <span class="n">cp</span> <span class="n">s3</span><span class="p">:</span><span class="o">//</span><span class="n">mybucket</span><span class="o">/</span><span class="n">reports</span><span class="o">/</span> <span class="n">s3</span><span class="p">:</span><span class="o">//</span><span class="n">mybucket</span><span class="o">/</span><span class="n">reports</span><span class="o">/</span><span class="n">Archive</span><span class="o">/</span> <span class="o">--</span><span class="n">dryrun</span> <span class="o">--</span><span class="n">exclude</span> <span class="s">"*"</span> <span class="o">--</span><span class="n">include</span> <span class="s">"VER_Daily_Report_2016*"</span>
+</code></pre></div></div>
+
+<p>Record tmux session with <a href="https://asciinema.org/">asciinema</a></p>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">asciinema</span> <span class="n">rec</span> <span class="o">-</span><span class="n">c</span> <span class="s">"tmux attach -t 1"</span>
 </code></pre></div></div>
 
 

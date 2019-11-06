@@ -165,7 +165,7 @@
 	  <div class="article_body">
 	  <h5 id="filter-and-delete-aws-s3-object">Filter and delete aws s3 object.</h5>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>➜  ~ aws s3api list-objects --bucket fake-bucket --query 'Contents[?LastModified&gt;=`2018-10-04` ].{Key:Key}' --prefix "2018-10-04" --output text |  xargs -I {} aws  s3 rm s3://fake-bucket/{}                                                                                           
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>➜  ~ aws s3api list-objects --bucket fake-bucket --query 'Contents[?LastModified&gt;=`2018-10-04` ].{Key:Key}' --prefix "2018-10-04" --output text |  xargs -I {} aws  s3 rm s3://fake-bucket/{}                                                                                           
 delete: s3://fake-bucket/2018-10-04T19:00-0zdoEmH9Mp7Y897MGMIy.log
 delete: s3://fake-bucket/2018-10-04T19:00-16FZUUHHZZkWisbJhyn2.log
 delete: s3://fake-bucket/2018-10-04T19:00-3Uw2gy2OyjgkMvhStPfE.log
