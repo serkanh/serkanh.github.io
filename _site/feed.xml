@@ -300,9 +300,7 @@ workflows:
 		
 			<item>
 				<title>AWS CLI Notes</title>
-				<description>&lt;h4 id=&quot;aws-cli&quot;&gt;AWS-CLI&lt;/h4&gt;
-
-&lt;table&gt;
+				<description>&lt;table&gt;
   &lt;tbody&gt;
     &lt;tr&gt;
       &lt;td&gt;&lt;a href=&quot;#cloudfront&quot;&gt;cloudfront&lt;/a&gt;&lt;/td&gt;
@@ -544,12 +542,113 @@ this is a test
 &lt;h4 id=&quot;vpc&quot;&gt;VPC&lt;/h4&gt;
 &lt;p&gt;&lt;strong&gt;Get vpc names&lt;/strong&gt;&lt;/p&gt;
 &lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;aws --profile=HA ec2 describe-vpcs --query &quot;Vpcs[*].Tags[].Value&quot; --output text
-ContentPublishing vpc   CarAndDriver vpc
+&amp;lt;redacted&amp;gt; vpc   &amp;lt;redacted&amp;gt; vpc
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 </description>
 				<pubDate>Thu, 01 Aug 2019 03:40:00 -0400</pubDate>
 				<link>/aws,cli,aws-cli/2019/08/01/aws-cli-notes.html</link>
 				<guid isPermaLink="true">/aws,cli,aws-cli/2019/08/01/aws-cli-notes.html</guid>
+			</item>
+		
+			<item>
+				<title>Awk  Notes</title>
+				<description>&lt;p&gt;&lt;strong&gt;To format strings in awk use &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;printf&lt;/code&gt;&lt;/strong&gt;&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;➜  echo '139.162.0.0/19' | awk 'BEGIN{FS=&quot;/&quot;}{printf &quot;\&quot;%s\&quot;,%s,false\n&quot;,$1,$2}'
+&quot;139.162.0.0&quot;,19,false
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;&lt;strong&gt;To print all but very first column&lt;/strong&gt;&lt;/p&gt;
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;(venv) ➜  notes git:(master) ✗ history | head -4               
+    1  ag ecr
+    2  cat .circleci/config.yml
+    3  cat ./circle_ci_deploy
+    4  cat ./build_and_push
+    
+(venv) ➜  notes git:(master) ✗ history | awk '{$1=&quot;&quot;;print $0}' | head -4
+ ag ecr
+ cat .circleci/config.yml
+ cat ./circle_ci_deploy
+ cat ./build_and_push
+
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;&lt;strong&gt;Print all but 2 first columns&lt;/strong&gt;&lt;/p&gt;
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;(venv) ➜  notes git:(master) ✗ history | awk '{$1=$2=&quot;&quot;;print $0}' | head -4
+  ecr
+  .circleci/config.yml
+  ./circle_ci_deploy
+  ./build_and_push
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;&lt;strong&gt;A &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;BEGIN&lt;/code&gt; rule is executed &lt;em&gt;ONCE&lt;/em&gt; only, before the first input record is read. Likewise, an &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;END&lt;/code&gt; rule is executed &lt;em&gt;ONCE&lt;/em&gt; only, after all the input is read.&lt;/strong&gt; &lt;a href=&quot;https://unix.stackexchange.com/a/119909&quot;&gt;stackoverflow&lt;/a&gt;&lt;/p&gt;
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;$ seq 5 | awk 'BEGIN{print &quot;Hello&quot;}/4/{print}'   # Hello printed once
+Hello
+4
+$ seq 5 | awk '{print &quot;Hello&quot;}/4/{print}'        # Hello printed for each line of input
+Hello
+Hello
+Hello
+Hello
+4
+Hello
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;p&gt;&lt;strong&gt;Another example would be like printing headers&lt;/strong&gt; &lt;a href=&quot;https://likegeeks.com/awk-command/&quot;&gt;likegeeks.com&lt;/a&gt;&lt;/p&gt;
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;history | awk 'BEGIN {print &quot;These are from history&quot;} {print $1,$2}' | head -5 
+These are from history
+1 ag
+2 cat
+3 cat
+4 cat
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;&lt;strong&gt;Only prints once the count is done for given column values.&lt;/strong&gt;&lt;/p&gt;
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;➜  notes git:(master) git log --shortstat --since &quot;1 day ago&quot; \
+| grep &quot;files changed&quot;  \ 
+| awk '{files+=$1; inserted+=$4; deleted+=$6} END {print &quot;files changed&quot;, files, &quot;lines inserted:&quot;, inserted, &quot;lines deleted:&quot;, deleted}' 
+
+files changed 26 lines inserted: 185 lines deleted: 19
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;strong&gt;To skip blank lines&lt;/strong&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;➜  hdm git:(master) ✗ ls -ltr | awk  -F &quot; &quot;  '{print $9}' | awk -F &quot;.&quot; '{print $1}'  
+
+forge-eks-setup
+hdm-gap-analysis
+hdm-apps
+quay-secrets
+sumologic
+hdm-journal
+index
+➜  hdm git:(master) ✗ ls -ltr | awk  -F &quot; &quot;  '{print $9}' | awk -F &quot;.&quot; 'NF {print $1}' 
+forge-eks-setup
+hdm-gap-analysis
+hdm-apps
+quay-secrets
+sumologic
+hdm-journal
+index
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;strong&gt;Get all files in the folder and create markdown links&lt;/strong&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;ls -ltr | awk  -F &quot; &quot;  '{print $9}' | awk -F &quot;.&quot; 'NF {print &quot;[&quot;$1&quot;]&quot;&quot;(&quot;$1&quot;.md&quot;&quot;)&quot;}' 
+[forge-eks-setup](forge-eks-setup.md)
+[hdm-gap-analysis](hdm-gap-analysis.md)
+[hdm-apps](hdm-apps.md)
+[quay-secrets](quay-secrets.md)
+[sumologic](sumologic.md)
+[hdm-journal](hdm-journal.md)
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+</description>
+				<pubDate>Mon, 01 Jul 2019 03:40:00 -0400</pubDate>
+				<link>/awk,cli/2019/07/01/awk-notes/html</link>
+				<guid isPermaLink="true">/awk,cli/2019/07/01/awk-notes/html</guid>
 			</item>
 		
 			<item>
@@ -2488,36 +2587,6 @@ functions:
 				<pubDate>Thu, 09 Aug 2018 11:51:00 -0400</pubDate>
 				<link>/aws,/lambda,/serverless,cloudformation/2018/08/09/multi-stage-api-gateway-deployment-with-serverless.html</link>
 				<guid isPermaLink="true">/aws,/lambda,/serverless,cloudformation/2018/08/09/multi-stage-api-gateway-deployment-with-serverless.html</guid>
-			</item>
-		
-			<item>
-				<title>Useful aws cli rds  commands i use often. </title>
-				<description>&lt;h4 id=&quot;get-the-full-attributes-of-rds-instances-with-its-instancesidentifier&quot;&gt;Get the full attributes of rds instances with its instancesidentifier&lt;/h4&gt;
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;aws --profile=HA rds describe-db-instances --query 'DBInstances[?DBInstanceIdentifier==`evox-dev`]'
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;h4 id=&quot;get-list-of-snapshots-of-rds-database&quot;&gt;Get list of snapshots of RDS database.&lt;/h4&gt;
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;aws --profile=HA rds describe-db-snapshots --db-instance-identifier evox-dev
-
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;h4 id=&quot;get-list-of-snapshots-of-rds-databse-but-only-display-snapshot-id-and-creation-time-with-jq&quot;&gt;Get list of snapshots of RDS databse but only display snapshot id and creation time with jq.&lt;/h4&gt;
-
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;aws --profile=HA rds describe-db-snapshots --db-instance-identifier evox-dev | jq '[.DBSnapshots[] | {Snapshot_Identifier:.DBSnapshotIdentifier,Creationtime:.SnapshotCreateTime}]'
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;h4 id=&quot;get-the-latestrestorabletime-that-is-typically-within-the-range-of-5-min-of-current-time&quot;&gt;Get the LatestRestorableTime that is typically within the range of 5 min of current time.&lt;/h4&gt;
-
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;aws --profile=HA rds  describe-db-instances --query 'DBInstances[?DBInstanceIdentifier==`evox-dev`].LatestRestorableTime'  --output text
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;➜  serkanh.github.io git:(master) aws --profile=HA rds  describe-db-instances --query 'DBInstances[?DBInstanceIdentifier==`evox-dev`].LatestRestorableTime'  --output text | TZ='America/New_York' date
-Mon Jul 23 13:01:59 EDT 2018
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-</description>
-				<pubDate>Wed, 11 Jul 2018 11:51:00 -0400</pubDate>
-				<link>/aws,/rds,/cli/2018/07/11/aws-cli-rds-commands.html</link>
-				<guid isPermaLink="true">/aws,/rds,/cli/2018/07/11/aws-cli-rds-commands.html</guid>
 			</item>
 		
 	</channel>

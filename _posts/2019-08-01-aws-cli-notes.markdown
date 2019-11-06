@@ -5,9 +5,6 @@ date: 2019-08-01 7:40:00
 categories: aws,cli,aws-cli
 ---
 
-
-#### AWS-CLI
-
 [cloudfront](#cloudfront) | [ec2](#ec2) | [ecr](#ecr) | [elb](#elb) | [ecs](#ecs) | [events](#events) [kms](#kms) | [sns](#sns) | [s3](#s3)
 
 ##### Cloudfront 
@@ -271,5 +268,5 @@ this is a test
 **Get vpc names**
 ````
 aws --profile=HA ec2 describe-vpcs --query "Vpcs[*].Tags[].Value" --output text
-ContentPublishing vpc   CarAndDriver vpc
+<redacted> vpc   <redacted> vpc
 ````

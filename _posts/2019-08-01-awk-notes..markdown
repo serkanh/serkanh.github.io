@@ -1,0 +1,106 @@
+---
+layout: post
+title: "Awk  Notes"
+date: 2019-07-01 7:40:00
+categories: awk,cli
+---
+
+
+ **To format strings in awk use `printf`**
+
+````
+➜  echo '139.162.0.0/19' | awk 'BEGIN{FS="/"}{printf "\"%s\",%s,false\n",$1,$2}'
+"139.162.0.0",19,false
+````
+
+**To print all but very first column** 
+````
+(venv) ➜  notes git:(master) ✗ history | head -4               
+    1  ag ecr
+    2  cat .circleci/config.yml
+    3  cat ./circle_ci_deploy
+    4  cat ./build_and_push
+    
+(venv) ➜  notes git:(master) ✗ history | awk '{$1="";print $0}' | head -4
+ ag ecr
+ cat .circleci/config.yml
+ cat ./circle_ci_deploy
+ cat ./build_and_push
+
+````
+
+**Print all but 2 first columns**
+````
+(venv) ➜  notes git:(master) ✗ history | awk '{$1=$2="";print $0}' | head -4
+  ecr
+  .circleci/config.yml
+  ./circle_ci_deploy
+  ./build_and_push
+````
+
+**A `BEGIN` rule is executed *ONCE* only, before the first input record is read. Likewise, an `END` rule is executed *ONCE* only, after all the input is read.** [stackoverflow](https://unix.stackexchange.com/a/119909)
+```
+$ seq 5 | awk 'BEGIN{print "Hello"}/4/{print}'   # Hello printed once
+Hello
+4
+$ seq 5 | awk '{print "Hello"}/4/{print}'        # Hello printed for each line of input
+Hello
+Hello
+Hello
+Hello
+4
+Hello
+````
+**Another example would be like printing headers** [likegeeks.com](https://likegeeks.com/awk-command/)
+````
+history | awk 'BEGIN {print "These are from history"} {print $1,$2}' | head -5 
+These are from history
+1 ag
+2 cat
+3 cat
+4 cat
+````
+
+**Only prints once the count is done for given column values.**
+````
+➜  notes git:(master) git log --shortstat --since "1 day ago" \
+| grep "files changed"  \ 
+| awk '{files+=$1; inserted+=$4; deleted+=$6} END {print "files changed", files, "lines inserted:", inserted, "lines deleted:", deleted}' 
+
+files changed 26 lines inserted: 185 lines deleted: 19
+````
+
+
+* **To skip blank lines**
+
+````
+➜  hdm git:(master) ✗ ls -ltr | awk  -F " "  '{print $9}' | awk -F "." '{print $1}'  
+
+forge-eks-setup
+hdm-gap-analysis
+hdm-apps
+quay-secrets
+sumologic
+hdm-journal
+index
+➜  hdm git:(master) ✗ ls -ltr | awk  -F " "  '{print $9}' | awk -F "." 'NF {print $1}' 
+forge-eks-setup
+hdm-gap-analysis
+hdm-apps
+quay-secrets
+sumologic
+hdm-journal
+index
+````
+
+* **Get all files in the folder and create markdown links**
+
+````
+ls -ltr | awk  -F " "  '{print $9}' | awk -F "." 'NF {print "["$1"]""("$1".md"")"}' 
+[forge-eks-setup](forge-eks-setup.md)
+[hdm-gap-analysis](hdm-gap-analysis.md)
+[hdm-apps](hdm-apps.md)
+[quay-secrets](quay-secrets.md)
+[sumologic](sumologic.md)
+[hdm-journal](hdm-journal.md)
+````
