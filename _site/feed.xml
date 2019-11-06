@@ -7,7 +7,7 @@
 		<atom:link href="/feed.xml" rel="self" type="application/rss+xml" />
 		
 			<item>
-				<title>Terrform Notes</title>
+				<title>Terraform Notes</title>
 				<description>&lt;ul&gt;
   &lt;li&gt;&lt;strong&gt;Conditional ternary syntax&lt;/strong&gt;&lt;/li&gt;
 &lt;/ul&gt;
@@ -296,6 +296,260 @@ workflows:
 				<pubDate>Thu, 01 Aug 2019 03:40:00 -0400</pubDate>
 				<link>/terraform,circleci/2019/08/01/terraform-notes.html</link>
 				<guid isPermaLink="true">/terraform,circleci/2019/08/01/terraform-notes.html</guid>
+			</item>
+		
+			<item>
+				<title>AWS CLI Notes</title>
+				<description>&lt;h4 id=&quot;aws-cli&quot;&gt;AWS-CLI&lt;/h4&gt;
+
+&lt;table&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;td&gt;&lt;a href=&quot;#cloudfront&quot;&gt;cloudfront&lt;/a&gt;&lt;/td&gt;
+      &lt;td&gt;&lt;a href=&quot;#ec2&quot;&gt;ec2&lt;/a&gt;&lt;/td&gt;
+      &lt;td&gt;&lt;a href=&quot;#ecr&quot;&gt;ecr&lt;/a&gt;&lt;/td&gt;
+      &lt;td&gt;&lt;a href=&quot;#elb&quot;&gt;elb&lt;/a&gt;&lt;/td&gt;
+      &lt;td&gt;&lt;a href=&quot;#ecs&quot;&gt;ecs&lt;/a&gt;&lt;/td&gt;
+      &lt;td&gt;&lt;a href=&quot;#events&quot;&gt;events&lt;/a&gt; &lt;a href=&quot;#kms&quot;&gt;kms&lt;/a&gt;&lt;/td&gt;
+      &lt;td&gt;&lt;a href=&quot;#sns&quot;&gt;sns&lt;/a&gt;&lt;/td&gt;
+      &lt;td&gt;&lt;a href=&quot;#s3&quot;&gt;s3&lt;/a&gt;&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;h5 id=&quot;cloudfront&quot;&gt;Cloudfront&lt;/h5&gt;
+
+&lt;p&gt;&lt;strong&gt;Get cloudfront distribution url and origin as a table&lt;/strong&gt;&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;➜  notes git:(master) ✗ aws cloudfront list-distributions --query 'DistributionList.Items[*].{DomainName:Origins.Items[0].DomainName,Origins:Origins.Items[0].Id,CNAME:Aliases.Items[0]}' --output table
+
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h5 id=&quot;configure&quot;&gt;Configure&lt;/h5&gt;
+&lt;p&gt;&lt;strong&gt;Create a named profile&lt;/strong&gt;&lt;/p&gt;
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;aws configure --profile=hdm-advantage
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;&lt;strong&gt;Get access_key_id/access_key_secret vals based on profile&lt;/strong&gt;&lt;/p&gt;
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;aws configure get aws_access_key_id --profile=HA
+aws configure get aws_secret_access_key --profile=HA
+
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h5 id=&quot;ecs&quot;&gt;ECS&lt;/h5&gt;
+&lt;p&gt;&lt;strong&gt;Get scheduled events based on name&lt;/strong&gt;&lt;/p&gt;
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;aws --profile=jumpstart events list-rules --query 'Rules[?contains('Name',`jam`)==`true`].{Name:Name}'  --output text
+
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;&lt;strong&gt;Kill all tasks within ecs cluster&lt;/strong&gt;&lt;/p&gt;
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;aws --profile=HA ecs list-tasks --cluster ContentPublishing_qa --query taskArns --output text \
+| xargs -n1 -I{} \
+| awk -F/ '{print $2}' \
+| xargs -I{} aws ecs --profile=HA stop-task --cluster ContentPublishing_qa --task {}
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;&lt;strong&gt;Get the env vars and values set on ECS task definition&lt;/strong&gt;&lt;/p&gt;
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;aws --profile=HA ecs describe-task-definition --task-definition arn:aws:ecs:us-east-1:174076265606:task-definition/preparation-h-generator-task-prod:81  --query 'taskDefinition.containerDefinitions[].environment' --output text 
+GENERATOR_FINAL_DIR     /final-dir
+REDIS_HOST      &amp;lt;redacted&amp;gt;
+REDIS_PORT      6379
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;&lt;strong&gt;Get the specific env var value in ECS task definition&lt;/strong&gt;&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;➜  notes git:(master) aws --profile=HA ecs describe-task-definition --task-definition arn:aws:ecs:us-east-1:174076265606:task-definition/preparation-h-generator-task-prod:81  --query 'taskDefinition.containerDefinitions[].environment[?name==`MONGODB`].value' --output text
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;&lt;strong&gt;Get container instance arns&lt;/strong&gt;&lt;/p&gt;
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;aws --profile=&quot;jumpstart&quot; ecs list-container-instances --cluster &quot;dev&quot; --query '[containerInstanceArns][0][*]' --output text | xargs -n1
+arn:aws:ecs:us-east-1:&amp;lt;redacted&amp;gt;:container-instance/5beb75a3-00c8-409e-bf7f-205d6f03fefa
+arn:aws:ecs:us-east-1:&amp;lt;redacted&amp;gt;:container-instance/5d2df610-c795-4c63-b723-8632cfbf728f
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h5 id=&quot;ec2&quot;&gt;EC2&lt;/h5&gt;
+
+&lt;p&gt;&lt;strong&gt;Get the list of ec2 instances by tag key/values&lt;/strong&gt;&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt; aws ec2 describe-instances --filters 'Name=tag-key,Values=Cluster,Name=tag-value, Values=[&quot;vault-two&quot;]' --query 'Reservations[*].Instances[*].{Name:Tags[?Key==`Name`].Value[]}' --output text     
+                                                                
+NAME    kubeprod:vault-two:etcd
+NAME    kubeprod:vault-two:etcd
+NAME    kubeprod:vault-two:etcd
+NAME    kubeprod:vault-two:etcd
+NAME    kubeprod:vault-two:etcd
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;&lt;strong&gt;Get decoded user-data from ec2 instances&lt;/strong&gt;&lt;/p&gt;
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;#/bin/bash
+trap exit INT
+INSTANCES=$( aws --profile=HA ec2 describe-instances --query 'Reservations[].Instances[].InstanceId[]' | sed -e 's/\[//g' -e 's/\]//g')
+SUM=0
+echo $INSTANCES
+for i in $( echo $INSTANCES | sed -e 's/&quot;//g' -e 's/,//g' -e 's/\[//g' -e 's/\]//g' ) ;do
+	echo &quot;---------------------------$i-------------------------------\n&quot;
+	 aws --profile=HA ec2 describe-instances --instance-ids $i --query 'Reservations[].Instances[].Tags[?Key==`Name`].Value' --output text 
+	 aws --profile=HA ec2 describe-instance-attribute --instance-id $( echo $i |  sed -e 's/&quot;//g'  -e 's/,//' -e 's/\[//g' -e 's/\]//g' ) --attribute userData \
+	 	| jq '.UserData.Value' | sed 's/&quot;//g' |  base64 --decode
+	((SUM += 1))
+	echo &quot;\n&quot;
+done
+echo &quot;Total Number of Servers: $SUM&quot;
+
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;&lt;strong&gt;Delete all the snaphsots older than given data&lt;/strong&gt;&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;#!/bin/sh
+snapshots_to_delete=($(aws ec2 --region='us-west-2' describe-snapshots --owner-ids &amp;lt;aws-account-id&amp;gt; --query 'Snapshots[?StartTime&amp;lt;=`2018-01-01`].SnapshotId' --output text))
+echo &quot;List of snapshots to delete: $snapshots_to_delete&quot;
+
+# actual deletion
+for snap in $snapshots_to_delete; do
+   aws ec2 --region=us-west-2 delete-snapshot --snapshot-id $snap
+done
+
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;&lt;strong&gt;Get public submnets on a given vpc&lt;/strong&gt;&lt;/p&gt;
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;aws --profile=$PROFILE ec2 describe-subnets \
+					   --filters &quot;Name=vpc-id,Values=$VPCID&quot; \
+					   --query &quot;Subnets[?Tags != null &amp;amp;&amp;amp; Tags[?contains(Value,\`Public\`)==\`true\`]].SubnetId&quot; --output text
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;&lt;strong&gt;Get public and private ips of given instances&lt;/strong&gt;&lt;/p&gt;
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;aws  ec2 describe-instances --instance-ids '[&quot;i-09487272fb11a4f90&quot;,&quot;i-0d111210e7ebd78bc&quot;]' --query 'Reservations[*].Instances[*].NetworkInterfaces[*].PrivateIpAddresses[0]'              
+[
+    [
+        [
+            {
+                &quot;Association&quot;: {
+                    &quot;IpOwnerId&quot;: &quot;amazon&quot;,
+                    &quot;PublicDnsName&quot;: &quot;&amp;lt;redacted&amp;gt;.compute-1.amazonaws.com&quot;,
+                    &quot;PublicIp&quot;: &quot;&amp;lt;redacted&amp;gt;&quot;
+                },
+                &quot;Primary&quot;: true,
+                &quot;PrivateDnsName&quot;: &quot;&amp;lt;redacted&amp;gt;.ec2.internal&quot;,
+                &quot;PrivateIpAddress&quot;: &quot;192.168.12.6&quot;
+            }
+        ]
+    ],
+...
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h4 id=&quot;ecr&quot;&gt;ECR&lt;/h4&gt;
+&lt;p&gt;&lt;strong&gt;Sort ecr images by push date and get the latest&lt;/strong&gt;&lt;/p&gt;
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;aws --profile=jumpstart ecr describe-images --repository-name lead-front-door \ 
+    --query 'sort_by(imageDetails,&amp;amp; imagePushedAt)[-1].imageTags[0]' --output text
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h4 id=&quot;elb&quot;&gt;ELB&lt;/h4&gt;
+&lt;p&gt;&lt;strong&gt;Create an elb&lt;/strong&gt;&lt;/p&gt;
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;aws --profile=$PROFILE elb create-load-balancer \
+		--load-balancer-name $ELB_NAME \
+	    --listeners &quot;Protocol=HTTP,LoadBalancerPort=$ELBPORT,InstanceProtocol=HTTP,InstancePort=$INSTANCEPORT&quot; \
+		--subnets $PUBLIC_SUBNETS \
+		--security-groups sg-8c2d57f6 
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h4 id=&quot;events&quot;&gt;Events&lt;/h4&gt;
+&lt;p&gt;&lt;strong&gt;list targets by events&lt;/strong&gt;&lt;/p&gt;
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt; aws  events list-targets-by-rule --rule &quot;prod-email-appraisal-lambda-schedule&quot;
+{
+    &quot;Targets&quot;: [
+        {
+            &quot;Id&quot;: &quot;terraform-20190827182914938000000001&quot;,
+            &quot;Arn&quot;: &quot;arn:aws:lambda:us-east-1:&amp;lt;redacted&amp;gt;:function:prod-email-appraisal-lead-sweep&quot;
+        }
+    ]
+}
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;p&gt;&lt;strong&gt;list rules by target&lt;/strong&gt;&lt;/p&gt;
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;## Get scheduled tasks on ecs clusters
+
+ aws --profile=jumpstart events list-rule-names-by-target --target arn:aws:ecs:us-east-1:&amp;lt;redacted&amp;gt;:cluster/production
+{
+    &quot;RuleNames&quot;: [
+        &quot;jam-tools-dps-production-2909-sync-AdUnit&quot;,
+        &quot;jam-tools-dps-production-2909-sync-AudienceSegment&quot;,
+        &quot;jam-tools-dps-production-2909-sync-CustomTargetingKey&quot;,
+        &quot;jam-tools-dps-production-2909-sync-CustomTargetingValue&quot;,
+        &quot;jam-tools-dps-production-2909-sync-Placement&quot;,
+        &quot;jam-tools-dps-production-3611-sync-AdUnit&quot;,
+        &quot;jam-tools-dps-production-3611-sync-AudienceSegment&quot;,
+        &quot;jam-tools-dps-production-3611-sync-Buyer&quot;,
+        &quot;jam-tools-dps-production-3611-sync-Company&quot;,
+        &quot;jam-tools-dps-production-3611-sync-Creative&quot;,
+}
+
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h4 id=&quot;kms&quot;&gt;KMS&lt;/h4&gt;
+&lt;p&gt;&lt;strong&gt;Encrypt/Descrypt text&lt;/strong&gt; \
+&lt;a href=&quot;https://www.youtube.com/watch?v=R5-_eu_9cLM&quot;&gt;Using aws kms to encrypt/decrpt&lt;/a&gt;&lt;/p&gt;
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;#encrypt text
+aws --profile=jumpstart kms encrypt \
+    --key-id &amp;lt;YOUR-KEY-ID&amp;gt; \
+    --plaintext fileb://test \
+    --query CiphertextBlob \
+    --output text | base64 --decode &amp;gt; testencrypted.txt
+    
+#decrypt text
+aws --profile=jumpstart kms decrypt \
+    --ciphertext-blob fileb://testencrypted.txt \
+    --query Plaintext --output text | base64 --decode
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h4 id=&quot;sns&quot;&gt;SNS&lt;/h4&gt;
+&lt;p&gt;&lt;strong&gt;List subscriptions&lt;/strong&gt;&lt;/p&gt;
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;aws --profile=HA sns list-subscriptions --query 'Subscriptions[*]|[?contains(Protocol,`lambda`)==`false`]|[?contains(Endpoint,`bark`)==`true`]|[?contains(Endpoint,`stg`)==`true`]|[?contains(TopicArn,`d6cbe`)==`false`].{TopicArn:TopicArn}' --output text 
+arn:aws:sns:us-east-1:&amp;lt;redacted&amp;gt;:&amp;lt;redacted&amp;gt;
+arn:aws:sns:us-east-1:&amp;lt;redacted&amp;gt;:&amp;lt;redacted&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h4 id=&quot;s3&quot;&gt;S3&lt;/h4&gt;
+
+&lt;p&gt;&lt;strong&gt;Server Side encryption with customer provided encryption keys&lt;/strong&gt; \
+Per AWS docs requirements for encryptions are:
+https://docs.aws.amazon.com/AmazonS3/latest/dev/ServerSideEncryptionCustomerKeys.html&lt;/p&gt;
+
+&lt;h5 id=&quot;1-generate-your-aes256-keys&quot;&gt;1. Generate your AES256 keys.&lt;/h5&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;➜ cat testing
+this is a test
+➜ echo -n your-super-secret-phrase-string | openssl dgst -sha256 -binary &amp;gt; aes256.key    
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h5 id=&quot;3-encrypt-and-upload-your-file&quot;&gt;3. Encrypt and upload your file&lt;/h5&gt;
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;➜ aws --profile=personal \
+s3api put-object \
+--bucket=shaytac-test \
+--key=test2 \
+--body=testing \
+--sse-customer-algorithm=AES256 \
+--sse-customer-key=fileb://aes256.key
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h5 id=&quot;4-decrypt-and-download-your-file&quot;&gt;4. Decrypt and download your file&lt;/h5&gt;
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;➜ aws --profile=personal \
+s3api get-object \
+--bucket=shaytac-test \
+--key=test2  \
+--sse-customer-algorithm=AES256 \
+--sse-customer-key=fileb://aes256.key testing-downloaded
+➜ cat testing-downloaded
+this is a test
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h4 id=&quot;vpc&quot;&gt;VPC&lt;/h4&gt;
+&lt;p&gt;&lt;strong&gt;Get vpc names&lt;/strong&gt;&lt;/p&gt;
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;aws --profile=HA ec2 describe-vpcs --query &quot;Vpcs[*].Tags[].Value&quot; --output text
+ContentPublishing vpc   CarAndDriver vpc
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+</description>
+				<pubDate>Thu, 01 Aug 2019 03:40:00 -0400</pubDate>
+				<link>/aws,cli,aws-cli/2019/08/01/aws-cli-notes.html</link>
+				<guid isPermaLink="true">/aws,cli,aws-cli/2019/08/01/aws-cli-notes.html</guid>
 			</item>
 		
 			<item>
@@ -2264,23 +2518,6 @@ Mon Jul 23 13:01:59 EDT 2018
 				<pubDate>Wed, 11 Jul 2018 11:51:00 -0400</pubDate>
 				<link>/aws,/rds,/cli/2018/07/11/aws-cli-rds-commands.html</link>
 				<guid isPermaLink="true">/aws,/rds,/cli/2018/07/11/aws-cli-rds-commands.html</guid>
-			</item>
-		
-			<item>
-				<title>Some useful cloudtrail commands i use often. </title>
-				<description>&lt;p&gt;&lt;a href=&quot;https://docs.aws.amazon.com/awscloudtrail/latest/userguide/view-cloudtrail-events-cli.html#attribute-lookup-example&quot;&gt;AWS Docs&lt;/a&gt;&lt;/p&gt;
-
-&lt;h5 id=&quot;get-the-last-10-actions-done-by-iam-user&quot;&gt;Get the last 10 actions done by IAM user.&lt;/h5&gt;
-
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;➜  ~ aws cloudtrail lookup-events --lookup-attributes aws lookup-events --lookup-attributes AttributeKey=Username,AttributeValue=username --max-items 10
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-&lt;h5 id=&quot;get-the-last-10-actions-done-by-iam-role&quot;&gt;Get the last 10 actions done by IAM role.&lt;/h5&gt;
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;➜  ~ aws cloudtrail lookup-events --lookup-attributes aws lookup-events --lookup-attributes AttributeKey=ResourceName,AttributeValue=CloudTrail_CloudWatchLogs_Role  --max-items 10
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-</description>
-				<pubDate>Tue, 10 Jul 2018 11:51:00 -0400</pubDate>
-				<link>/aws,/clooudtrail,/cli/2018/07/10/useful-aws-cli-cloudtrail-commands.html</link>
-				<guid isPermaLink="true">/aws,/clooudtrail,/cli/2018/07/10/useful-aws-cli-cloudtrail-commands.html</guid>
 			</item>
 		
 	</channel>

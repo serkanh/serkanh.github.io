@@ -1,0 +1,511 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>AWS CLI Notes</title>
+	
+	<meta name="author" content="serkan haytac">
+    
+	<!-- Enable responsive viewport -->
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+	<!-- Le HTML5 shim, for IE6-8 support of HTML elements -->
+	<!--[if lt IE 9]>
+	<script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+	<![endif]-->
+
+	<!-- Le styles -->
+	<link href="/assets/resources/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+	<link href="/assets/resources/font-awesome/css/font-awesome.min.css" rel="stylesheet">
+	<link href="/assets/resources/syntax/syntax.css" rel="stylesheet">
+	<link href="/assets/css/style.css" rel="stylesheet">
+
+	<!-- Le fav and touch icons -->
+	<!-- Update these with your own images
+	<link rel="shortcut icon" href="images/favicon.ico">
+	<link rel="apple-touch-icon" href="images/apple-touch-icon.png">
+	<link rel="apple-touch-icon" sizes="72x72" href="images/apple-touch-icon-72x72.png">
+	<link rel="apple-touch-icon" sizes="114x114" href="images/apple-touch-icon-114x114.png">
+	-->
+
+	<link rel="alternate" type="application/rss+xml" title="" href="/feed.xml">
+</head>
+
+<body>
+	<nav class="navbar navbar-default visible-xs" role="navigation">
+		<!-- Brand and toggle get grouped for better mobile display -->
+		<div class="navbar-header">
+			<button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+				<span class="sr-only">Toggle navigation</span>
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+			</button>
+			
+			<a type="button" class="navbar-toggle nav-link" href="http://github.com/serkanh">
+				<i class="fa fa-github"></i>
+			</a>
+			
+			
+			<a type="button" class="navbar-toggle nav-link" href="http://twitter.com/shaytac">
+				<i class="fa fa-twitter"></i>
+			</a>
+			
+			
+			<a type="button" class="navbar-toggle nav-link" href="mailto:shaytac at gmail.com">
+				<i class="fa fa-envelope"></i>
+			</a>
+			
+			<a class="navbar-brand" href="/">
+				<img src="/assets/imgs/profileimg.jpg" class="img-circle" />
+				serkan haytac
+			</a>
+		</div>
+
+		<!-- Collect the nav links, forms, and other content for toggling -->
+		<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+			<ul class="nav navbar-nav">
+				<li class="active"><a href="/">Home</a></li>
+				<li><a href="/categories.html">Categories</a></li>
+				<li><a href="/tags.html">Tags</a></li>
+			</ul>
+		</div><!-- /.navbar-collapse -->
+	</nav>
+
+	<!-- nav-menu-dropdown -->
+	<div class="btn-group hidden-xs" id="nav-menu">
+		<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+			<i class="fa fa-bars"></i>
+		</button>
+		<ul class="dropdown-menu" role="menu">
+			<li><a href="/"><i class="fa fa-home"></i>Home</a></li>
+			<li><a href="/categories.html"><i class="fa fa-folder"></i>Categories</a></li>
+			<li><a href="/tags.html"><i class="fa fa-tags"></i>Tags</a></li>
+			<li class="divider"></li>
+			<li><a href="#"><i class="fa fa-arrow-up"></i>Top of Page</a></li>
+		</ul>
+	</div>
+
+	<div class="col-sm-3 sidebar hidden-xs" style="">
+		<!-- sidebar.html -->
+<header class="sidebar-header" role="banner">
+	<a href="/">
+		<img src="/assets/imgs/profileimg.jpg" class="img-circle" />
+	</a>
+	<h3 class="title">
+        <a href="/">serkan haytac</a>
+    </h3>
+</header>
+
+
+<div id="bio" class="text-center">
+	<a href="https://www.certmetrics.com/amazon/public/badge.aspx?i=1&t=c&d=2016-07-01&ci=AWS00186868">AWS Certified Solutions Architect - Associate</a><br /><a href="https://www.certmetrics.com/amazon/public/badge.aspx?i=2&t=c&d=2016-07-23&ci=AWS00186868">AWS Certified Developer - Associate</a><br /><a href="https://www.certmetrics.com/amazon/public/badge.aspx?i=3&t=c&d=2018-01-12&ci=AWS00186868">AWS Certified SysOps Administrator - Associate</a><br /> <a href="https://gist.github.com/serkanh">Gists</><br /><a href="/resources">Resources</a><br /><a href="/one-liners">One liners</a>
+</div>
+
+
+<div id="contact-list" class="text-center">
+	<ul class="list-unstyled list-inline">
+		
+		<li>
+			<a class="btn btn-default btn-sm" href="https://github.com/serkanh">
+				<i class="fa fa-github-alt fa-lg"></i>
+			</a>
+		</li>
+		
+		
+		<li>
+			<a class="btn btn-default btn-sm" href="https://twitter.com/shaytac">
+				<i class="fa fa-twitter fa-lg"></i>
+			</a>
+		</li>
+		
+		
+		<li>
+			<a class="btn btn-default btn-sm" href="mailto:shaytac at gmail.com">
+				<i class="fa fa-envelope fa-lg"></i>
+			</a>
+		</li>
+		
+	</ul>
+	<ul id="contact-list-secondary" class="list-unstyled list-inline">
+		
+		
+		<li>
+			<a class="btn btn-default btn-sm" href="https://linkedin.com/in/serkanhaytac">
+				<i class="fa fa-linkedin fa-lg"></i>
+			</a>
+		</li>
+		
+		<li>
+			<a class="btn btn-default btn-sm" href="/feed.xml">
+				<i class="fa fa-rss fa-lg"></i>
+			</a>
+		</li>
+	</ul>
+</div>
+<!-- sidebar.html end -->
+
+	</div>
+
+	<div class="col-sm-9 col-sm-offset-3">
+		<div class="page-header">
+  <h1>AWS CLI Notes </h1>
+</div>
+	
+<article>
+
+	<div class="col-sm-10">
+	 <span class="post-date">
+	   
+	   August 
+	   1st,
+	     
+	   2019
+	 </span>
+	  <div class="article_body">
+	  <h4 id="aws-cli">AWS-CLI</h4>
+
+<table>
+  <tbody>
+    <tr>
+      <td><a href="#cloudfront">cloudfront</a></td>
+      <td><a href="#ec2">ec2</a></td>
+      <td><a href="#ecr">ecr</a></td>
+      <td><a href="#elb">elb</a></td>
+      <td><a href="#ecs">ecs</a></td>
+      <td><a href="#events">events</a> <a href="#kms">kms</a></td>
+      <td><a href="#sns">sns</a></td>
+      <td><a href="#s3">s3</a></td>
+    </tr>
+  </tbody>
+</table>
+
+<h5 id="cloudfront">Cloudfront</h5>
+
+<p><strong>Get cloudfront distribution url and origin as a table</strong></p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>➜  notes git:(master) ✗ aws cloudfront list-distributions --query 'DistributionList.Items[*].{DomainName:Origins.Items[0].DomainName,Origins:Origins.Items[0].Id,CNAME:Aliases.Items[0]}' --output table
+
+</code></pre></div></div>
+
+<h5 id="configure">Configure</h5>
+<p><strong>Create a named profile</strong></p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>aws configure --profile=hdm-advantage
+</code></pre></div></div>
+
+<p><strong>Get access_key_id/access_key_secret vals based on profile</strong></p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>aws configure get aws_access_key_id --profile=HA
+aws configure get aws_secret_access_key --profile=HA
+
+</code></pre></div></div>
+
+<h5 id="ecs">ECS</h5>
+<p><strong>Get scheduled events based on name</strong></p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>aws --profile=jumpstart events list-rules --query 'Rules[?contains('Name',`jam`)==`true`].{Name:Name}'  --output text
+
+</code></pre></div></div>
+
+<p><strong>Kill all tasks within ecs cluster</strong></p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>aws --profile=HA ecs list-tasks --cluster ContentPublishing_qa --query taskArns --output text \
+| xargs -n1 -I{} \
+| awk -F/ '{print $2}' \
+| xargs -I{} aws ecs --profile=HA stop-task --cluster ContentPublishing_qa --task {}
+</code></pre></div></div>
+
+<p><strong>Get the env vars and values set on ECS task definition</strong></p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>aws --profile=HA ecs describe-task-definition --task-definition arn:aws:ecs:us-east-1:174076265606:task-definition/preparation-h-generator-task-prod:81  --query 'taskDefinition.containerDefinitions[].environment' --output text 
+GENERATOR_FINAL_DIR     /final-dir
+REDIS_HOST      &lt;redacted&gt;
+REDIS_PORT      6379
+</code></pre></div></div>
+
+<p><strong>Get the specific env var value in ECS task definition</strong></p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>➜  notes git:(master) aws --profile=HA ecs describe-task-definition --task-definition arn:aws:ecs:us-east-1:174076265606:task-definition/preparation-h-generator-task-prod:81  --query 'taskDefinition.containerDefinitions[].environment[?name==`MONGODB`].value' --output text
+</code></pre></div></div>
+
+<p><strong>Get container instance arns</strong></p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>aws --profile="jumpstart" ecs list-container-instances --cluster "dev" --query '[containerInstanceArns][0][*]' --output text | xargs -n1
+arn:aws:ecs:us-east-1:&lt;redacted&gt;:container-instance/5beb75a3-00c8-409e-bf7f-205d6f03fefa
+arn:aws:ecs:us-east-1:&lt;redacted&gt;:container-instance/5d2df610-c795-4c63-b723-8632cfbf728f
+</code></pre></div></div>
+
+<h5 id="ec2">EC2</h5>
+
+<p><strong>Get the list of ec2 instances by tag key/values</strong></p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code> aws ec2 describe-instances --filters 'Name=tag-key,Values=Cluster,Name=tag-value, Values=["vault-two"]' --query 'Reservations[*].Instances[*].{Name:Tags[?Key==`Name`].Value[]}' --output text     
+                                                                
+NAME    kubeprod:vault-two:etcd
+NAME    kubeprod:vault-two:etcd
+NAME    kubeprod:vault-two:etcd
+NAME    kubeprod:vault-two:etcd
+NAME    kubeprod:vault-two:etcd
+</code></pre></div></div>
+
+<p><strong>Get decoded user-data from ec2 instances</strong></p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>#/bin/bash
+trap exit INT
+INSTANCES=$( aws --profile=HA ec2 describe-instances --query 'Reservations[].Instances[].InstanceId[]' | sed -e 's/\[//g' -e 's/\]//g')
+SUM=0
+echo $INSTANCES
+for i in $( echo $INSTANCES | sed -e 's/"//g' -e 's/,//g' -e 's/\[//g' -e 's/\]//g' ) ;do
+	echo "---------------------------$i-------------------------------\n"
+	 aws --profile=HA ec2 describe-instances --instance-ids $i --query 'Reservations[].Instances[].Tags[?Key==`Name`].Value' --output text 
+	 aws --profile=HA ec2 describe-instance-attribute --instance-id $( echo $i |  sed -e 's/"//g'  -e 's/,//' -e 's/\[//g' -e 's/\]//g' ) --attribute userData \
+	 	| jq '.UserData.Value' | sed 's/"//g' |  base64 --decode
+	((SUM += 1))
+	echo "\n"
+done
+echo "Total Number of Servers: $SUM"
+
+</code></pre></div></div>
+
+<p><strong>Delete all the snaphsots older than given data</strong></p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>#!/bin/sh
+snapshots_to_delete=($(aws ec2 --region='us-west-2' describe-snapshots --owner-ids &lt;aws-account-id&gt; --query 'Snapshots[?StartTime&lt;=`2018-01-01`].SnapshotId' --output text))
+echo "List of snapshots to delete: $snapshots_to_delete"
+
+# actual deletion
+for snap in $snapshots_to_delete; do
+   aws ec2 --region=us-west-2 delete-snapshot --snapshot-id $snap
+done
+
+</code></pre></div></div>
+
+<p><strong>Get public submnets on a given vpc</strong></p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>aws --profile=$PROFILE ec2 describe-subnets \
+					   --filters "Name=vpc-id,Values=$VPCID" \
+					   --query "Subnets[?Tags != null &amp;&amp; Tags[?contains(Value,\`Public\`)==\`true\`]].SubnetId" --output text
+</code></pre></div></div>
+
+<p><strong>Get public and private ips of given instances</strong></p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>aws  ec2 describe-instances --instance-ids '["i-09487272fb11a4f90","i-0d111210e7ebd78bc"]' --query 'Reservations[*].Instances[*].NetworkInterfaces[*].PrivateIpAddresses[0]'              
+[
+    [
+        [
+            {
+                "Association": {
+                    "IpOwnerId": "amazon",
+                    "PublicDnsName": "&lt;redacted&gt;.compute-1.amazonaws.com",
+                    "PublicIp": "&lt;redacted&gt;"
+                },
+                "Primary": true,
+                "PrivateDnsName": "&lt;redacted&gt;.ec2.internal",
+                "PrivateIpAddress": "192.168.12.6"
+            }
+        ]
+    ],
+...
+</code></pre></div></div>
+
+<h4 id="ecr">ECR</h4>
+<p><strong>Sort ecr images by push date and get the latest</strong></p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>aws --profile=jumpstart ecr describe-images --repository-name lead-front-door \ 
+    --query 'sort_by(imageDetails,&amp; imagePushedAt)[-1].imageTags[0]' --output text
+</code></pre></div></div>
+
+<h4 id="elb">ELB</h4>
+<p><strong>Create an elb</strong></p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>aws --profile=$PROFILE elb create-load-balancer \
+		--load-balancer-name $ELB_NAME \
+	    --listeners "Protocol=HTTP,LoadBalancerPort=$ELBPORT,InstanceProtocol=HTTP,InstancePort=$INSTANCEPORT" \
+		--subnets $PUBLIC_SUBNETS \
+		--security-groups sg-8c2d57f6 
+</code></pre></div></div>
+
+<h4 id="events">Events</h4>
+<p><strong>list targets by events</strong></p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code> aws  events list-targets-by-rule --rule "prod-email-appraisal-lambda-schedule"
+{
+    "Targets": [
+        {
+            "Id": "terraform-20190827182914938000000001",
+            "Arn": "arn:aws:lambda:us-east-1:&lt;redacted&gt;:function:prod-email-appraisal-lead-sweep"
+        }
+    ]
+}
+</code></pre></div></div>
+<p><strong>list rules by target</strong></p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>## Get scheduled tasks on ecs clusters
+
+ aws --profile=jumpstart events list-rule-names-by-target --target arn:aws:ecs:us-east-1:&lt;redacted&gt;:cluster/production
+{
+    "RuleNames": [
+        "jam-tools-dps-production-2909-sync-AdUnit",
+        "jam-tools-dps-production-2909-sync-AudienceSegment",
+        "jam-tools-dps-production-2909-sync-CustomTargetingKey",
+        "jam-tools-dps-production-2909-sync-CustomTargetingValue",
+        "jam-tools-dps-production-2909-sync-Placement",
+        "jam-tools-dps-production-3611-sync-AdUnit",
+        "jam-tools-dps-production-3611-sync-AudienceSegment",
+        "jam-tools-dps-production-3611-sync-Buyer",
+        "jam-tools-dps-production-3611-sync-Company",
+        "jam-tools-dps-production-3611-sync-Creative",
+}
+
+</code></pre></div></div>
+
+<h4 id="kms">KMS</h4>
+<p><strong>Encrypt/Descrypt text</strong> \
+<a href="https://www.youtube.com/watch?v=R5-_eu_9cLM">Using aws kms to encrypt/decrpt</a></p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>#encrypt text
+aws --profile=jumpstart kms encrypt \
+    --key-id &lt;YOUR-KEY-ID&gt; \
+    --plaintext fileb://test \
+    --query CiphertextBlob \
+    --output text | base64 --decode &gt; testencrypted.txt
+    
+#decrypt text
+aws --profile=jumpstart kms decrypt \
+    --ciphertext-blob fileb://testencrypted.txt \
+    --query Plaintext --output text | base64 --decode
+</code></pre></div></div>
+
+<h4 id="sns">SNS</h4>
+<p><strong>List subscriptions</strong></p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>aws --profile=HA sns list-subscriptions --query 'Subscriptions[*]|[?contains(Protocol,`lambda`)==`false`]|[?contains(Endpoint,`bark`)==`true`]|[?contains(Endpoint,`stg`)==`true`]|[?contains(TopicArn,`d6cbe`)==`false`].{TopicArn:TopicArn}' --output text 
+arn:aws:sns:us-east-1:&lt;redacted&gt;:&lt;redacted&gt;
+arn:aws:sns:us-east-1:&lt;redacted&gt;:&lt;redacted&gt;
+</code></pre></div></div>
+
+<h4 id="s3">S3</h4>
+
+<p><strong>Server Side encryption with customer provided encryption keys</strong> \
+Per AWS docs requirements for encryptions are:
+https://docs.aws.amazon.com/AmazonS3/latest/dev/ServerSideEncryptionCustomerKeys.html</p>
+
+<h5 id="1-generate-your-aes256-keys">1. Generate your AES256 keys.</h5>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>➜ cat testing
+this is a test
+➜ echo -n your-super-secret-phrase-string | openssl dgst -sha256 -binary &gt; aes256.key    
+</code></pre></div></div>
+
+<h5 id="3-encrypt-and-upload-your-file">3. Encrypt and upload your file</h5>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>➜ aws --profile=personal \
+s3api put-object \
+--bucket=shaytac-test \
+--key=test2 \
+--body=testing \
+--sse-customer-algorithm=AES256 \
+--sse-customer-key=fileb://aes256.key
+</code></pre></div></div>
+
+<h5 id="4-decrypt-and-download-your-file">4. Decrypt and download your file</h5>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>➜ aws --profile=personal \
+s3api get-object \
+--bucket=shaytac-test \
+--key=test2  \
+--sse-customer-algorithm=AES256 \
+--sse-customer-key=fileb://aes256.key testing-downloaded
+➜ cat testing-downloaded
+this is a test
+</code></pre></div></div>
+
+<h4 id="vpc">VPC</h4>
+<p><strong>Get vpc names</strong></p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>aws --profile=HA ec2 describe-vpcs --query "Vpcs[*].Tags[].Value" --output text
+ContentPublishing vpc   CarAndDriver vpc
+</code></pre></div></div>
+
+	  </div>
+
+		
+		<ul class="tag_box list-unstyled list-inline">
+		  <li><i class="fa fa-folder-open"></i></li>
+		  
+		  
+			 
+				<li><a href="/categories.html#aws,cli,aws-cli-ref">
+					aws,cli,aws-cli <span>(1)</span>
+					
+				</a></li>
+			
+		  
+		</ul>
+		  
+
+		  
+
+		<hr>
+
+		<div>
+      <section class="share col-sm-6">
+        <h4 class="section-title">Share Post</h4>
+        <a class="btn btn-default btn-sm twitter" href="http://twitter.com/share?text=AWS CLI Notes&via=shaytac"
+           onclick="window.open(this.href, 'twitter-share', 'width=550,height=235');return false;">
+          <i class="fa fa-twitter fa-lg"></i>
+          Twitter
+        </a>
+        <a class="btn btn-default btn-sm facebook" href="https://www.facebook.com/sharer/sharer.php"
+           onclick="window.open(this.href, 'facebook-share','width=580,height=296');return false;">
+          <i class="fa fa-facebook fa-lg"></i>
+          Facebook
+        </a>
+        <a class="btn btn-default btn-sm gplus"
+           onclick="window.open('https://plus.google.com/share?url='+window.location.href, 'google-plus-share', 'width=490,height=530');return false;">
+          <i class="fa fa-google-plus fa-lg"></i>
+          Google+
+        </a>
+      </section>
+
+      <section class="col-sm-6 author">
+        <img src="/assets/imgs/profileimg.jpg" class="img-rounded author-image" />
+        <h4 class="section-title author-name">serkan haytac</h4>
+        <p class="author-bio"><a href="https://www.certmetrics.com/amazon/public/badge.aspx?i=1&t=c&d=2016-07-01&ci=AWS00186868">AWS Certified Solutions Architect - Associate</a><br /><a href="https://www.certmetrics.com/amazon/public/badge.aspx?i=2&t=c&d=2016-07-23&ci=AWS00186868">AWS Certified Developer - Associate</a><br /><a href="https://www.certmetrics.com/amazon/public/badge.aspx?i=3&t=c&d=2018-01-12&ci=AWS00186868">AWS Certified SysOps Administrator - Associate</a><br /> <a href="https://gist.github.com/serkanh">Gists</><br /><a href="/resources">Resources</a><br /><a href="/one-liners">One liners</a></p>
+      </section>
+    </div>
+
+    <div class="clearfix"></div>
+
+		<ul class="pager">
+		  
+		  <li class="previous"><a href="/github,github-topic-labels,github/search/2019/02/26/sarching-github-multiple-topics-copy.html" title="Searching github with multiple topics.">&larr; Previous</a></li>
+		  
+		  
+		  <li class="next"><a href="/terraform,circleci/2019/08/01/terraform-notes.html" title="Terraform Notes">Next &rarr;</a></li>
+		  
+		</ul>
+
+		<hr>
+	</div>
+	
+	<div class="col-sm-2 sidebar-2">
+	
+	</div>
+</article>
+<div class="clearfix"></div>
+
+
+
+
+
+		<footer>
+			<hr/>
+			<p>
+				&copy; 2019 serkan haytac with <a href="http://jekyllrb.com/">Jekyll</a>. Theme: <a href="https://github.com/dbtek/dbyll">dbyll</a> by dbtek.
+			</p>
+		</footer>
+	</div>
+
+	<script type="text/javascript" src="/assets/resources/jquery/jquery.min.js"></script>
+	<script type="text/javascript" src="/assets/resources/bootstrap/js/bootstrap.min.js"></script>
+	<script type="text/javascript" src="/assets/js/app.js"></script>
+</body>
+</html>
+
+
+
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-900551-54"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-900551-54');
+</script>
+
+

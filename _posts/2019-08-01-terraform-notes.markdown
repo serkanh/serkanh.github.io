@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "Terrform Notes"
+title: "Terraform Notes"
 date: 2019-08-01 7:40:00
 categories: terraform,circleci
 ---
