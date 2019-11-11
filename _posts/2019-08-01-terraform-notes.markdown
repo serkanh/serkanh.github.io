@@ -5,6 +5,12 @@ date: 2019-08-01 7:40:00
 categories: terraform,circleci
 ---
 
+* **To pull\push the terraform state file to local env**
+
+````
+terraform state pull > state_file_from_s3.json
+terraform state push -file <file>
+````
 
 * **Conditional ternary syntax** 
 

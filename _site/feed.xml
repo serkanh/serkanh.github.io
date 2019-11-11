@@ -9,6 +9,14 @@
 			<item>
 				<title>Terraform Notes</title>
 				<description>&lt;ul&gt;
+  &lt;li&gt;&lt;strong&gt;To pull\push the terraform state file to local env&lt;/strong&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;terraform state pull &amp;gt; state_file_from_s3.json
+terraform state push -file &amp;lt;file&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;ul&gt;
   &lt;li&gt;&lt;strong&gt;Conditional ternary syntax&lt;/strong&gt;&lt;/li&gt;
 &lt;/ul&gt;
 
@@ -311,9 +319,17 @@ workflows:
       &lt;td&gt;&lt;a href=&quot;#events&quot;&gt;events&lt;/a&gt; &lt;a href=&quot;#kms&quot;&gt;kms&lt;/a&gt;&lt;/td&gt;
       &lt;td&gt;&lt;a href=&quot;#sns&quot;&gt;sns&lt;/a&gt;&lt;/td&gt;
       &lt;td&gt;&lt;a href=&quot;#s3&quot;&gt;s3&lt;/a&gt;&lt;/td&gt;
+      &lt;td&gt;&lt;a href=&quot;#Resourcegroupstaggingapi&quot;&gt;resourcegroupstaggingapi&lt;/a&gt;&lt;/td&gt;
     &lt;/tr&gt;
   &lt;/tbody&gt;
 &lt;/table&gt;
+
+&lt;h5 id=&quot;resourcegroupstaggingapi&quot;&gt;Resourcegroupstaggingapi&lt;/h5&gt;
+
+&lt;p&gt;&lt;strong&gt;Get all the resources in a region tagged by certain tags regardless of their type.&lt;/strong&gt;&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;aws resourcegroupstaggingapi get-resources --tag-filters 'Key=&amp;lt;key-name&amp;gt;,Values=[&quot;key-value&quot;]'
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
 &lt;h5 id=&quot;cloudfront&quot;&gt;Cloudfront&lt;/h5&gt;
 
