@@ -5,6 +5,288 @@ date: 2019-08-01 7:40:00
 categories: terraform,circleci
 ---
 
+[github search](https://github.com/search?q=redis+extension%3Atf)
+
+
+* **Check if value is set if not get it from remote state**
+
+`DB_HOST             = "${var.DB_HOST != "" ? var.DB_HOST : data.terraform_remote_state.rds.outputs.write_encrypted_cname.fqdn}"`
+
+
+* **Merge 2 objects to single one.**
+
+````
+merge(local.comman_lt_settings,{ ECS_CLUSTER = "oddjobs-${local.env}", app = "oddjobs" }))
+````
+
+
+* **To iterate over lists with for_each**
+
+https://blog.gruntwork.io/terraform-tips-tricks-loops-if-statements-and-gotchas-f739bbae55f9
+````
+locals {
+    sqs-queues = ["ccpa-dmd-finanace","ccpa-dmd-devops","ccpa-dmd-mst"]
+}
+
+
+resource "aws_sqs_queue" "sqs_queue" {
+  for_each                  = toset(local.sqs-queues)
+  name                      = "c51-${var.env}-${each.value}"
+  delay_seconds             = 90
+  max_message_size          = 2048
+  message_retention_seconds = 86400
+  receive_wait_time_seconds = 10
+   tags = {
+    Name = "c51-${var.env}-${each.value}"
+    env  = "${var.env}"
+  }
+}
+````
+
+* **cidr subnet function**
+https://tidalmigrations.com/subnet-builder/
+
+````
+terraform console 
+>cidrsubnet("10.226.0.0/20", 4, 2)
+10.226.2.0/24
+> cidrsubnet("10.226.0.0/20", 4, 3)
+10.226.3.0/24
+> cidrsubnet("10.226.0.0/20", 4, 4)
+10.226.4.0/24
+> cidrsubnet("10.226.0.0/20", 3, 4)
+10.226.8.0/23
+> cidrsubnet("10.226.0.0/20", 3, 1)
+10.226.2.0/23
+> cidrsubnet("10.226.0.0/20", 3, 2)
+10.226.4.0/23
+> cidrsubnet("10.226.0.0/20", 3, 4)
+10.226.8.0/23
+> cidrsubnet("10.226.0.0/18", 4, 8)
+10.226.32.0/22
+> cidrsubnet("10.226.0.0/18", 4, 1)
+...
+10.226.60.0/22
+> cidrsubnet("10.226.0.0/18", 4, 16)
+
+#produces 32 ip blocks with 512 ips each
+> cidrsubnet("10.226.0.0/18", 5, 0)
+10.226.0.0/23
+
+
+````
+
+* **look up syntax for 0.11**
+
+````
+my_var = [
+  {
+    key1 = "value1"
+    key2 = "value2"
+    key3 = "value3"
+  },
+  {
+    key1 = "value11"
+    key2 = "value22"
+    key3 = "value33"
+  },
+  {
+    key1 = "value111"
+    key2 = "value222"
+    key3 = "value333"
+  },
+]
+
+output "test" {
+  value = "${lookup(local.my_var[0], "key1")}"
+}
+Outputs:
+test = value1
+````
+* **look up syntax for 0.12**
+
+````
+my_var = [
+  {
+    key1 = "value1"
+    key2 = "value2"
+    key3 = "value3"
+  },
+  {
+    key1 = "value11"
+    key2 = "value22"
+    key3 = "value33"
+  },
+  {
+    key1 = "value111"
+    key2 = "value222"
+    key3 = "value333"
+  },
+]
+
+output "test" {
+  value = local.my_var[1].key1
+}
+Outputs:
+test = value1
+````
+
+
+* **Iterating through nested blocks**
+
+````
+  ecs-clusters = {
+    webapp = {
+      task-definition       = templatefile("${path.module}/webapp-task-definition.json", { env = "dev" })
+      service_desired_count = 1
+      is_internal_alb       = false
+      public_subnet_ids     = local.public_subnet_ids
+      alb_ingress_ports     = [80,443] <-- To iterate over this list
+    }
+  }
+
+
+resource "aws_security_group" "alb" {
+  for_each    = var.ecs-clusters
+  name        = "${each.key}-${var.env}"
+  description = "${each.key}-${var.env}"
+  vpc_id      = var.vpc-id
+
+  egress {
+    description = "all"
+    from_port   = 0
+    to_port     = 0
+    protocol    = -1
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+  dynamic "ingress" {
+   for_each = [for ip in each.value.alb_ingress_ports: {
+      from_port  = ip
+      to_port = ip
+      protocol = "tcp"
+    }]
+   content {
+         from_port = ingress.value.from_port
+         to_port = ingress.value.to_port
+         protocol = ingress.value.protocol
+     }
+  }
+
+  tags = {
+    Name = "${each.key}-${var.env}"
+    env = "${var.env}"
+  }
+
+}
+````
+
+
+
+* **To upgrade terraform providers' versions to latest**
+
+`terraform init --upgrade` 
+
+* **Show the state list**
+
+````
+(base) ➜  vpc git:(dev) ✗ terraform state list                                                       
+data.http.executor_ip
+module.dev-vpc.data.aws_ami.ubuntu
+module.dev-vpc.data.aws_secretsmanager_secret.vpc
+module.dev-vpc.data.aws_secretsmanager_secret_version.falconid
+module.dev-vpc.aws_eip.eip["us-west-2a"]
+module.dev-vpc.aws_instance.bastion["bastion1"]
+module.dev-vpc.aws_internet_gateway.igw
+module.dev-vpc.aws_nat_gateway.natgateway["us-west-2a"]
+module.dev-vpc.aws_route_table.private["us-west-2a"]
+module.dev-vpc.aws_route_table.public
+module.dev-vpc.aws_route_table_association.private["us-west-2a"]
+module.dev-vpc.aws_route_table_association.public["us-west-2a"]
+module.dev-vpc.aws_security_group.bastion-sg
+module.dev-vpc.aws_subnet.private["us-west-2a"]
+module.dev-vpc.aws_subnet.private["us-west-2b"]
+module.dev-vpc.aws_subnet.public["us-west-2a"]
+module.dev-vpc.aws_vpc.main
+````
+
+* **Remove specific state of instance that is created by foreach**
+
+````
+(base) ➜  vpc git:(dev) ✗ terraform state rm 'module.dev-vpc.aws_subnet.private["us-west-2b"]'
+Acquiring state lock. This may take a few moments...
+Removed module.dev-vpc.aws_subnet.private["us-west-2b"]
+Successfully removed 1 resource instance(s).
+Releasing state lock. This may take a few moments...
+````
+
+
+* **Show remote state of a specific instance created by `for_each` **
+
+````
+(base) ➜  vpc git:(dev) ✗ terraform state show 'module.dev-vpc.aws_nat_gateway.natgateway["us-west-2a"]'
+# module.dev-vpc.aws_nat_gateway.natgateway["us-west-2a"]:
+resource "aws_nat_gateway" "natgateway" {
+    allocation_id        = "eipalloc-07a54166dc3895130"
+    id                   = "nat-0162ae2d0ed022fa1"
+    network_interface_id = "eni-0d4a03b3aa3bee379"
+    private_ip           = "10.227.115.245"
+    public_ip            = "44.229.139.157"
+    subnet_id            = "subnet-0edd61ecfe793c4f5"
+    tags                 = {
+        "Name" = "c51-dev-nat-us-west-2a"
+        "env"  = "c51-dev"
+    }
+}
+````
+
+* **Testing template rendering with `templatefile` function
+Given the template file is in a module, go into main section where module is called from and start the console with `terraform console`
+Give the relative path of the file
+
+````
+> templatefile("../../../modules/vpc/bastion-host-userdata.tmpl", { falcon-cid="test" })
+#!/bin/bash 
+
+# Install the AWS command-line tools
+sudo yum install -y aws-cli
+
+# Install CrowdStrike
+sudo mkdir /home/ec2-user/falcon-sensor
+cd /home/ec2-user/falcon-sensor
+aws s3 cp s3://c51-falcon-sensor/falcon-sensor-4.25.0-7103.amzn2.x86_64.rpm .
+sudo yum install -y falcon-sensor-4.25.0-7103.amzn2.x86_64.rpm
+
+# Set crowdstrike cid
+sudo /opt/CrowdStrike/falconctl -s --cid=test
+sudo /opt/CrowdStrike/falconctl -s --feature=enableLog,disableLogBuffer --update # enable logging
+sudo service falcon-sensor start
+
+>  
+````
+
+* **To use AWS Secret manager for secrets** 
+
+```
+~ cat ~/vcp.tf
+
+data "aws_secretsmanager_secret" "vpc" {
+  name = "c51-dev/vpc/"
+}
+data "aws_secretsmanager_secret_version" "vpc" {
+  secret_id = "${data.aws_secretsmanager_secret.vpc.id}"
+}
+
+~ cat ~/output.tf
+output "c51-dev-vpc-secrets" {
+  value = data.aws_secretsmanager_secret_version.vpc.secret_string
+}
+
+returns an json string 
+falcon-cid = {"falcon-cid":"blahblah"}
+
+```
+
+
 * **To pull\push the terraform state file to local env**
 
 ````

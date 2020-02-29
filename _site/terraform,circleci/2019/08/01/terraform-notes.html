@@ -172,7 +172,296 @@
 	   2019
 	 </span>
 	  <div class="article_body">
-	  <ul>
+	  <p><a href="https://github.com/search?q=redis+extension%3Atf">github search</a></p>
+
+<ul>
+  <li><strong>Check if value is set if not get it from remote state</strong></li>
+</ul>
+
+<p><code class="language-plaintext highlighter-rouge">DB_HOST             = "${var.DB_HOST != "" ? var.DB_HOST : data.terraform_remote_state.rds.outputs.write_encrypted_cname.fqdn}"</code></p>
+
+<ul>
+  <li><strong>Merge 2 objects to single one.</strong></li>
+</ul>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>merge(local.comman_lt_settings,{ ECS_CLUSTER = "oddjobs-${local.env}", app = "oddjobs" }))
+</code></pre></div></div>
+
+<ul>
+  <li><strong>To iterate over lists with for_each</strong></li>
+</ul>
+
+<p>https://blog.gruntwork.io/terraform-tips-tricks-loops-if-statements-and-gotchas-f739bbae55f9</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>locals {
+    sqs-queues = ["ccpa-dmd-finanace","ccpa-dmd-devops","ccpa-dmd-mst"]
+}
+
+
+resource "aws_sqs_queue" "sqs_queue" {
+  for_each                  = toset(local.sqs-queues)
+  name                      = "c51-${var.env}-${each.value}"
+  delay_seconds             = 90
+  max_message_size          = 2048
+  message_retention_seconds = 86400
+  receive_wait_time_seconds = 10
+   tags = {
+    Name = "c51-${var.env}-${each.value}"
+    env  = "${var.env}"
+  }
+}
+</code></pre></div></div>
+
+<ul>
+  <li><strong>cidr subnet function</strong>
+https://tidalmigrations.com/subnet-builder/</li>
+</ul>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>terraform console 
+&gt;cidrsubnet("10.226.0.0/20", 4, 2)
+10.226.2.0/24
+&gt; cidrsubnet("10.226.0.0/20", 4, 3)
+10.226.3.0/24
+&gt; cidrsubnet("10.226.0.0/20", 4, 4)
+10.226.4.0/24
+&gt; cidrsubnet("10.226.0.0/20", 3, 4)
+10.226.8.0/23
+&gt; cidrsubnet("10.226.0.0/20", 3, 1)
+10.226.2.0/23
+&gt; cidrsubnet("10.226.0.0/20", 3, 2)
+10.226.4.0/23
+&gt; cidrsubnet("10.226.0.0/20", 3, 4)
+10.226.8.0/23
+&gt; cidrsubnet("10.226.0.0/18", 4, 8)
+10.226.32.0/22
+&gt; cidrsubnet("10.226.0.0/18", 4, 1)
+...
+10.226.60.0/22
+&gt; cidrsubnet("10.226.0.0/18", 4, 16)
+
+#produces 32 ip blocks with 512 ips each
+&gt; cidrsubnet("10.226.0.0/18", 5, 0)
+10.226.0.0/23
+
+
+</code></pre></div></div>
+
+<ul>
+  <li><strong>look up syntax for 0.11</strong></li>
+</ul>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>my_var = [
+  {
+    key1 = "value1"
+    key2 = "value2"
+    key3 = "value3"
+  },
+  {
+    key1 = "value11"
+    key2 = "value22"
+    key3 = "value33"
+  },
+  {
+    key1 = "value111"
+    key2 = "value222"
+    key3 = "value333"
+  },
+]
+
+output "test" {
+  value = "${lookup(local.my_var[0], "key1")}"
+}
+Outputs:
+test = value1
+</code></pre></div></div>
+<ul>
+  <li><strong>look up syntax for 0.12</strong></li>
+</ul>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>my_var = [
+  {
+    key1 = "value1"
+    key2 = "value2"
+    key3 = "value3"
+  },
+  {
+    key1 = "value11"
+    key2 = "value22"
+    key3 = "value33"
+  },
+  {
+    key1 = "value111"
+    key2 = "value222"
+    key3 = "value333"
+  },
+]
+
+output "test" {
+  value = local.my_var[1].key1
+}
+Outputs:
+test = value1
+</code></pre></div></div>
+
+<ul>
+  <li><strong>Iterating through nested blocks</strong></li>
+</ul>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  ecs-clusters = {
+    webapp = {
+      task-definition       = templatefile("${path.module}/webapp-task-definition.json", { env = "dev" })
+      service_desired_count = 1
+      is_internal_alb       = false
+      public_subnet_ids     = local.public_subnet_ids
+      alb_ingress_ports     = [80,443] &lt;-- To iterate over this list
+    }
+  }
+
+
+resource "aws_security_group" "alb" {
+  for_each    = var.ecs-clusters
+  name        = "${each.key}-${var.env}"
+  description = "${each.key}-${var.env}"
+  vpc_id      = var.vpc-id
+
+  egress {
+    description = "all"
+    from_port   = 0
+    to_port     = 0
+    protocol    = -1
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+  dynamic "ingress" {
+   for_each = [for ip in each.value.alb_ingress_ports: {
+      from_port  = ip
+      to_port = ip
+      protocol = "tcp"
+    }]
+   content {
+         from_port = ingress.value.from_port
+         to_port = ingress.value.to_port
+         protocol = ingress.value.protocol
+     }
+  }
+
+  tags = {
+    Name = "${each.key}-${var.env}"
+    env = "${var.env}"
+  }
+
+}
+</code></pre></div></div>
+
+<ul>
+  <li><strong>To upgrade terraform providers’ versions to latest</strong></li>
+</ul>
+
+<p><code class="language-plaintext highlighter-rouge">terraform init --upgrade</code></p>
+
+<ul>
+  <li><strong>Show the state list</strong></li>
+</ul>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>(base) ➜  vpc git:(dev) ✗ terraform state list                                                       
+data.http.executor_ip
+module.dev-vpc.data.aws_ami.ubuntu
+module.dev-vpc.data.aws_secretsmanager_secret.vpc
+module.dev-vpc.data.aws_secretsmanager_secret_version.falconid
+module.dev-vpc.aws_eip.eip["us-west-2a"]
+module.dev-vpc.aws_instance.bastion["bastion1"]
+module.dev-vpc.aws_internet_gateway.igw
+module.dev-vpc.aws_nat_gateway.natgateway["us-west-2a"]
+module.dev-vpc.aws_route_table.private["us-west-2a"]
+module.dev-vpc.aws_route_table.public
+module.dev-vpc.aws_route_table_association.private["us-west-2a"]
+module.dev-vpc.aws_route_table_association.public["us-west-2a"]
+module.dev-vpc.aws_security_group.bastion-sg
+module.dev-vpc.aws_subnet.private["us-west-2a"]
+module.dev-vpc.aws_subnet.private["us-west-2b"]
+module.dev-vpc.aws_subnet.public["us-west-2a"]
+module.dev-vpc.aws_vpc.main
+</code></pre></div></div>
+
+<ul>
+  <li><strong>Remove specific state of instance that is created by foreach</strong></li>
+</ul>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>(base) ➜  vpc git:(dev) ✗ terraform state rm 'module.dev-vpc.aws_subnet.private["us-west-2b"]'
+Acquiring state lock. This may take a few moments...
+Removed module.dev-vpc.aws_subnet.private["us-west-2b"]
+Successfully removed 1 resource instance(s).
+Releasing state lock. This may take a few moments...
+</code></pre></div></div>
+
+<ul>
+  <li>**Show remote state of a specific instance created by <code class="language-plaintext highlighter-rouge">for_each</code> **</li>
+</ul>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>(base) ➜  vpc git:(dev) ✗ terraform state show 'module.dev-vpc.aws_nat_gateway.natgateway["us-west-2a"]'
+# module.dev-vpc.aws_nat_gateway.natgateway["us-west-2a"]:
+resource "aws_nat_gateway" "natgateway" {
+    allocation_id        = "eipalloc-07a54166dc3895130"
+    id                   = "nat-0162ae2d0ed022fa1"
+    network_interface_id = "eni-0d4a03b3aa3bee379"
+    private_ip           = "10.227.115.245"
+    public_ip            = "44.229.139.157"
+    subnet_id            = "subnet-0edd61ecfe793c4f5"
+    tags                 = {
+        "Name" = "c51-dev-nat-us-west-2a"
+        "env"  = "c51-dev"
+    }
+}
+</code></pre></div></div>
+
+<ul>
+  <li>**Testing template rendering with <code class="language-plaintext highlighter-rouge">templatefile</code> function
+Given the template file is in a module, go into main section where module is called from and start the console with <code class="language-plaintext highlighter-rouge">terraform console</code>
+Give the relative path of the file</li>
+</ul>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&gt; templatefile("../../../modules/vpc/bastion-host-userdata.tmpl", { falcon-cid="test" })
+#!/bin/bash 
+
+# Install the AWS command-line tools
+sudo yum install -y aws-cli
+
+# Install CrowdStrike
+sudo mkdir /home/ec2-user/falcon-sensor
+cd /home/ec2-user/falcon-sensor
+aws s3 cp s3://c51-falcon-sensor/falcon-sensor-4.25.0-7103.amzn2.x86_64.rpm .
+sudo yum install -y falcon-sensor-4.25.0-7103.amzn2.x86_64.rpm
+
+# Set crowdstrike cid
+sudo /opt/CrowdStrike/falconctl -s --cid=test
+sudo /opt/CrowdStrike/falconctl -s --feature=enableLog,disableLogBuffer --update # enable logging
+sudo service falcon-sensor start
+
+&gt;  
+</code></pre></div></div>
+
+<ul>
+  <li><strong>To use AWS Secret manager for secrets</strong></li>
+</ul>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>~ cat ~/vcp.tf
+
+data "aws_secretsmanager_secret" "vpc" {
+  name = "c51-dev/vpc/"
+}
+data "aws_secretsmanager_secret_version" "vpc" {
+  secret_id = "${data.aws_secretsmanager_secret.vpc.id}"
+}
+
+~ cat ~/output.tf
+output "c51-dev-vpc-secrets" {
+  value = data.aws_secretsmanager_secret_version.vpc.secret_string
+}
+
+returns an json string 
+falcon-cid = {"falcon-cid":"blahblah"}
+
+</code></pre></div></div>
+
+<ul>
   <li><strong>To pull\push the terraform state file to local env</strong></li>
 </ul>
 
@@ -549,7 +838,7 @@ workflows:
 		<footer>
 			<hr/>
 			<p>
-				&copy; 2019 serkan haytac with <a href="http://jekyllrb.com/">Jekyll</a>. Theme: <a href="https://github.com/dbtek/dbyll">dbyll</a> by dbtek.
+				&copy; 2020 serkan haytac with <a href="http://jekyllrb.com/">Jekyll</a>. Theme: <a href="https://github.com/dbtek/dbyll">dbyll</a> by dbtek.
 			</p>
 		</footer>
 	</div>

@@ -8,7 +8,296 @@
 		
 			<item>
 				<title>Terraform Notes</title>
-				<description>&lt;ul&gt;
+				<description>&lt;p&gt;&lt;a href=&quot;https://github.com/search?q=redis+extension%3Atf&quot;&gt;github search&lt;/a&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;strong&gt;Check if value is set if not get it from remote state&lt;/strong&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;DB_HOST             = &quot;${var.DB_HOST != &quot;&quot; ? var.DB_HOST : data.terraform_remote_state.rds.outputs.write_encrypted_cname.fqdn}&quot;&lt;/code&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;strong&gt;Merge 2 objects to single one.&lt;/strong&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;merge(local.comman_lt_settings,{ ECS_CLUSTER = &quot;oddjobs-${local.env}&quot;, app = &quot;oddjobs&quot; }))
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;strong&gt;To iterate over lists with for_each&lt;/strong&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;https://blog.gruntwork.io/terraform-tips-tricks-loops-if-statements-and-gotchas-f739bbae55f9&lt;/p&gt;
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;locals {
+    sqs-queues = [&quot;ccpa-dmd-finanace&quot;,&quot;ccpa-dmd-devops&quot;,&quot;ccpa-dmd-mst&quot;]
+}
+
+
+resource &quot;aws_sqs_queue&quot; &quot;sqs_queue&quot; {
+  for_each                  = toset(local.sqs-queues)
+  name                      = &quot;c51-${var.env}-${each.value}&quot;
+  delay_seconds             = 90
+  max_message_size          = 2048
+  message_retention_seconds = 86400
+  receive_wait_time_seconds = 10
+   tags = {
+    Name = &quot;c51-${var.env}-${each.value}&quot;
+    env  = &quot;${var.env}&quot;
+  }
+}
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;strong&gt;cidr subnet function&lt;/strong&gt;
+https://tidalmigrations.com/subnet-builder/&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;terraform console 
+&amp;gt;cidrsubnet(&quot;10.226.0.0/20&quot;, 4, 2)
+10.226.2.0/24
+&amp;gt; cidrsubnet(&quot;10.226.0.0/20&quot;, 4, 3)
+10.226.3.0/24
+&amp;gt; cidrsubnet(&quot;10.226.0.0/20&quot;, 4, 4)
+10.226.4.0/24
+&amp;gt; cidrsubnet(&quot;10.226.0.0/20&quot;, 3, 4)
+10.226.8.0/23
+&amp;gt; cidrsubnet(&quot;10.226.0.0/20&quot;, 3, 1)
+10.226.2.0/23
+&amp;gt; cidrsubnet(&quot;10.226.0.0/20&quot;, 3, 2)
+10.226.4.0/23
+&amp;gt; cidrsubnet(&quot;10.226.0.0/20&quot;, 3, 4)
+10.226.8.0/23
+&amp;gt; cidrsubnet(&quot;10.226.0.0/18&quot;, 4, 8)
+10.226.32.0/22
+&amp;gt; cidrsubnet(&quot;10.226.0.0/18&quot;, 4, 1)
+...
+10.226.60.0/22
+&amp;gt; cidrsubnet(&quot;10.226.0.0/18&quot;, 4, 16)
+
+#produces 32 ip blocks with 512 ips each
+&amp;gt; cidrsubnet(&quot;10.226.0.0/18&quot;, 5, 0)
+10.226.0.0/23
+
+
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;strong&gt;look up syntax for 0.11&lt;/strong&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;my_var = [
+  {
+    key1 = &quot;value1&quot;
+    key2 = &quot;value2&quot;
+    key3 = &quot;value3&quot;
+  },
+  {
+    key1 = &quot;value11&quot;
+    key2 = &quot;value22&quot;
+    key3 = &quot;value33&quot;
+  },
+  {
+    key1 = &quot;value111&quot;
+    key2 = &quot;value222&quot;
+    key3 = &quot;value333&quot;
+  },
+]
+
+output &quot;test&quot; {
+  value = &quot;${lookup(local.my_var[0], &quot;key1&quot;)}&quot;
+}
+Outputs:
+test = value1
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;ul&gt;
+  &lt;li&gt;&lt;strong&gt;look up syntax for 0.12&lt;/strong&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;my_var = [
+  {
+    key1 = &quot;value1&quot;
+    key2 = &quot;value2&quot;
+    key3 = &quot;value3&quot;
+  },
+  {
+    key1 = &quot;value11&quot;
+    key2 = &quot;value22&quot;
+    key3 = &quot;value33&quot;
+  },
+  {
+    key1 = &quot;value111&quot;
+    key2 = &quot;value222&quot;
+    key3 = &quot;value333&quot;
+  },
+]
+
+output &quot;test&quot; {
+  value = local.my_var[1].key1
+}
+Outputs:
+test = value1
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;strong&gt;Iterating through nested blocks&lt;/strong&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;  ecs-clusters = {
+    webapp = {
+      task-definition       = templatefile(&quot;${path.module}/webapp-task-definition.json&quot;, { env = &quot;dev&quot; })
+      service_desired_count = 1
+      is_internal_alb       = false
+      public_subnet_ids     = local.public_subnet_ids
+      alb_ingress_ports     = [80,443] &amp;lt;-- To iterate over this list
+    }
+  }
+
+
+resource &quot;aws_security_group&quot; &quot;alb&quot; {
+  for_each    = var.ecs-clusters
+  name        = &quot;${each.key}-${var.env}&quot;
+  description = &quot;${each.key}-${var.env}&quot;
+  vpc_id      = var.vpc-id
+
+  egress {
+    description = &quot;all&quot;
+    from_port   = 0
+    to_port     = 0
+    protocol    = -1
+    cidr_blocks = [&quot;0.0.0.0/0&quot;]
+  }
+  dynamic &quot;ingress&quot; {
+   for_each = [for ip in each.value.alb_ingress_ports: {
+      from_port  = ip
+      to_port = ip
+      protocol = &quot;tcp&quot;
+    }]
+   content {
+         from_port = ingress.value.from_port
+         to_port = ingress.value.to_port
+         protocol = ingress.value.protocol
+     }
+  }
+
+  tags = {
+    Name = &quot;${each.key}-${var.env}&quot;
+    env = &quot;${var.env}&quot;
+  }
+
+}
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;strong&gt;To upgrade terraform providers’ versions to latest&lt;/strong&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;terraform init --upgrade&lt;/code&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;strong&gt;Show the state list&lt;/strong&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;(base) ➜  vpc git:(dev) ✗ terraform state list                                                       
+data.http.executor_ip
+module.dev-vpc.data.aws_ami.ubuntu
+module.dev-vpc.data.aws_secretsmanager_secret.vpc
+module.dev-vpc.data.aws_secretsmanager_secret_version.falconid
+module.dev-vpc.aws_eip.eip[&quot;us-west-2a&quot;]
+module.dev-vpc.aws_instance.bastion[&quot;bastion1&quot;]
+module.dev-vpc.aws_internet_gateway.igw
+module.dev-vpc.aws_nat_gateway.natgateway[&quot;us-west-2a&quot;]
+module.dev-vpc.aws_route_table.private[&quot;us-west-2a&quot;]
+module.dev-vpc.aws_route_table.public
+module.dev-vpc.aws_route_table_association.private[&quot;us-west-2a&quot;]
+module.dev-vpc.aws_route_table_association.public[&quot;us-west-2a&quot;]
+module.dev-vpc.aws_security_group.bastion-sg
+module.dev-vpc.aws_subnet.private[&quot;us-west-2a&quot;]
+module.dev-vpc.aws_subnet.private[&quot;us-west-2b&quot;]
+module.dev-vpc.aws_subnet.public[&quot;us-west-2a&quot;]
+module.dev-vpc.aws_vpc.main
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;strong&gt;Remove specific state of instance that is created by foreach&lt;/strong&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;(base) ➜  vpc git:(dev) ✗ terraform state rm 'module.dev-vpc.aws_subnet.private[&quot;us-west-2b&quot;]'
+Acquiring state lock. This may take a few moments...
+Removed module.dev-vpc.aws_subnet.private[&quot;us-west-2b&quot;]
+Successfully removed 1 resource instance(s).
+Releasing state lock. This may take a few moments...
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;**Show remote state of a specific instance created by &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;for_each&lt;/code&gt; **&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;(base) ➜  vpc git:(dev) ✗ terraform state show 'module.dev-vpc.aws_nat_gateway.natgateway[&quot;us-west-2a&quot;]'
+# module.dev-vpc.aws_nat_gateway.natgateway[&quot;us-west-2a&quot;]:
+resource &quot;aws_nat_gateway&quot; &quot;natgateway&quot; {
+    allocation_id        = &quot;eipalloc-07a54166dc3895130&quot;
+    id                   = &quot;nat-0162ae2d0ed022fa1&quot;
+    network_interface_id = &quot;eni-0d4a03b3aa3bee379&quot;
+    private_ip           = &quot;10.227.115.245&quot;
+    public_ip            = &quot;44.229.139.157&quot;
+    subnet_id            = &quot;subnet-0edd61ecfe793c4f5&quot;
+    tags                 = {
+        &quot;Name&quot; = &quot;c51-dev-nat-us-west-2a&quot;
+        &quot;env&quot;  = &quot;c51-dev&quot;
+    }
+}
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;**Testing template rendering with &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;templatefile&lt;/code&gt; function
+Given the template file is in a module, go into main section where module is called from and start the console with &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;terraform console&lt;/code&gt;
+Give the relative path of the file&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&amp;gt; templatefile(&quot;../../../modules/vpc/bastion-host-userdata.tmpl&quot;, { falcon-cid=&quot;test&quot; })
+#!/bin/bash 
+
+# Install the AWS command-line tools
+sudo yum install -y aws-cli
+
+# Install CrowdStrike
+sudo mkdir /home/ec2-user/falcon-sensor
+cd /home/ec2-user/falcon-sensor
+aws s3 cp s3://c51-falcon-sensor/falcon-sensor-4.25.0-7103.amzn2.x86_64.rpm .
+sudo yum install -y falcon-sensor-4.25.0-7103.amzn2.x86_64.rpm
+
+# Set crowdstrike cid
+sudo /opt/CrowdStrike/falconctl -s --cid=test
+sudo /opt/CrowdStrike/falconctl -s --feature=enableLog,disableLogBuffer --update # enable logging
+sudo service falcon-sensor start
+
+&amp;gt;  
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;strong&gt;To use AWS Secret manager for secrets&lt;/strong&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;~ cat ~/vcp.tf
+
+data &quot;aws_secretsmanager_secret&quot; &quot;vpc&quot; {
+  name = &quot;c51-dev/vpc/&quot;
+}
+data &quot;aws_secretsmanager_secret_version&quot; &quot;vpc&quot; {
+  secret_id = &quot;${data.aws_secretsmanager_secret.vpc.id}&quot;
+}
+
+~ cat ~/output.tf
+output &quot;c51-dev-vpc-secrets&quot; {
+  value = data.aws_secretsmanager_secret_version.vpc.secret_string
+}
+
+returns an json string 
+falcon-cid = {&quot;falcon-cid&quot;:&quot;blahblah&quot;}
+
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;ul&gt;
   &lt;li&gt;&lt;strong&gt;To pull\push the terraform state file to local env&lt;/strong&gt;&lt;/li&gt;
 &lt;/ul&gt;
 
