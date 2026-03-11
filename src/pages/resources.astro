@@ -1,50 +1,297 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+import ExternalLink from '@lucide/astro/icons/external-link';
+import Palette from '@lucide/astro/icons/palette';
+import Brain from '@lucide/astro/icons/brain';
+import Terminal from '@lucide/astro/icons/terminal';
+import Code from '@lucide/astro/icons/code';
+import Wrench from '@lucide/astro/icons/wrench';
+import Globe from '@lucide/astro/icons/globe';
+
+/*──────────────────────────────────────────────
+  DATA — Add new categories, sections & items here.
+  Structure:  Category → Section → Item[]
+──────────────────────────────────────────────*/
+
+interface Resource {
+  name: string;
+  url: string;
+  description: string;
+}
+
+interface Section {
+  name: string;
+  items: Resource[];
+}
+
+interface Category {
+  name: string;
+  icon: string;            // emoji used as accent
+  color: string;           // tailwind ring/accent color class
+  sections: Section[];
+}
+
+const categories: Category[] = [
+  {
+    name: 'Design',
+    icon: '🎨',
+    color: 'purple',
+    sections: [
+      {
+        name: 'Image Editing',
+        items: [
+          { name: 'ComfyUI Cloud', url: 'https://cloud.comfy.org/', description: 'Node-based AI image generation and editing workflows' },
+          { name: 'Weavy', url: 'https://www.weavy.ai/', description: 'AI-based image editing tool, similar to ComfyUI' },
+        ],
+      },
+      {
+        name: 'Image Inspiration',
+        items: [
+          { name: 'Cosmos', url: 'https://www.cosmos.so/', description: 'Visual bookmarking and moodboard tool for creatives' },
+        ],
+      },
+      {
+        name: 'Images',
+        items: [
+          { name: 'Pixabay', url: 'https://pixabay.com/', description: 'Royalty-free images, illustrations, and vectors' },
+        ],
+      },
+      {
+        name: 'Website Design Inspiration',
+        items: [
+          { name: 'SaaS Landing Page', url: 'https://saaslandingpage.com/', description: 'Landing page design inspiration for SaaS' },
+          { name: 'Godly', url: 'https://godly.website/', description: 'Curated gallery of best web design' },
+          { name: 'Landing Folio', url: 'https://www.landingfolio.com/', description: 'Landing page designs, templates, and components' },
+        ],
+      },
+      {
+        name: 'Video & Animation',
+        items: [
+          { name: 'Remotion', url: 'https://www.remotion.dev/showcase', description: 'Create programmable videos with React' },
+          { name: 'Motion', url: 'https://motion.dev/examples', description: 'Production-ready animation library for the web' },
+        ],
+      },
+    ],
+  },
+  {
+    name: 'GenAI',
+    icon: '🧠',
+    color: 'blue',
+    sections: [
+      {
+        name: 'AI Tools',
+        items: [
+          { name: 'Google ADK', url: 'https://google.github.io/adk-docs/get-started/', description: 'Google\'s Agent Development Framework' },
+          { name: 'Pencil', url: 'https://www.pencil.dev/', description: 'AI-powered design tool for creating web and mobile interfaces' },
+          { name: 'Playwright MCP', url: 'https://github.com/microsoft/playwright-mcp', description: 'MCP server for browser automation via Playwright by Microsoft' },
+        ],
+      },
+      {
+        name: 'AI Development',
+        items: [
+          { name: 'LangChain', url: 'https://www.langchain.com/', description: 'Framework for building LLM applications' },
+          { name: 'Hugging Face', url: 'https://huggingface.co/', description: 'ML models, datasets, and spaces' },
+        ],
+      },
+    ],
+  },
+  {
+    name: 'Developer Tools',
+    icon: '⚡',
+    color: 'green',
+    sections: [
+      {
+        name: 'CLI & Terminal',
+        items: [
+          { name: 'tmux', url: 'https://github.com/tmux/tmux', description: 'Terminal multiplexer for managing multiple sessions' },
+          { name: 'tmuxinator', url: 'https://github.com/tmuxinator/tmuxinator', description: 'Manage complex tmux sessions with YAML configs' },
+          { name: 'Zsh', url: 'https://www.zsh.org/', description: 'Powerful shell with scripting, completion, and customization' },
+          { name: 'Oh My Zsh', url: 'https://ohmyz.sh/', description: 'Framework for managing Zsh configuration with plugins and themes' },
+          { name: 'kubectx', url: 'https://github.com/ahmetb/kubectx', description: 'Fast way to switch between Kubernetes contexts and namespaces' },
+          { name: 'k9s', url: 'https://k9scli.io/', description: 'Terminal UI to manage Kubernetes clusters' },
+          { name: 'K8sGPT', url: 'https://k8sgpt.ai/', description: 'AI-powered Kubernetes diagnostics and troubleshooting' },
+          { name: 'k3s', url: 'https://k3s.io/', description: 'Lightweight Kubernetes distribution for edge and IoT' },
+        ],
+      },
+      {
+        name: 'Learning',
+        items: [
+          { name: 'Anki', url: 'https://apps.ankiweb.net/', description: 'Spaced repetition flashcards for efficient long-term memorization' },
+          { name: 'SICP in Python', url: 'https://wizardforcel.gitbooks.io/sicp-in-python/content/', description: 'Structure & Interpretation of Computer Programs in Python' },
+          { name: 'Data Science CLI', url: 'https://www.datascienceatthecommandline.com/chapter-2-getting-started.html', description: 'Data science at the command line' },
+          { name: 'Linux Commands', url: 'http://www.pixelbeat.org/cmdline.html', description: 'Comprehensive list of Linux commands' },
+          { name: 'Git Tips', url: 'https://github.com/git-tips/tips', description: 'Collection of useful git commands' },
+        ],
+      },
+    ],
+  },
+  {
+    name: 'Cloud & Infrastructure',
+    icon: '☁️',
+    color: 'amber',
+    sections: [
+      {
+        name: 'MCP Servers',
+        items: [
+          { name: 'AWS EKS MCP', url: 'https://github.com/stknob/eks-mcp-server', description: 'MCP server for EKS cluster management' },
+          { name: 'AWS ECS MCP', url: 'https://github.com/seanpm2001/aws-ecs-mcp-server', description: 'MCP server for ECS service operations' },
+          { name: 'AWS Cost Explorer MCP', url: 'https://github.com/aarora79/aws-cost-explorer-mcp-server', description: 'MCP server for querying AWS cost and usage data' },
+          { name: 'CloudWatch Logs MCP', url: 'https://github.com/serkanh/cloudwatch-logs-mcp', description: 'MCP server for querying CloudWatch log groups' },
+          { name: 'Neon MCP', url: 'https://github.com/neondatabase/mcp-server-neon', description: 'MCP server for managing Neon Postgres databases and branches' },
+        ],
+      },
+    ],
+  },
+];
+
+/*──────────────────────────────────────────────
+  Color mappings for category accents
+──────────────────────────────────────────────*/
+const colorMap: Record<string, { border: string; bg: string; text: string; dot: string; sectionBorder: string }> = {
+  purple: {
+    border: 'border-purple-900/40',
+    bg: 'bg-purple-950/20',
+    text: 'text-purple-400',
+    dot: 'bg-purple-500',
+    sectionBorder: 'border-purple-900/20',
+  },
+  blue: {
+    border: 'border-blue-900/40',
+    bg: 'bg-blue-950/20',
+    text: 'text-blue-400',
+    dot: 'bg-blue-500',
+    sectionBorder: 'border-blue-900/20',
+  },
+  green: {
+    border: 'border-green-900/40',
+    bg: 'bg-green-950/20',
+    text: 'text-green-400',
+    dot: 'bg-green-500',
+    sectionBorder: 'border-green-900/20',
+  },
+  amber: {
+    border: 'border-amber-900/40',
+    bg: 'bg-amber-950/20',
+    text: 'text-amber-400',
+    dot: 'bg-amber-500',
+    sectionBorder: 'border-amber-900/20',
+  },
+  rose: {
+    border: 'border-rose-900/40',
+    bg: 'bg-rose-950/20',
+    text: 'text-rose-400',
+    dot: 'bg-rose-500',
+    sectionBorder: 'border-rose-900/20',
+  },
+};
+
+// Sidebar table of contents
+const toc = categories.map((cat) => ({
+  name: cat.name,
+  id: cat.name.toLowerCase().replace(/\s+/g, '-'),
+  sections: cat.sections.map((s) => ({
+    name: s.name,
+    id: `${cat.name}-${s.name}`.toLowerCase().replace(/\s+/g, '-'),
+  })),
+}));
 ---
 
 <BaseLayout title="Resources | Serkan Haytac">
-  <div class="max-w-3xl mx-auto px-6 py-12">
-    <h1 class="text-3xl font-bold text-zinc-50 tracking-tight">Resources</h1>
-    <p class="text-zinc-400 mt-4 leading-relaxed">
-      Some useful resources I keep forgetting about.
-    </p>
+  <div class="flex">
+    <!-- Sticky sidebar TOC -->
+    <aside class="hidden lg:block w-56 shrink-0 sticky top-14 h-[calc(100vh-3.5rem)] overflow-y-auto border-r border-zinc-800 px-6 py-10">
+      <p class="text-[11px] font-semibold text-zinc-500 uppercase tracking-widest mb-4">On this page</p>
+      <nav class="space-y-3">
+        {toc.map((cat) => (
+          <div>
+            <a href={`#${cat.id}`} class="text-[13px] font-medium text-zinc-300 hover:text-zinc-50 transition-colors">
+              {cat.name}
+            </a>
+            <div class="mt-1 ml-3 space-y-1 border-l border-zinc-800 pl-3">
+              {cat.sections.map((s) => (
+                <a href={`#${s.id}`} class="block text-[12px] text-zinc-500 hover:text-zinc-300 transition-colors">
+                  {s.name}
+                </a>
+              ))}
+            </div>
+          </div>
+        ))}
+      </nav>
+    </aside>
 
-    <ul class="mt-8 space-y-4">
-      <li>
-        <a href="http://www.pixelbeat.org/cmdline.html" target="_blank" rel="noopener noreferrer" class="text-blue-500 hover:text-blue-400 transition">
-          List of Linux commands
-        </a>
-      </li>
-      <li>
-        <a href="https://github.com/git-tips/tips" target="_blank" rel="noopener noreferrer" class="text-blue-500 hover:text-blue-400 transition">
-          Comprehensive list of GitHub commands
-        </a>
-      </li>
-      <li>
-        <a href="https://astralapp.com/" target="_blank" rel="noopener noreferrer" class="text-blue-500 hover:text-blue-400 transition">
-          A web app to organize GitHub stars
-        </a>
-      </li>
-      <li>
-        <a href="https://github.com/Leo-G/DevopsWiki" target="_blank" rel="noopener noreferrer" class="text-blue-500 hover:text-blue-400 transition">
-          A wiki of DevOps Tools, Tutorials and Scripts
-        </a>
-      </li>
-      <li>
-        <a href="https://www.datascienceatthecommandline.com/chapter-2-getting-started.html" target="_blank" rel="noopener noreferrer" class="text-blue-500 hover:text-blue-400 transition">
-          Data Science with Command Line
-        </a>
-      </li>
-      <li>
-        <a href="https://wizardforcel.gitbooks.io/sicp-in-python/content/" target="_blank" rel="noopener noreferrer" class="text-blue-500 hover:text-blue-400 transition">
-          SICP in Python
-        </a>
-      </li>
-      <li>
-        <a href="https://github.com/kay-is/react-from-zero/blob/master/02-jsx.html" target="_blank" rel="noopener noreferrer" class="text-blue-500 hover:text-blue-400 transition">
-          React from Zero
-        </a>
-      </li>
-    </ul>
+    <!-- Main content -->
+    <div class="flex-1 min-w-0 px-8 lg:px-12 pt-12 pb-16 max-w-4xl">
+      <h1 class="text-3xl font-bold text-zinc-50 tracking-tight" data-animate="fade-up">Resources</h1>
+      <p class="text-zinc-500 text-sm mt-2 max-w-xl" data-animate="fade-up" data-delay="0.1">
+        A curated collection of tools, websites, and references I find useful. Updated as I discover new things.
+      </p>
+
+      <!-- Category count -->
+      <div class="flex items-center gap-4 mt-6 text-[12px] text-zinc-600" data-animate="fade-up" data-delay="0.15">
+        <span>{categories.length} categories</span>
+        <span class="text-zinc-800">·</span>
+        <span>{categories.reduce((acc, c) => acc + c.sections.reduce((a, s) => a + s.items.length, 0), 0)} resources</span>
+      </div>
+
+      <!-- Categories -->
+      <div class="mt-10 space-y-12" data-stagger>
+        {categories.map((cat) => {
+          const colors = colorMap[cat.color] || colorMap.blue;
+          const catId = cat.name.toLowerCase().replace(/\s+/g, '-');
+          return (
+            <section id={catId}>
+              <!-- Category header -->
+              <div class="flex items-center gap-3 mb-6">
+                <span class="text-2xl">{cat.icon}</span>
+                <h2 class="text-xl font-bold text-zinc-50 tracking-tight">{cat.name}</h2>
+                <span class="text-[11px] text-zinc-600 font-mono mt-1">
+                  {cat.sections.reduce((a, s) => a + s.items.length, 0)} items
+                </span>
+              </div>
+
+              <!-- Sections within category -->
+              <div class="space-y-6">
+                {cat.sections.map((section) => {
+                  const sectionId = `${cat.name}-${section.name}`.toLowerCase().replace(/\s+/g, '-');
+                  return (
+                    <div id={sectionId}>
+                      <!-- Section label -->
+                      <div class="flex items-center gap-2 mb-3">
+                        <span class={`w-1.5 h-1.5 rounded-full ${colors.dot}`} />
+                        <h3 class={`text-sm font-semibold ${colors.text} uppercase tracking-wider`}>
+                          {section.name}
+                        </h3>
+                      </div>
+
+                      <!-- Resource grid -->
+                      <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                        {section.items.map((item) => (
+                          <a
+                            href={item.url}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            class={`group border ${colors.border} ${colors.bg} rounded-lg p-4 hover:border-zinc-600 hover:-translate-y-0.5 hover:shadow-lg hover:shadow-zinc-950/50 transition-all duration-300 ease-out block`}
+                          >
+                            <div class="flex items-start justify-between gap-2">
+                              <h4 class="text-[14px] font-semibold text-zinc-200 group-hover:text-zinc-50 transition-colors">
+                                {item.name}
+                              </h4>
+                              <ExternalLink class="w-3.5 h-3.5 text-zinc-600 group-hover:text-zinc-400 transition-colors shrink-0 mt-0.5" />
+                            </div>
+                            <p class="text-[12px] text-zinc-500 leading-relaxed mt-1.5">
+                              {item.description}
+                            </p>
+                          </a>
+                        ))}
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
+            </section>
+          );
+        })}
+      </div>
+    </div>
   </div>
 </BaseLayout>

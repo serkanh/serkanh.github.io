@@ -26,6 +26,14 @@ const projects = [
     language: 'Python',
     tags: ['python', 'mcp', 'aws', 'cloudwatch', 'boto3', 'docker'],
   },
+  {
+    name: 'FocusedFeed',
+    description: 'Organize YouTube subscriptions into custom categories and view only the latest uploads — no algorithmic recommendations or distractions.',
+    longDescription: 'Sign in with Google, group subscriptions by topic, and browse new videos sorted by date. Features AI-generated video summaries, a Chrome extension, and a native iOS app.',
+    liveUrl: 'https://www.focusedfeed.app/',
+    language: 'Python',
+    tags: ['fastapi', 'python', 'vite', 'swift', 'chrome-extension', 'youtube', 'ai-summaries'],
+  },
 ];
 
 const languageColors: Record<string, string> = {
@@ -68,16 +76,18 @@ const languageColors: Record<string, string> = {
           </div>
 
           <!-- Stats -->
-          <div class="flex items-center gap-4 text-zinc-500 shrink-0">
-            <div class="flex items-center gap-1">
-              <Star class="w-3.5 h-3.5" />
-              <span class="text-xs font-medium">{project.stars}</span>
+          {project.stars > 0 && (
+            <div class="flex items-center gap-4 text-zinc-500 shrink-0">
+              <div class="flex items-center gap-1">
+                <Star class="w-3.5 h-3.5" />
+                <span class="text-xs font-medium">{project.stars}</span>
+              </div>
+              <div class="flex items-center gap-1">
+                <GitFork class="w-3.5 h-3.5" />
+                <span class="text-xs font-medium">{project.forks}</span>
+              </div>
             </div>
-            <div class="flex items-center gap-1">
-              <GitFork class="w-3.5 h-3.5" />
-              <span class="text-xs font-medium">{project.forks}</span>
-            </div>
-          </div>
+          )}
         </div>
 
         <!-- Tags -->
@@ -91,24 +101,28 @@ const languageColors: Record<string, string> = {
 
         <!-- Links -->
         <div class="flex items-center gap-4 mt-5">
-          <a
-            href={project.github}
-            target="_blank"
-            rel="noopener noreferrer"
-            class="flex items-center gap-2 text-[13px] font-medium text-zinc-400 hover:text-zinc-50 transition-colors"
-          >
-            <Github class="w-4 h-4" />
-            View on GitHub
-          </a>
-          <a
-            href={project.github}
-            target="_blank"
-            rel="noopener noreferrer"
-            class="flex items-center gap-1.5 text-[13px] font-medium text-blue-500 hover:text-blue-400 transition-colors"
-          >
-            <ExternalLink class="w-3.5 h-3.5" />
-            Live
-          </a>
+          {project.github && (
+            <a
+              href={project.github}
+              target="_blank"
+              rel="noopener noreferrer"
+              class="flex items-center gap-2 text-[13px] font-medium text-zinc-400 hover:text-zinc-50 transition-colors"
+            >
+              <Github class="w-4 h-4" />
+              View on GitHub
+            </a>
+          )}
+          {project.liveUrl && (
+            <a
+              href={project.liveUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              class="flex items-center gap-1.5 text-[13px] font-medium text-blue-500 hover:text-blue-400 transition-colors"
+            >
+              <ExternalLink class="w-3.5 h-3.5" />
+              Live
+            </a>
+          )}
         </div>
       </article>
     ))}

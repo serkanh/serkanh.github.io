@@ -5,6 +5,7 @@ import MapPin from '@lucide/astro/icons/map-pin';
 import Video from '@lucide/astro/icons/video';
 import Presentation from '@lucide/astro/icons/presentation';
 import ExternalLink from '@lucide/astro/icons/external-link';
+import FileText from '@lucide/astro/icons/file-text';
 import Mic from '@lucide/astro/icons/mic';
 
 interface Talk {
@@ -19,6 +20,7 @@ interface Talk {
   videoUrl?: string;
   slidesUrl?: string;
   blogUrl?: string;
+  guideUrl?: string;
 }
 
 const upcoming: Talk[] = [
@@ -31,6 +33,7 @@ const upcoming: Talk[] = [
     sessionId: 'IND3327',
     image: '/images/reinvent-2025.jpeg',
     description: 'Learn how iHeartMedia leveraged Amazon Bedrock to build an AI-powered operations platform that cut incident response time by 60%. Co-presented with Sudipta Ghosh (AWS) and Harish Kumar Nagraj (iHeartMedia).',
+    guideUrl: 'https://pages.awscloud.com/rs/112-TZM-766/images/2025-reInvent-Attendee-Guide-Media-Entertainment.pdf?version=1',
   },
 ];
 
@@ -89,6 +92,17 @@ const years = Object.keys(pastTalks).sort((a, b) => parseInt(b) - parseInt(a));
                   <p class="text-sm text-green-400 mt-1">{talk.event}</p>
                 )}
                 <p class="text-[13px] text-zinc-400 leading-relaxed mt-3 max-w-2xl">{talk.description}</p>
+                {talk.guideUrl && (
+                  <a
+                    href={talk.guideUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="flex items-center gap-1.5 text-[13px] font-medium text-green-400 hover:text-green-300 transition-colors mt-3 inline-flex"
+                  >
+                    <FileText class="w-3.5 h-3.5" />
+                    Attendee Guide (PDF)
+                  </a>
+                )}
               </div>
             </div>
           </article>
@@ -164,6 +178,17 @@ const years = Object.keys(pastTalks).sort((a, b) => parseInt(b) - parseInt(a));
                   Blog Post
                 </a>
               )}
+              {talk.guideUrl && (
+                <a
+                  href={talk.guideUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="flex items-center gap-1.5 text-[13px] font-medium text-zinc-400 hover:text-zinc-50 transition-colors"
+                >
+                  <FileText class="w-3.5 h-3.5" />
+                  Guide
+                </a>
+              )}
               {talk.eventUrl && (
                 <a
                   href={talk.eventUrl}
@@ -175,7 +200,7 @@ const years = Object.keys(pastTalks).sort((a, b) => parseInt(b) - parseInt(a));
                   Event
                 </a>
               )}
-              {!talk.videoUrl && !talk.slidesUrl && !talk.blogUrl && !talk.eventUrl && (
+              {!talk.videoUrl && !talk.slidesUrl && !talk.blogUrl && !talk.eventUrl && !talk.guideUrl && (
                 <span class="text-[12px] text-zinc-600 italic">Resources coming soon</span>
               )}
             </div>

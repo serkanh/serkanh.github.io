@@ -4,7 +4,7 @@ import FolderCode from '@lucide/astro/icons/folder-code';
 import Mic from '@lucide/astro/icons/mic';
 import Tag from '@lucide/astro/icons/tag';
 import BookOpen from '@lucide/astro/icons/book-open';
-import Wrench from '@lucide/astro/icons/wrench';
+import Star from '@lucide/astro/icons/star';
 import Search from '@lucide/astro/icons/search';
 import Github from '@lucide/astro/icons/github';
 import Linkedin from '@lucide/astro/icons/linkedin';
@@ -17,7 +17,7 @@ const navLinks = [
   { href: '/talks', label: 'Talks', Icon: Mic },
   { href: '/tags', label: 'Tags', Icon: Tag },
   { href: '/resources', label: 'Resources', Icon: BookOpen },
-  { href: '/one-liners', label: 'Tools', Icon: Wrench },
+  { href: '/stars', label: 'Stars', Icon: Star },
 ];
 ---
 
@@ -49,7 +49,7 @@ const navLinks = [
   <!-- Right side -->
   <div class="flex items-center gap-3">
     <!-- Search box -->
-    <div class="bg-zinc-900 border border-zinc-800 rounded-md px-3 py-1.5 flex items-center gap-2 cursor-pointer">
+    <div id="search-trigger" class="bg-zinc-900 border border-zinc-800 rounded-md px-3 py-1.5 flex items-center gap-2 cursor-pointer">
       <Search class="w-3.5 h-3.5 text-zinc-500" />
       <span class="text-[13px] text-zinc-600">Search...</span>
       <span class="bg-zinc-800 rounded px-1.5 py-0.5 text-[10px] font-medium text-zinc-500">⌘K</span>

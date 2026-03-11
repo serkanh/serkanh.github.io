@@ -1,0 +1,189 @@
+---
+import Search from '@lucide/astro/icons/search';
+import FileText from '@lucide/astro/icons/file-text';
+import FolderCode from '@lucide/astro/icons/folder-code';
+import Mic from '@lucide/astro/icons/mic';
+---
+
+<!-- Search modal backdrop -->
+<div id="search-modal" class="fixed inset-0 z-50 hidden">
+  <div id="search-backdrop" class="absolute inset-0 bg-black/60 backdrop-blur-sm"></div>
+  <div class="relative flex items-start justify-center pt-[20vh]">
+    <div class="w-full max-w-xl bg-zinc-900 border border-zinc-700 rounded-xl shadow-2xl overflow-hidden">
+      <!-- Search input -->
+      <div class="flex items-center gap-3 px-4 py-3 border-b border-zinc-800">
+        <Search class="w-4 h-4 text-zinc-500 shrink-0" />
+        <input
+          id="search-input"
+          type="text"
+          placeholder="Search posts, projects, talks..."
+          class="flex-1 bg-transparent text-sm text-zinc-50 placeholder-zinc-500 outline-none"
+          autocomplete="off"
+        />
+        <kbd class="bg-zinc-800 rounded px-1.5 py-0.5 text-[10px] font-medium text-zinc-500">ESC</kbd>
+      </div>
+      <!-- Results -->
+      <div id="search-results" class="max-h-80 overflow-y-auto p-2">
+        <p class="text-[13px] text-zinc-600 px-3 py-6 text-center">Type to search...</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  import Fuse from 'fuse.js';
+
+  interface SearchItem {
+    type: 'post' | 'project' | 'talk';
+    title: string;
+    description: string;
+    url: string;
+    tags: string[];
+    date: string;
+  }
+
+  let fuse: Fuse<SearchItem> | null = null;
+  let items: SearchItem[] = [];
+
+  const modal = document.getElementById('search-modal')!;
+  const backdrop = document.getElementById('search-backdrop')!;
+  const input = document.getElementById('search-input') as HTMLInputElement;
+  const results = document.getElementById('search-results')!;
+  const searchTrigger = document.getElementById('search-trigger');
+
+  async function loadIndex() {
+    if (items.length) return;
+    const res = await fetch('/search-index.json');
+    items = await res.json();
+    fuse = new Fuse(items, {
+      keys: [
+        { name: 'title', weight: 2 },
+        { name: 'description', weight: 1 },
+        { name: 'tags', weight: 1.5 },
+      ],
+      threshold: 0.4,
+      includeMatches: true,
+    });
+  }
+
+  function openSearch() {
+    loadIndex();
+    modal.classList.remove('hidden');
+    document.body.style.overflow = 'hidden';
+    input.value = '';
+    results.innerHTML = '<p class="text-[13px] text-zinc-600 px-3 py-6 text-center">Type to search...</p>';
+    requestAnimationFrame(() => input.focus());
+  }
+
+  function closeSearch() {
+    modal.classList.add('hidden');
+    document.body.style.overflow = '';
+  }
+
+  const typeIcons: Record<string, string> = {
+    post: '📝',
+    project: '📦',
+    talk: '🎤',
+  };
+
+  const typeLabels: Record<string, string> = {
+    post: 'Post',
+    project: 'Project',
+    talk: 'Talk',
+  };
+
+  let selectedIndex = 0;
+
+  function renderResults(query: string) {
+    if (!query.trim()) {
+      results.innerHTML = '<p class="text-[13px] text-zinc-600 px-3 py-6 text-center">Type to search...</p>';
+      return;
+    }
+
+    if (!fuse) {
+      results.innerHTML = '<p class="text-[13px] text-zinc-600 px-3 py-6 text-center">Loading...</p>';
+      return;
+    }
+
+    const matches = fuse.search(query, { limit: 10 });
+
+    if (!matches.length) {
+      results.innerHTML = '<p class="text-[13px] text-zinc-500 px-3 py-6 text-center">No results found.</p>';
+      return;
+    }
+
+    selectedIndex = 0;
+    results.innerHTML = matches
+      .map(
+        (m, i) => `
+        <a href="${m.item.url}" class="search-result flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm transition-colors ${i === 0 ? 'bg-zinc-800 text-zinc-50' : 'text-zinc-300 hover:bg-zinc-800/50'}" data-index="${i}">
+          <span class="text-base">${typeIcons[m.item.type] || '📄'}</span>
+          <div class="flex-1 min-w-0">
+            <p class="font-medium truncate">${m.item.title}</p>
+            ${m.item.description ? `<p class="text-[12px] text-zinc-500 truncate mt-0.5">${m.item.description}</p>` : ''}
+          </div>
+          <span class="text-[11px] text-zinc-600 shrink-0">${typeLabels[m.item.type] || ''}</span>
+        </a>
+      `
+      )
+      .join('');
+  }
+
+  function updateSelection() {
+    const items = results.querySelectorAll('.search-result');
+    items.forEach((el, i) => {
+      if (i === selectedIndex) {
+        el.classList.add('bg-zinc-800', 'text-zinc-50');
+        el.classList.remove('hover:bg-zinc-800/50');
+        el.scrollIntoView({ block: 'nearest' });
+      } else {
+        el.classList.remove('bg-zinc-800', 'text-zinc-50');
+        el.classList.add('hover:bg-zinc-800/50');
+      }
+    });
+  }
+
+  // ⌘K / Ctrl+K to open
+  document.addEventListener('keydown', (e) => {
+    if ((e.metaKey || e.ctrlKey) && e.key === 'k') {
+      e.preventDefault();
+      if (modal.classList.contains('hidden')) {
+        openSearch();
+      } else {
+        closeSearch();
+      }
+    }
+    if (e.key === 'Escape') {
+      closeSearch();
+    }
+  });
+
+  // Click the search box in nav to open
+  searchTrigger?.addEventListener('click', openSearch);
+
+  // Close on backdrop click
+  backdrop.addEventListener('click', closeSearch);
+
+  // Search on input
+  input.addEventListener('input', () => renderResults(input.value));
+
+  // Keyboard navigation
+  input.addEventListener('keydown', (e) => {
+    const items = results.querySelectorAll('.search-result');
+    if (!items.length) return;
+
+    if (e.key === 'ArrowDown') {
+      e.preventDefault();
+      selectedIndex = Math.min(selectedIndex + 1, items.length - 1);
+      updateSelection();
+    } else if (e.key === 'ArrowUp') {
+      e.preventDefault();
+      selectedIndex = Math.max(selectedIndex - 1, 0);
+      updateSelection();
+    } else if (e.key === 'Enter') {
+      e.preventDefault();
+      const selected = items[selectedIndex] as HTMLAnchorElement;
+      if (selected) window.location.href = selected.href;
+    }
+  });
+</script>
