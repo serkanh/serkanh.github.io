@@ -1,0 +1,37 @@
+---
+import { getCollection, render } from 'astro:content';
+import PostLayout from '../../layouts/PostLayout.astro';
+
+export async function getStaticPaths() {
+  const posts = (await getCollection('posts')).sort(
+    (a, b) => b.data.date.valueOf() - a.data.date.valueOf()
+  );
+  return posts.map((post, index) => ({
+    params: { slug: post.id },
+    props: {
+      post,
+      prevPost:
+        index < posts.length - 1
+          ? { title: posts[index + 1].data.title, slug: posts[index + 1].id }
+          : null,
+      nextPost:
+        index > 0
+          ? { title: posts[index - 1].data.title, slug: posts[index - 1].id }
+          : null,
+    },
+  }));
+}
+
+const { post, prevPost, nextPost } = Astro.props;
+const { Content } = await render(post);
+const readingTime = Math.ceil(post.body?.split(/\s+/).length / 200) || 3;
+---
+
+<PostLayout
+  frontmatter={post.data}
+  readingTime={readingTime}
+  prevPost={prevPost}
+  nextPost={nextPost}
+>
+  <Content />
+</PostLayout>
