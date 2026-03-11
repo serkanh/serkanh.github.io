@@ -1,2 +1,7 @@
 *.swp
 *.sw*
+
+# Astro
+dist/
+.astro/
+node_modules/
