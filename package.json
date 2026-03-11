@@ -5,7 +5,8 @@
   "scripts": {
     "dev": "astro dev",
     "fetch-stars": "node scripts/fetch-stars.mjs",
-    "build": "node scripts/fetch-stars.mjs && astro build && node scripts/generate-redirects.mjs",
+    "fetch-books": "node scripts/fetch-books.mjs",
+    "build": "node scripts/fetch-stars.mjs && node scripts/fetch-books.mjs && astro build && node scripts/generate-redirects.mjs",
     "preview": "astro preview",
     "astro": "astro"
   },
