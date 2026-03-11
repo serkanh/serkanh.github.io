@@ -14,54 +14,27 @@ interface Talk {
   date: string;
   location: string;
   description: string;
+  image?: string;
+  sessionId?: string;
   videoUrl?: string;
   slidesUrl?: string;
   blogUrl?: string;
 }
 
 const upcoming: Talk[] = [
-  // Add upcoming talks here
-  // {
-  //   title: 'Talk Title',
-  //   event: 'Conference Name',
-  //   eventUrl: 'https://...',
-  //   date: 'March 2026',
-  //   location: 'New York, NY',
-  //   description: 'Description of the talk.',
-  // },
+  {
+    title: 'AIOps Revolution: How iHeart Slashed Incident Response Time by 60% with Bedrock',
+    event: 'AWS re:Invent 2025',
+    eventUrl: 'https://reinvent.awsevents.com/',
+    date: 'December 1–5, 2025',
+    location: 'Las Vegas, NV',
+    sessionId: 'IND3327',
+    image: '/images/reinvent-2025.jpeg',
+    description: 'Learn how iHeartMedia leveraged Amazon Bedrock to build an AI-powered operations platform that cut incident response time by 60%. Co-presented with Sudipta Ghosh (AWS) and Harish Kumar Nagraj (iHeartMedia).',
+  },
 ];
 
 const pastTalks: Record<string, Talk[]> = {
-  '2024': [
-    {
-      title: 'Building an AI-Powered SRE Assistant with Google ADK',
-      event: 'DevOps Days NYC',
-      date: 'October 2024',
-      location: 'New York, NY',
-      description: 'Walkthrough of building sre-bot — an AI assistant for AWS cost analysis, Kubernetes operations, and incident response using Google\'s Agent Development Kit.',
-      videoUrl: '',
-      slidesUrl: '',
-    },
-    {
-      title: 'MCP Servers for Cloud Observability',
-      event: 'AWS Community Day',
-      date: 'August 2024',
-      location: 'Online',
-      description: 'How to build Model Context Protocol servers that give AI assistants access to CloudWatch logs, metrics, and traces for faster incident debugging.',
-      slidesUrl: '',
-    },
-  ],
-  '2023': [
-    {
-      title: 'Terraform at Scale: Managing Multi-Account AWS Infrastructure',
-      event: 'HashiConf',
-      date: 'October 2023',
-      location: 'San Francisco, CA',
-      description: 'Patterns and practices for managing Terraform state, modules, and Terragrunt configurations across multiple AWS accounts and environments.',
-      videoUrl: '',
-      slidesUrl: '',
-    },
-  ],
 };
 
 const years = Object.keys(pastTalks).sort((a, b) => parseInt(b) - parseInt(a));
@@ -82,9 +55,16 @@ const years = Object.keys(pastTalks).sort((a, b) => parseInt(b) - parseInt(a));
       </div>
       <div data-stagger>
         {upcoming.map((talk) => (
-          <article class="border border-green-900/50 bg-green-950/20 rounded-xl p-6 mb-4 hover:border-green-800/50 transition-all duration-300">
-            <div class="flex items-start justify-between gap-4">
-              <div class="flex-1">
+          <article class="border border-green-900/50 bg-green-950/20 rounded-xl overflow-hidden mb-4 hover:border-green-800/50 transition-all duration-300">
+            <div class="flex">
+              {/* Image */}
+              {talk.image && (
+                <div class="w-72 shrink-0">
+                  <img src={talk.image} alt={talk.title} class="w-full h-full object-cover" />
+                </div>
+              )}
+              {/* Content */}
+              <div class="flex-1 p-6">
                 <div class="flex items-center gap-3 text-xs text-zinc-500 mb-3">
                   <span class="flex items-center gap-1">
                     <Calendar class="w-3 h-3" />
@@ -94,6 +74,11 @@ const years = Object.keys(pastTalks).sort((a, b) => parseInt(b) - parseInt(a));
                     <MapPin class="w-3 h-3" />
                     {talk.location}
                   </span>
+                  {talk.sessionId && (
+                    <span class="px-2 py-0.5 rounded bg-zinc-800 text-[11px] font-mono font-medium text-zinc-400">
+                      {talk.sessionId}
+                    </span>
+                  )}
                 </div>
                 <h3 class="text-lg font-semibold text-zinc-50 tracking-tight">{talk.title}</h3>
                 {talk.eventUrl ? (
