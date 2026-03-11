@@ -27,7 +27,7 @@
   50% { box-shadow: 0 0 12px rgba(34, 197, 94, 0.8); }
 }
 
-.animate-pulse-glow {
+@utility animate-pulse-glow {
   animation: pulse-glow 2s ease-in-out infinite;
 }
 
