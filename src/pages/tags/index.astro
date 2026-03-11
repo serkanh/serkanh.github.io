@@ -1,0 +1,29 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+
+const posts = await getCollection('posts');
+const tagCounts = new Map<string, number>();
+posts.forEach((post) => {
+  (post.data.tags || []).forEach((tag) => {
+    tagCounts.set(tag, (tagCounts.get(tag) || 0) + 1);
+  });
+});
+const sortedTags = [...tagCounts.entries()].sort((a, b) => b[1] - a[1]);
+---
+
+<BaseLayout title="Tags | Serkan Haytac">
+  <div class="px-12 py-12">
+    <h1 class="text-3xl font-bold text-zinc-50 tracking-tight">Tags</h1>
+    <div class="flex flex-wrap gap-3 mt-8">
+      {sortedTags.map(([tag, count]) => (
+        <a
+          href={`/tags/${tag}`}
+          class="bg-zinc-900 border border-zinc-800 rounded-lg px-4 py-2 text-sm font-mono text-zinc-400 hover:border-zinc-700 hover:text-zinc-300 transition"
+        >
+          {tag} ({count})
+        </a>
+      ))}
+    </div>
+  </div>
+</BaseLayout>

@@ -1,0 +1,22 @@
+{
+  "name": "serkanh-github-io",
+  "type": "module",
+  "version": "0.0.1",
+  "scripts": {
+    "dev": "astro dev",
+    "fetch-stars": "node scripts/fetch-stars.mjs",
+    "build": "node scripts/fetch-stars.mjs && astro build && node scripts/generate-redirects.mjs",
+    "preview": "astro preview",
+    "astro": "astro"
+  },
+  "dependencies": {
+    "@astrojs/sitemap": "^3.7.1",
+    "@lucide/astro": "^0.577.0",
+    "@tailwindcss/typography": "^0.5.19",
+    "@tailwindcss/vite": "^4.2.1",
+    "astro": "^5.18.1",
+    "fuse.js": "^7.1.0",
+    "motion": "^12.35.2",
+    "tailwindcss": "^4.2.1"
+  }
+}

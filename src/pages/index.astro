@@ -1,0 +1,76 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PostCard from '../components/PostCard.astro';
+import FileText from '@lucide/astro/icons/file-text';
+import Github from '@lucide/astro/icons/github';
+import ArrowRight from '@lucide/astro/icons/arrow-right';
+
+const allPosts = (await getCollection('posts')).sort(
+  (a, b) => b.data.date.valueOf() - a.data.date.valueOf()
+);
+const latestPosts = allPosts.slice(0, 6);
+---
+
+<BaseLayout>
+  <!-- Hero Section -->
+  <section class="px-12 pt-14 pb-10">
+    <!-- Title -->
+    <h1 class="text-[44px] font-bold tracking-tighter bg-gradient-to-b from-zinc-50 to-zinc-500 bg-clip-text text-transparent" data-animate="fade-up" data-delay="0.1">
+      Hey, I'm Serkan
+    </h1>
+
+    <!-- Description -->
+    <p class="text-[17px] text-zinc-400 leading-relaxed max-w-[640px] mt-5 -tracking-wide" data-animate="fade-up" data-delay="0.25">
+      AWS certified solutions architect & full-stack developer. Writing about DevOps, AWS, Terraform, Kubernetes, and infrastructure automation.
+    </p>
+
+    <!-- CTA Buttons -->
+    <div class="flex gap-3 mt-6" data-animate="fade-up" data-delay="0.4">
+      <a
+        href="/posts"
+        class="bg-zinc-50 text-zinc-950 px-5 py-2.5 rounded-lg font-semibold text-sm flex items-center gap-2 hover:bg-zinc-200 transition"
+      >
+        <FileText class="w-4 h-4" />
+        Read Posts
+      </a>
+      <a
+        href="https://github.com/serkanh"
+        target="_blank"
+        rel="noopener noreferrer"
+        class="border border-zinc-800 px-5 py-2.5 rounded-lg font-medium text-sm text-zinc-400 flex items-center gap-2 hover:border-zinc-700 hover:text-zinc-300 transition"
+      >
+        <Github class="w-4 h-4" />
+        GitHub
+      </a>
+    </div>
+  </section>
+
+  <!-- Posts Section -->
+  <section class="px-12 pb-12">
+    <!-- Header row -->
+    <div class="flex justify-between items-center" data-animate="fade-up" data-delay="0.5">
+      <h2 class="text-xl font-semibold text-zinc-50 -tracking-wide">Latest Posts</h2>
+      <a
+        href="/posts"
+        class="border border-zinc-800 rounded-md px-3.5 py-1.5 text-[13px] font-medium text-zinc-400 flex items-center gap-1.5 hover:border-zinc-700 transition"
+      >
+        View all
+        <ArrowRight class="w-3.5 h-3.5" />
+      </a>
+    </div>
+
+    <!-- Posts grid -->
+    <div class="grid grid-cols-3 gap-4 mt-6" data-stagger>
+      {latestPosts.map((post) => (
+        <PostCard
+          title={post.data.title}
+          date={post.data.date}
+          description={post.data.description || (post.body ? post.body.slice(0, 150) + '...' : '')}
+          tags={post.data.tags || []}
+          slug={post.id}
+        />
+      ))}
+    </div>
+  </section>
+</BaseLayout>

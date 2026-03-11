@@ -1,0 +1,88 @@
+<!-- Motion-powered entrance animations -->
+<!-- Add data-animate attributes to elements to animate them -->
+<!-- data-animate="fade-up" | "fade-in" | "scale-in" -->
+<!-- data-delay="0.1" (seconds) -->
+<!-- data-stagger="true" on parent to stagger children -->
+
+<script>
+  import { animate, stagger, inView } from "motion";
+
+  function initAnimations() {
+    // Fade-up elements (hero content, headings)
+    document.querySelectorAll("[data-animate='fade-up']").forEach((el) => {
+      const delay = parseFloat(el.getAttribute("data-delay") || "0");
+      el.style.opacity = "0";
+      el.style.transform = "translateY(20px)";
+      animate(
+        el,
+        { opacity: [0, 1], transform: ["translateY(20px)", "translateY(0)"] },
+        { duration: 0.6, delay, easing: [0.25, 0.1, 0.25, 1] }
+      );
+    });
+
+    // Fade-in elements
+    document.querySelectorAll("[data-animate='fade-in']").forEach((el) => {
+      const delay = parseFloat(el.getAttribute("data-delay") || "0");
+      el.style.opacity = "0";
+      animate(
+        el,
+        { opacity: [0, 1] },
+        { duration: 0.5, delay, easing: "ease-out" }
+      );
+    });
+
+    // Stagger children on scroll into view (post cards)
+    document.querySelectorAll("[data-stagger]").forEach((container) => {
+      const children = container.children;
+      if (!children.length) return;
+
+      Array.from(children).forEach((child) => {
+        (child as HTMLElement).style.opacity = "0";
+        (child as HTMLElement).style.transform = "translateY(16px)";
+      });
+
+      inView(container, () => {
+        animate(
+          Array.from(children) as HTMLElement[],
+          {
+            opacity: [0, 1],
+            transform: ["translateY(16px)", "translateY(0)"],
+          },
+          {
+            duration: 0.5,
+            delay: stagger(0.08),
+            easing: [0.25, 0.1, 0.25, 1],
+          }
+        );
+      }, { amount: 0.1 });
+    });
+
+    // Scale-in elements
+    document.querySelectorAll("[data-animate='scale-in']").forEach((el) => {
+      const delay = parseFloat(el.getAttribute("data-delay") || "0");
+      el.style.opacity = "0";
+      el.style.transform = "scale(0.95)";
+      animate(
+        el,
+        { opacity: [0, 1], transform: ["scale(0.95)", "scale(1)"] },
+        { duration: 0.4, delay, easing: [0.25, 0.1, 0.25, 1] }
+      );
+    });
+
+    // Nav slide down
+    const nav = document.querySelector("[data-animate='slide-down']");
+    if (nav) {
+      animate(
+        nav,
+        { opacity: [0, 1], transform: ["translateY(-100%)", "translateY(0)"] },
+        { duration: 0.5, easing: [0.25, 0.1, 0.25, 1] }
+      );
+    }
+  }
+
+  // Run on initial load
+  initAnimations();
+
+  // Re-run on Astro page transitions (if View Transitions are used)
+  document.addEventListener("astro:page-load", initAnimations);
+</script>

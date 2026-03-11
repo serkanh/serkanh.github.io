@@ -1,0 +1,113 @@
+---
+import BaseLayout from './BaseLayout.astro';
+import Tag from '../components/Tag.astro';
+import ArrowLeft from '@lucide/astro/icons/arrow-left';
+import ArrowRight from '@lucide/astro/icons/arrow-right';
+
+interface Props {
+  frontmatter: {
+    title: string;
+    date: Date;
+    tags?: string[];
+    description?: string;
+  };
+  readingTime: number;
+  prevPost?: { title: string; slug: string } | null;
+  nextPost?: { title: string; slug: string } | null;
+}
+
+const { frontmatter, readingTime, prevPost, nextPost } = Astro.props;
+
+const formattedDate = new Date(frontmatter.date).toLocaleDateString('en-US', {
+  year: 'numeric',
+  month: 'long',
+  day: 'numeric',
+});
+---
+
+<BaseLayout title={frontmatter.title} description={frontmatter.description}>
+  <article class="max-w-3xl mx-auto px-6 py-12">
+    <!-- Back link -->
+    <a
+      href="/posts"
+      class="text-[13px] font-medium text-blue-500 hover:text-blue-400 transition flex items-center gap-1"
+    >
+      <ArrowLeft class="w-3.5 h-3.5" />
+      Back to posts
+    </a>
+
+    <!-- Post header -->
+    <header class="mt-8">
+      <!-- Meta row -->
+      <div class="flex items-center gap-2 text-[13px] text-zinc-500">
+        <time datetime={frontmatter.date.toString()}>{formattedDate}</time>
+        <span>·</span>
+        <span>{readingTime} min read</span>
+      </div>
+
+      <!-- Title -->
+      <h1 class="text-[32px] font-bold text-zinc-50 leading-tight tracking-tight mt-4">
+        {frontmatter.title}
+      </h1>
+
+      <!-- Tags -->
+      {frontmatter.tags && frontmatter.tags.length > 0 && (
+        <div class="flex flex-wrap gap-2 mt-4">
+          {frontmatter.tags.map((tag) => (
+            <Tag name={tag} href={`/tags/${tag}`} />
+          ))}
+        </div>
+      )}
+    </header>
+
+    <!-- Divider -->
+    <hr class="border-t border-zinc-800 my-8" />
+
+    <!-- Article content -->
+    <div
+      class="prose prose-invert prose-zinc max-w-none
+        prose-headings:font-semibold prose-headings:tracking-tight
+        prose-h2:text-xl prose-h2:mt-8 prose-h2:mb-4
+        prose-p:text-zinc-300 prose-p:leading-relaxed
+        prose-a:text-blue-500 prose-a:no-underline hover:prose-a:text-blue-400
+        prose-code:text-zinc-300 prose-code:bg-zinc-800 prose-code:px-1.5 prose-code:py-0.5 prose-code:rounded prose-code:text-[13px] prose-code:font-mono
+        prose-pre:bg-zinc-900 prose-pre:border prose-pre:border-zinc-800 prose-pre:rounded-lg
+        prose-strong:text-zinc-50
+        prose-li:text-zinc-300"
+    >
+      <slot />
+    </div>
+
+    <!-- Divider -->
+    <hr class="border-t border-zinc-800 my-8" />
+
+    <!-- Post navigation -->
+    {(prevPost || nextPost) && (
+      <nav class="flex justify-between gap-8">
+        <!-- Previous post -->
+        {prevPost ? (
+          <a href={`/posts/${prevPost.slug}`} class="flex flex-col gap-1 group">
+            <span class="text-xs text-zinc-500">Previous Post</span>
+            <span class="text-[15px] font-medium text-zinc-200 group-hover:text-zinc-50 transition flex items-center gap-1">
+              <ArrowLeft class="w-4 h-4 flex-shrink-0" />
+              {prevPost.title}
+            </span>
+          </a>
+        ) : (
+          <div />
+        )}
+
+        <!-- Next post -->
+        {nextPost && (
+          <a href={`/posts/${nextPost.slug}`} class="flex flex-col gap-1 items-end text-right group">
+            <span class="text-xs text-zinc-500">Next Post</span>
+            <span class="text-[15px] font-medium text-zinc-200 group-hover:text-zinc-50 transition flex items-center gap-1">
+              {nextPost.title}
+              <ArrowRight class="w-4 h-4 flex-shrink-0" />
+            </span>
+          </a>
+        )}
+      </nav>
+    )}
+  </article>
+</BaseLayout>

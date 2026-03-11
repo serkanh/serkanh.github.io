@@ -1,0 +1,66 @@
+---
+import FileText from '@lucide/astro/icons/file-text';
+import FolderCode from '@lucide/astro/icons/folder-code';
+import Mic from '@lucide/astro/icons/mic';
+import Tag from '@lucide/astro/icons/tag';
+import BookOpen from '@lucide/astro/icons/book-open';
+import Star from '@lucide/astro/icons/star';
+import Search from '@lucide/astro/icons/search';
+import Github from '@lucide/astro/icons/github';
+import Linkedin from '@lucide/astro/icons/linkedin';
+
+const pathname = Astro.url.pathname;
+
+const navLinks = [
+  { href: '/posts', label: 'Posts', Icon: FileText },
+  { href: '/projects', label: 'Projects', Icon: FolderCode },
+  { href: '/talks', label: 'Talks', Icon: Mic },
+  { href: '/tags', label: 'Tags', Icon: Tag },
+  { href: '/resources', label: 'Resources', Icon: BookOpen },
+  { href: '/stars', label: 'Stars', Icon: Star },
+];
+---
+
+<header class="w-full h-14 border-b border-zinc-800 bg-zinc-950 flex items-center px-12" data-animate="slide-down">
+  <div class="flex items-center gap-6 flex-1">
+    <!-- Logo -->
+    <a href="/" class="flex items-center gap-2">
+      <span class="w-2 h-2 rounded-full bg-green-500 animate-pulse-glow"></span>
+      <span class="text-[15px] font-semibold text-zinc-50 tracking-tight">serkan haytac</span>
+    </a>
+
+    <!-- Nav links -->
+    <nav class="flex items-center gap-1">
+      {navLinks.map(({ href, label, Icon }) => {
+        const isActive = pathname === href || pathname.startsWith(href + '/');
+        return (
+          <a
+            href={href}
+            class={`flex items-center gap-1.5 px-3 py-1.5 rounded-md hover:bg-zinc-800/50 transition text-[13px] font-medium ${isActive ? 'text-zinc-50' : 'text-zinc-400'}`}
+          >
+            <Icon class="w-3.5 h-3.5" />
+            {label}
+          </a>
+        );
+      })}
+    </nav>
+  </div>
+
+  <!-- Right side -->
+  <div class="flex items-center gap-3">
+    <!-- Search box -->
+    <div id="search-trigger" class="bg-zinc-900 border border-zinc-800 rounded-md px-3 py-1.5 flex items-center gap-2 cursor-pointer">
+      <Search class="w-3.5 h-3.5 text-zinc-500" />
+      <span class="text-[13px] text-zinc-600">Search...</span>
+      <span class="bg-zinc-800 rounded px-1.5 py-0.5 text-[10px] font-medium text-zinc-500">⌘K</span>
+    </div>
+
+    <!-- Social icons -->
+    <a href="https://github.com/serkanh" target="_blank" rel="noopener noreferrer" class="text-zinc-400 hover:text-zinc-200 transition">
+      <Github class="w-[18px] h-[18px]" />
+    </a>
+    <a href="https://www.linkedin.com/in/serkanhaytac" target="_blank" rel="noopener noreferrer" class="text-zinc-400 hover:text-zinc-200 transition">
+      <Linkedin class="w-[18px] h-[18px]" />
+    </a>
+  </div>
+</header>

@@ -1,0 +1,130 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Github from '@lucide/astro/icons/github';
+import ExternalLink from '@lucide/astro/icons/external-link';
+import Star from '@lucide/astro/icons/star';
+import GitFork from '@lucide/astro/icons/git-fork';
+
+const projects = [
+  {
+    name: 'sre-bot',
+    description: 'A powerful Site Reliability Engineering assistant built with Google\'s Agent Development Kit (ADK). Features specialized agents for AWS cost analysis, Kubernetes operations, and operational best practices.',
+    longDescription: 'Provides an AI-powered SRE assistant that analyzes AWS costs, monitors infrastructure, and offers operational guidance through a web interface, API server, and Slack integration. Supports multiple AI providers including Google Gemini, Anthropic Claude, and AWS Bedrock.',
+    github: 'https://github.com/serkanh/sre-bot',
+    stars: 41,
+    forks: 7,
+    language: 'Python',
+    tags: ['python', 'google-adk', 'fastapi', 'aws', 'kubernetes', 'slack', 'docker'],
+  },
+  {
+    name: 'cloudwatch-logs-mcp',
+    description: 'An MCP (Model Context Protocol) server that provides tools for accessing AWS CloudWatch logs. Enables AI assistants to query and retrieve CloudWatch log data.',
+    longDescription: 'Integrates with AI assistants to list available log groups and fetch log entries with filtering capabilities. Built on FastMCP framework with Docker support for easy deployment.',
+    github: 'https://github.com/serkanh/cloudwatch-logs-mcp',
+    stars: 27,
+    forks: 2,
+    language: 'Python',
+    tags: ['python', 'mcp', 'aws', 'cloudwatch', 'boto3', 'docker'],
+  },
+  {
+    name: 'FocusedFeed',
+    description: 'Organize YouTube subscriptions into custom categories and view only the latest uploads — no algorithmic recommendations or distractions.',
+    longDescription: 'Sign in with Google, group subscriptions by topic, and browse new videos sorted by date. Features AI-generated video summaries, a Chrome extension, and a native iOS app.',
+    liveUrl: 'https://www.focusedfeed.app/',
+    language: 'Python',
+    tags: ['fastapi', 'python', 'vite', 'swift', 'chrome-extension', 'youtube', 'ai-summaries'],
+  },
+];
+
+const languageColors: Record<string, string> = {
+  Python: '#3572A5',
+  TypeScript: '#3178c6',
+  Go: '#00ADD8',
+  Rust: '#dea584',
+  JavaScript: '#f1e05a',
+};
+---
+
+<BaseLayout title="Projects | Serkan Haytac">
+  <section class="px-12 pt-12 pb-6">
+    <h1 class="text-3xl font-bold text-zinc-50 tracking-tight" data-animate="fade-up">Projects</h1>
+    <p class="text-zinc-500 text-sm mt-2" data-animate="fade-up" data-delay="0.1">Open source tools and side projects I've built.</p>
+  </section>
+
+  <section class="px-12 pb-16" data-stagger>
+    {projects.map((project) => (
+      <article class="border border-zinc-800 rounded-xl p-6 mb-4 bg-zinc-900 hover:border-zinc-700 hover:-translate-y-0.5 hover:shadow-lg hover:shadow-zinc-900/50 transition-all duration-300 ease-out group">
+        <!-- Header: name + stats -->
+        <div class="flex items-start justify-between gap-4">
+          <div class="flex-1">
+            <div class="flex items-center gap-3">
+              <h2 class="text-lg font-semibold text-zinc-50 tracking-tight group-hover:text-blue-400 transition-colors">
+                {project.name}
+              </h2>
+              <!-- Language badge -->
+              <div class="flex items-center gap-1.5">
+                <span class="w-2.5 h-2.5 rounded-full" style={`background-color: ${languageColors[project.language] || '#6B7280'}`} />
+                <span class="text-xs text-zinc-500">{project.language}</span>
+              </div>
+            </div>
+            <p class="text-[14px] text-zinc-400 leading-relaxed mt-2 max-w-2xl">
+              {project.description}
+            </p>
+            <p class="text-[13px] text-zinc-500 leading-relaxed mt-2 max-w-2xl">
+              {project.longDescription}
+            </p>
+          </div>
+
+          <!-- Stats -->
+          {project.stars > 0 && (
+            <div class="flex items-center gap-4 text-zinc-500 shrink-0">
+              <div class="flex items-center gap-1">
+                <Star class="w-3.5 h-3.5" />
+                <span class="text-xs font-medium">{project.stars}</span>
+              </div>
+              <div class="flex items-center gap-1">
+                <GitFork class="w-3.5 h-3.5" />
+                <span class="text-xs font-medium">{project.forks}</span>
+              </div>
+            </div>
+          )}
+        </div>
+
+        <!-- Tags -->
+        <div class="flex flex-wrap gap-1.5 mt-4">
+          {project.tags.map((tag) => (
+            <span class="px-2 py-0.5 rounded-md bg-zinc-800 text-[11px] font-medium text-zinc-400 font-mono">
+              {tag}
+            </span>
+          ))}
+        </div>
+
+        <!-- Links -->
+        <div class="flex items-center gap-4 mt-5">
+          {project.github && (
+            <a
+              href={project.github}
+              target="_blank"
+              rel="noopener noreferrer"
+              class="flex items-center gap-2 text-[13px] font-medium text-zinc-400 hover:text-zinc-50 transition-colors"
+            >
+              <Github class="w-4 h-4" />
+              View on GitHub
+            </a>
+          )}
+          {project.liveUrl && (
+            <a
+              href={project.liveUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              class="flex items-center gap-1.5 text-[13px] font-medium text-blue-500 hover:text-blue-400 transition-colors"
+            >
+              <ExternalLink class="w-3.5 h-3.5" />
+              Live
+            </a>
+          )}
+        </div>
+      </article>
+    ))}
+  </section>
+</BaseLayout>
