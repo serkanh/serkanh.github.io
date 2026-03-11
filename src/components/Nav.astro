@@ -1,5 +1,6 @@
 ---
 import FileText from '@lucide/astro/icons/file-text';
+import FolderCode from '@lucide/astro/icons/folder-code';
 import Tag from '@lucide/astro/icons/tag';
 import BookOpen from '@lucide/astro/icons/book-open';
 import Wrench from '@lucide/astro/icons/wrench';
@@ -11,6 +12,7 @@ const pathname = Astro.url.pathname;
 
 const navLinks = [
   { href: '/posts', label: 'Posts', Icon: FileText },
+  { href: '/projects', label: 'Projects', Icon: FolderCode },
   { href: '/tags', label: 'Tags', Icon: Tag },
   { href: '/resources', label: 'Resources', Icon: BookOpen },
   { href: '/one-liners', label: 'Tools', Icon: Wrench },
