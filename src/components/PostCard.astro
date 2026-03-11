@@ -1,0 +1,61 @@
+---
+import ArrowRight from '@lucide/astro/icons/arrow-right';
+import TagComponent from './Tag.astro';
+
+interface Props {
+  title: string;
+  date: Date;
+  description: string;
+  tags: string[];
+  slug: string;
+  readingTime?: number;
+}
+
+const { title, date, description, tags, slug, readingTime = 3 } = Astro.props;
+
+const formattedDate = date.toLocaleDateString('en-US', {
+  month: 'short',
+  day: 'numeric',
+  year: 'numeric',
+});
+---
+
+<article class="bg-zinc-900 border border-zinc-800 rounded-xl p-6 flex flex-col gap-4 hover:border-zinc-700 transition">
+  <!-- Top row: date + reading time -->
+  <div class="flex items-center justify-between">
+    <time class="text-xs font-medium text-zinc-600" datetime={date.toISOString()}>
+      {formattedDate}
+    </time>
+    <span class="text-xs text-zinc-600">{readingTime} min read</span>
+  </div>
+
+  <!-- Title -->
+  <h2 class="text-base font-semibold text-zinc-50 leading-snug tracking-tight line-clamp-2">
+    {title}
+  </h2>
+
+  <!-- Description -->
+  {description && (
+    <p class="text-[13px] text-zinc-500 leading-relaxed line-clamp-3">
+      {description}
+    </p>
+  )}
+
+  <!-- Tags -->
+  {tags && tags.length > 0 && (
+    <div class="flex flex-wrap gap-1.5">
+      {tags.map((tag) => (
+        <TagComponent name={tag} href={`/tags/${tag}`} />
+      ))}
+    </div>
+  )}
+
+  <!-- Read more link -->
+  <a
+    href={`/posts/${slug}`}
+    class="text-[13px] font-medium text-blue-500 hover:text-blue-400 flex items-center gap-1.5 mt-auto"
+  >
+    Read more
+    <ArrowRight class="w-3.5 h-3.5" />
+  </a>
+</article>

@@ -1,0 +1,34 @@
+---
+import Github from '@lucide/astro/icons/github';
+import Linkedin from '@lucide/astro/icons/linkedin';
+import Mail from '@lucide/astro/icons/mail';
+import Rss from '@lucide/astro/icons/rss';
+---
+
+<footer class="border-t border-zinc-800 px-12 py-5 flex justify-between items-center">
+  <!-- Left: Built with -->
+  <p class="text-xs text-zinc-600">
+    Built with
+    <span class="text-zinc-500 font-medium">Astro</span>
+    ·
+    <span class="text-zinc-500 font-medium">Tailwind CSS</span>
+    ·
+    <span class="text-zinc-500 font-medium">shadcn/ui</span>
+  </p>
+
+  <!-- Right: Social icons -->
+  <div class="flex items-center gap-3">
+    <a href="https://github.com/serkanh" target="_blank" rel="noopener noreferrer" class="text-zinc-600 hover:text-zinc-400 transition">
+      <Github class="w-4 h-4" />
+    </a>
+    <a href="https://www.linkedin.com/in/serkanhaytac" target="_blank" rel="noopener noreferrer" class="text-zinc-600 hover:text-zinc-400 transition">
+      <Linkedin class="w-4 h-4" />
+    </a>
+    <a href="mailto:serkan@haytac.com" class="text-zinc-600 hover:text-zinc-400 transition">
+      <Mail class="w-4 h-4" />
+    </a>
+    <a href="/rss.xml" class="text-zinc-600 hover:text-zinc-400 transition">
+      <Rss class="w-4 h-4" />
+    </a>
+  </div>
+</footer>
