@@ -15,24 +15,18 @@ const latestPosts = allPosts.slice(0, 6);
 <BaseLayout>
   <!-- Hero Section -->
   <section class="px-12 pt-14 pb-10">
-    <!-- Status pill -->
-    <div class="border border-zinc-800 rounded-full px-3 py-1 flex items-center gap-1.5 w-fit">
-      <span class="w-1.5 h-1.5 rounded-full bg-green-500"></span>
-      <span class="text-xs font-medium text-zinc-400">Available for consulting</span>
-    </div>
-
     <!-- Title -->
-    <h1 class="text-[44px] font-bold tracking-tighter mt-5 bg-gradient-to-b from-zinc-50 to-zinc-500 bg-clip-text text-transparent">
+    <h1 class="text-[44px] font-bold tracking-tighter bg-gradient-to-b from-zinc-50 to-zinc-500 bg-clip-text text-transparent" data-animate="fade-up" data-delay="0.1">
       Hey, I'm Serkan
     </h1>
 
     <!-- Description -->
-    <p class="text-[17px] text-zinc-400 leading-relaxed max-w-[640px] mt-5 -tracking-wide">
+    <p class="text-[17px] text-zinc-400 leading-relaxed max-w-[640px] mt-5 -tracking-wide" data-animate="fade-up" data-delay="0.25">
       AWS certified solutions architect & full-stack developer. Writing about DevOps, AWS, Terraform, Kubernetes, and infrastructure automation.
     </p>
 
     <!-- CTA Buttons -->
-    <div class="flex gap-3 mt-6">
+    <div class="flex gap-3 mt-6" data-animate="fade-up" data-delay="0.4">
       <a
         href="/posts"
         class="bg-zinc-50 text-zinc-950 px-5 py-2.5 rounded-lg font-semibold text-sm flex items-center gap-2 hover:bg-zinc-200 transition"
@@ -55,7 +49,7 @@ const latestPosts = allPosts.slice(0, 6);
   <!-- Posts Section -->
   <section class="px-12 pb-12">
     <!-- Header row -->
-    <div class="flex justify-between items-center">
+    <div class="flex justify-between items-center" data-animate="fade-up" data-delay="0.5">
       <h2 class="text-xl font-semibold text-zinc-50 -tracking-wide">Latest Posts</h2>
       <a
         href="/posts"
@@ -67,7 +61,7 @@ const latestPosts = allPosts.slice(0, 6);
     </div>
 
     <!-- Posts grid -->
-    <div class="grid grid-cols-3 gap-4 mt-6">
+    <div class="grid grid-cols-3 gap-4 mt-6" data-stagger>
       {latestPosts.map((post) => (
         <PostCard
           title={post.data.title}

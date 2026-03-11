@@ -10,10 +10,11 @@
   },
   "dependencies": {
     "@astrojs/sitemap": "^3.7.1",
+    "@lucide/astro": "^0.577.0",
     "@tailwindcss/typography": "^0.5.19",
     "@tailwindcss/vite": "^4.2.1",
     "astro": "^5.18.1",
-    "@lucide/astro": "^0.577.0",
+    "motion": "^12.35.2",
     "tailwindcss": "^4.2.1"
   }
 }

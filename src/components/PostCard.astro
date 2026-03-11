@@ -20,7 +20,7 @@ const formattedDate = date.toLocaleDateString('en-US', {
 });
 ---
 
-<article class="bg-zinc-900 border border-zinc-800 rounded-xl p-6 flex flex-col gap-4 hover:border-zinc-700 transition">
+<article class="bg-zinc-900 border border-zinc-800 rounded-xl p-6 flex flex-col gap-4 hover:border-zinc-700 hover:-translate-y-1 hover:shadow-lg hover:shadow-zinc-900/50 transition-all duration-300 ease-out">
   <!-- Top row: date + reading time -->
   <div class="flex items-center justify-between">
     <time class="text-xs font-medium text-zinc-600" datetime={date.toISOString()}>

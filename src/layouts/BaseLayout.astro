@@ -1,6 +1,7 @@
 ---
 import Nav from '../components/Nav.astro';
 import Footer from '../components/Footer.astro';
+import Animations from '../components/Animations.astro';
 import '../styles/global.css';
 
 interface Props {
@@ -39,5 +40,6 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
       <slot />
     </main>
     <Footer />
+    <Animations />
   </body>
 </html>
