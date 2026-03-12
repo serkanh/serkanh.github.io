@@ -10,13 +10,13 @@ const allPosts = (await getCollection('posts')).sort(
 
 <BaseLayout title="Posts | Serkan Haytac">
   <!-- Header -->
-  <div class="px-12 pt-12 pb-6">
+  <div class="px-4 sm:px-8 lg:px-12 pt-12 pb-6">
     <h1 class="text-3xl font-bold text-zinc-50 tracking-tight">All Posts</h1>
     <p class="text-zinc-500 text-sm mt-2">{allPosts.length} posts</p>
   </div>
 
   <!-- Posts grid -->
-  <div class="px-12 pb-12 grid grid-cols-3 gap-4">
+  <div class="px-4 sm:px-8 lg:px-12 pb-12 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
     {allPosts.map((post) => (
       <PostCard
         title={post.data.title}
