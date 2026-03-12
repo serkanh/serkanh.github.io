@@ -14,9 +14,9 @@ const latestPosts = allPosts.slice(0, 6);
 
 <BaseLayout>
   <!-- Hero Section -->
-  <section class="px-12 pt-14 pb-10">
+  <section class="px-4 sm:px-8 lg:px-12 pt-14 pb-10">
     <!-- Title -->
-    <h1 class="text-[44px] font-bold tracking-tighter bg-gradient-to-b from-zinc-50 to-zinc-500 bg-clip-text text-transparent" data-animate="fade-up" data-delay="0.1">
+    <h1 class="text-[28px] sm:text-[36px] lg:text-[44px] font-bold tracking-tighter bg-gradient-to-b from-zinc-50 to-zinc-500 bg-clip-text text-transparent" data-animate="fade-up" data-delay="0.1">
       Hey, I'm Serkan
     </h1>
 
@@ -47,7 +47,7 @@ const latestPosts = allPosts.slice(0, 6);
   </section>
 
   <!-- Posts Section -->
-  <section class="px-12 pb-12">
+  <section class="px-4 sm:px-8 lg:px-12 pb-12">
     <!-- Header row -->
     <div class="flex justify-between items-center" data-animate="fade-up" data-delay="0.5">
       <h2 class="text-xl font-semibold text-zinc-50 -tracking-wide">Latest Posts</h2>
@@ -61,7 +61,7 @@ const latestPosts = allPosts.slice(0, 6);
     </div>
 
     <!-- Posts grid -->
-    <div class="grid grid-cols-3 gap-4 mt-6" data-stagger>
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mt-6" data-stagger>
       {latestPosts.map((post) => (
         <PostCard
           title={post.data.title}

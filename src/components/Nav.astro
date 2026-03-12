@@ -9,6 +9,8 @@ import Star from '@lucide/astro/icons/star';
 import Search from '@lucide/astro/icons/search';
 import Github from '@lucide/astro/icons/github';
 import Linkedin from '@lucide/astro/icons/linkedin';
+import Menu from '@lucide/astro/icons/menu';
+import X from '@lucide/astro/icons/x';
 
 const pathname = Astro.url.pathname;
 
@@ -23,46 +25,92 @@ const navLinks = [
 ];
 ---
 
-<header class="w-full h-14 border-b border-zinc-800 bg-zinc-950 flex items-center px-12" data-animate="slide-down">
-  <div class="flex items-center gap-6 flex-1">
-    <!-- Logo -->
-    <a href="/" class="flex items-center gap-2">
-      <span class="w-2 h-2 rounded-full bg-green-500 animate-pulse-glow"></span>
-      <span class="text-[15px] font-semibold text-zinc-50 tracking-tight">serkan haytac</span>
-    </a>
+<header class="w-full border-b border-zinc-800 bg-zinc-950" data-animate="slide-down">
+  <div class="h-14 flex items-center px-4 sm:px-8 lg:px-12">
+    <div class="flex items-center gap-6 flex-1">
+      <!-- Logo -->
+      <a href="/" class="flex items-center gap-2">
+        <span class="w-2 h-2 rounded-full bg-green-500 animate-pulse-glow"></span>
+        <span class="text-[15px] font-semibold text-zinc-50 tracking-tight">serkan haytac</span>
+      </a>
 
-    <!-- Nav links -->
-    <nav class="flex items-center gap-1">
-      {navLinks.map(({ href, label, Icon }) => {
-        const isActive = pathname === href || pathname.startsWith(href + '/');
-        return (
-          <a
-            href={href}
-            class={`flex items-center gap-1.5 px-3 py-1.5 rounded-md hover:bg-zinc-800/50 transition text-[13px] font-medium ${isActive ? 'text-zinc-50' : 'text-zinc-400'}`}
-          >
-            <Icon class="w-3.5 h-3.5" />
-            {label}
-          </a>
-        );
-      })}
-    </nav>
-  </div>
-
-  <!-- Right side -->
-  <div class="flex items-center gap-3">
-    <!-- Search box -->
-    <div id="search-trigger" class="bg-zinc-900 border border-zinc-800 rounded-md px-3 py-1.5 flex items-center gap-2 cursor-pointer">
-      <Search class="w-3.5 h-3.5 text-zinc-500" />
-      <span class="text-[13px] text-zinc-600">Search...</span>
-      <span class="bg-zinc-800 rounded px-1.5 py-0.5 text-[10px] font-medium text-zinc-500">⌘K</span>
+      <!-- Nav links (desktop) -->
+      <nav class="hidden md:flex items-center gap-1">
+        {navLinks.map(({ href, label, Icon }) => {
+          const isActive = pathname === href || pathname.startsWith(href + '/');
+          return (
+            <a
+              href={href}
+              class={`flex items-center gap-1.5 px-3 py-1.5 rounded-md hover:bg-zinc-800/50 transition text-[13px] font-medium ${isActive ? 'text-zinc-50' : 'text-zinc-400'}`}
+            >
+              <Icon class="w-3.5 h-3.5" />
+              {label}
+            </a>
+          );
+        })}
+      </nav>
     </div>
 
-    <!-- Social icons -->
-    <a href="https://github.com/serkanh" target="_blank" rel="noopener noreferrer" class="text-zinc-400 hover:text-zinc-200 transition">
-      <Github class="w-[18px] h-[18px]" />
-    </a>
-    <a href="https://www.linkedin.com/in/serkanhaytac" target="_blank" rel="noopener noreferrer" class="text-zinc-400 hover:text-zinc-200 transition">
-      <Linkedin class="w-[18px] h-[18px]" />
-    </a>
+    <!-- Right side -->
+    <div class="flex items-center gap-3">
+      <!-- Search box (hidden on mobile) -->
+      <div id="search-trigger" class="hidden sm:flex bg-zinc-900 border border-zinc-800 rounded-md px-3 py-1.5 items-center gap-2 cursor-pointer">
+        <Search class="w-3.5 h-3.5 text-zinc-500" />
+        <span class="text-[13px] text-zinc-600">Search...</span>
+        <span class="bg-zinc-800 rounded px-1.5 py-0.5 text-[10px] font-medium text-zinc-500">⌘K</span>
+      </div>
+
+      <!-- Social icons (hidden on mobile) -->
+      <a href="https://github.com/serkanh" target="_blank" rel="noopener noreferrer" class="hidden sm:block text-zinc-400 hover:text-zinc-200 transition">
+        <Github class="w-[18px] h-[18px]" />
+      </a>
+      <a href="https://www.linkedin.com/in/serkanhaytac" target="_blank" rel="noopener noreferrer" class="hidden sm:block text-zinc-400 hover:text-zinc-200 transition">
+        <Linkedin class="w-[18px] h-[18px]" />
+      </a>
+
+      <!-- Hamburger button (mobile only) -->
+      <button id="mobile-menu-btn" class="md:hidden text-zinc-400 hover:text-zinc-200 transition p-1" aria-label="Toggle menu">
+        <Menu id="menu-icon-open" class="w-5 h-5" />
+        <X id="menu-icon-close" class="w-5 h-5 hidden" />
+      </button>
+    </div>
   </div>
+
+  <!-- Mobile menu -->
+  <nav id="mobile-menu" class="hidden md:hidden border-t border-zinc-800 px-4 py-3">
+    {navLinks.map(({ href, label, Icon }) => {
+      const isActive = pathname === href || pathname.startsWith(href + '/');
+      return (
+        <a
+          href={href}
+          class={`flex items-center gap-2 px-3 py-2.5 rounded-md hover:bg-zinc-800/50 transition text-sm font-medium ${isActive ? 'text-zinc-50' : 'text-zinc-400'}`}
+        >
+          <Icon class="w-4 h-4" />
+          {label}
+        </a>
+      );
+    })}
+    <div class="flex items-center gap-3 px-3 pt-3 mt-2 border-t border-zinc-800">
+      <a href="https://github.com/serkanh" target="_blank" rel="noopener noreferrer" class="text-zinc-400 hover:text-zinc-200 transition">
+        <Github class="w-[18px] h-[18px]" />
+      </a>
+      <a href="https://www.linkedin.com/in/serkanhaytac" target="_blank" rel="noopener noreferrer" class="text-zinc-400 hover:text-zinc-200 transition">
+        <Linkedin class="w-[18px] h-[18px]" />
+      </a>
+    </div>
+  </nav>
 </header>
+
+<script>
+  const btn = document.getElementById('mobile-menu-btn');
+  const menu = document.getElementById('mobile-menu');
+  const iconOpen = document.getElementById('menu-icon-open');
+  const iconClose = document.getElementById('menu-icon-close');
+
+  btn?.addEventListener('click', () => {
+    const isOpen = !menu?.classList.contains('hidden');
+    menu?.classList.toggle('hidden', isOpen);
+    iconOpen?.classList.toggle('hidden', !isOpen);
+    iconClose?.classList.toggle('hidden', isOpen);
+  });
+</script>
