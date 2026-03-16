@@ -9,6 +9,9 @@ import { dirname, join } from 'path';
 
 const DIST = 'dist';
 
+// Ensure dist directory exists
+mkdirSync(DIST, { recursive: true });
+
 const redirects = {
   // Posts (old Jekyll: /:categories/:year/:month/:day/:title.html)
   'jekyll/2015/10/20/hashicorp-vault-setup.html': '/posts/hashicorp-vault-setup/',
@@ -51,6 +54,10 @@ function redirectHtml(newUrl) {
 <body><p>Redirecting to <a href="${newUrl}">${newUrl}</a>…</p></body>
 </html>`;
 }
+
+// Create .nojekyll file to disable GitHub Pages Jekyll processing
+writeFileSync(join(DIST, '.nojekyll'), '');
+console.log('✓ Created .nojekyll file to disable Jekyll processing');
 
 let count = 0;
 for (const [oldPath, newUrl] of Object.entries(redirects)) {
