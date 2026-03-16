@@ -6,7 +6,7 @@
  * Run: node scripts/fetch-books.mjs
  */
 
-import { mkdirSync, writeFileSync } from 'node:fs';
+import { mkdirSync, writeFileSync, existsSync } from 'node:fs';
 import { dirname } from 'node:path';
 
 const USER_ID = '38544146';
@@ -69,12 +69,25 @@ async function fetchShelf(shelf) {
 
 console.log('📚 Fetching books from Goodreads...');
 
-const allBooks = [];
-for (const shelf of SHELVES) {
-  const books = await fetchShelf(shelf);
-  allBooks.push(...books);
-  console.log(`  ✓ ${shelf}: ${books.length} books`);
-}
+try {
+  const allBooks = [];
+  for (const shelf of SHELVES) {
+    const books = await fetchShelf(shelf);
+    allBooks.push(...books);
+    console.log(`  ✓ ${shelf}: ${books.length} books`);
+  }
 
-writeFileSync(OUTPUT, JSON.stringify(allBooks, null, 2));
-console.log(`✓ Wrote ${allBooks.length} books to ${OUTPUT}`);
+  writeFileSync(OUTPUT, JSON.stringify(allBooks, null, 2));
+  console.log(`✓ Wrote ${allBooks.length} books to ${OUTPUT}`);
+} catch (error) {
+  console.error('⚠ Failed to fetch books:', error.message);
+
+  // Try to use existing cached data if available
+  if (existsSync(OUTPUT)) {
+    console.log('ℹ Using existing cached books.json');
+  } else {
+    // Write empty array as fallback
+    writeFileSync(OUTPUT, JSON.stringify([], null, 2));
+    console.log('ℹ Created empty books.json (build will continue)');
+  }
+}

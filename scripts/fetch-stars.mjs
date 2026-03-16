@@ -8,7 +8,7 @@
  */
 
 import { execSync } from 'node:child_process';
-import { mkdirSync, writeFileSync } from 'node:fs';
+import { mkdirSync, writeFileSync, readFileSync, existsSync } from 'node:fs';
 import { dirname } from 'node:path';
 
 const OUTPUT = 'src/data/stars.json';
@@ -17,16 +17,29 @@ mkdirSync(dirname(OUTPUT), { recursive: true });
 
 console.log('⭐ Fetching starred repos from GitHub...');
 
-const raw = execSync(
-  `gh api /users/serkanh/starred --paginate -H "Accept: application/vnd.github.v3.star+json" --jq '.[] | {starred_at: .starred_at, full_name: .repo.full_name, html_url: .repo.html_url, description: .repo.description, stargazers_count: .repo.stargazers_count, language: .repo.language, topics: .repo.topics}'`,
-  { encoding: 'utf-8', maxBuffer: 50 * 1024 * 1024 }
-);
+try {
+  const raw = execSync(
+    `gh api /users/serkanh/starred --paginate -H "Accept: application/vnd.github.v3.star+json" --jq '.[] | {starred_at: .starred_at, full_name: .repo.full_name, html_url: .repo.html_url, description: .repo.description, stargazers_count: .repo.stargazers_count, language: .repo.language, topics: .repo.topics}'`,
+    { encoding: 'utf-8', maxBuffer: 50 * 1024 * 1024 }
+  );
 
-const repos = raw
-  .trim()
-  .split('\n')
-  .filter(Boolean)
-  .map((line) => JSON.parse(line));
+  const repos = raw
+    .trim()
+    .split('\n')
+    .filter(Boolean)
+    .map((line) => JSON.parse(line));
 
-writeFileSync(OUTPUT, JSON.stringify(repos, null, 2));
-console.log(`✓ Wrote ${repos.length} starred repos to ${OUTPUT}`);
+  writeFileSync(OUTPUT, JSON.stringify(repos, null, 2));
+  console.log(`✓ Wrote ${repos.length} starred repos to ${OUTPUT}`);
+} catch (error) {
+  console.error('⚠ Failed to fetch starred repos:', error.message);
+
+  // Try to use existing cached data if available
+  if (existsSync(OUTPUT)) {
+    console.log('ℹ Using existing cached stars.json');
+  } else {
+    // Write empty array as fallback
+    writeFileSync(OUTPUT, JSON.stringify([], null, 2));
+    console.log('ℹ Created empty stars.json (build will continue)');
+  }
+}
