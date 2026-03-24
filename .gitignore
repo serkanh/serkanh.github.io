@@ -8,3 +8,6 @@ node_modules/
 
 # Generated at build time
 src/data/stars.json
+
+# Claude Code local config
+CLAUDE.local.md
